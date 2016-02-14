@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.2.1" version_id="121" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners/>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <group group_id="EndlessHorizonSocialShare" display_order="1" debug_only="0"/>
+    <option option_id="EHSS_CacheHitDebug" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="400"/>
+    </option>
+    <option option_id="EHSS_CacheTime" edit_format="textbox" data_type="positive_integer" can_backup="1">
+      <default_value>21600</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="110"/>
+    </option>
+    <option option_id="EHSS_KeepTrying" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="120"/>
+    </option>
+    <option option_id="EHSS_MailPrefix" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>I thought you might like this. Go check it out with this link:</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="320"/>
+    </option>
+    <option option_id="EHSS_ShareCounter" edit_format="checkbox" data_type="array" can_backup="1">
+      <default_value>a:7:{s:8:"facebook";b:1;s:7:"twitter";b:1;s:10:"googleplus";b:1;s:8:"linkedin";b:1;s:9:"pinterest";b:1;s:9:"delicious";b:0;s:2:"vk";b:0;}</default_value>
+      <edit_format_params>facebook=Facebook
+twitter=Twitter
+googleplus=Google+
+linkedin=LinkedIn
+pinterest=Pinterest
+delicious=Delicious
+vk=VK</edit_format_params>
+      <sub_options>facebook
+twitter
+googleplus
+linkedin
+pinterest
+delicious
+vk</sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="100"/>
+    </option>
+    <option option_id="EHSS_SocialSites" edit_format="checkbox" data_type="array" can_backup="1">
+      <default_value>a:13:{s:8:"facebook";b:1;s:7:"twitter";b:1;s:10:"googleplus";b:1;s:8:"linkedin";b:1;s:11:"stumbleupon";b:1;s:9:"pinterest";b:1;s:9:"delicious";b:1;s:6:"tumblr";b:1;s:6:"reddit";b:1;s:2:"vk";b:1;s:8:"whatsapp";b:1;s:4:"line";b:0;s:5:"email";b:1;}</default_value>
+      <edit_format_params>facebook=Facebook
+twitter=Twitter
+googleplus=Google+
+linkedin=LinkedIn
+stumbleupon=StumbleUpon
+pinterest=Pinterest
+delicious=Delicious
+tumblr=Tumblr
+reddit=Reddit
+vk=VK
+whatsapp=WhatsApp
+line=LINE (be warned, the icon will use an image instead of FontAwesome)
+email=E-Mail</edit_format_params>
+      <sub_options>facebook
+twitter
+googleplus
+linkedin
+stumbleupon
+pinterest
+delicious
+tumblr
+reddit
+vk
+whatsapp
+line
+email</sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="10"/>
+    </option>
+    <option option_id="EHSS_TweetParamRelated" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="310"/>
+    </option>
+    <option option_id="EHSS_TweetParamVia" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="300"/>
+    </option>
+    <option option_id="EHSS_ViewPages" edit_format="checkbox" data_type="array" can_backup="1">
+      <default_value>a:2:{s:3:"top";b:1;s:6:"bottom";b:0;}</default_value>
+      <edit_format_params>top={xen:phrase option_EHSS_ViewOptions_top}
+bottom={xen:phrase option_EHSS_ViewOptions_bottom}</edit_format_params>
+      <sub_options>top
+bottom</sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="210"/>
+    </option>
+    <option option_id="EHSS_ViewThreads" edit_format="checkbox" data_type="array" can_backup="1">
+      <default_value>a:2:{s:3:"top";b:0;s:6:"bottom";b:1;}</default_value>
+      <edit_format_params>top={xen:phrase option_EHSS_ViewOptions_top}
+bottom={xen:phrase option_EHSS_ViewOptions_bottom}</edit_format_params>
+      <sub_options>top
+bottom</sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="200"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="option_EHSS_CacheHitDebug" version_id="120" version_string="1.2.0"><![CDATA[Enable Cache Hit Debug]]></phrase>
+    <phrase title="option_EHSS_CacheHitDebug_explain" version_id="120" version_string="1.2.0"><![CDATA[Enabling this will force the add-on to output cache hit status on Server Error Log. You may want to enable this for the first few minutes prior to installing the add-on to see if the cache is being used correctly.]]></phrase>
+    <phrase title="option_EHSS_CacheTime" version_id="120" version_string="1.2.0"><![CDATA[Share Counter Cache Time]]></phrase>
+    <phrase title="option_EHSS_CacheTime_explain" version_id="120" version_string="1.2.0"><![CDATA[Set how long the share counters will be cached until they will be fetched again (in seconds).<br>
+<b>NOTE:</b> This requires your XenForo installation to have any back-end caching enabled on config.php!]]></phrase>
+    <phrase title="option_EHSS_KeepTrying" version_id="120" version_string="1.2.0"><![CDATA[Keep Trying]]></phrase>
+    <phrase title="option_EHSS_KeepTrying_explain" version_id="120" version_string="1.2.0"><![CDATA[If not even one social site returned any number other than -1 (which means fetching failure), the script will keep trying to fetch the share count on page loads.]]></phrase>
+    <phrase title="option_EHSS_MailPrefix" version_id="106" version_string="1.0.6"><![CDATA[Mail Prefix]]></phrase>
+    <phrase title="option_EHSS_MailPrefix_explain" version_id="106" version_string="1.0.6"><![CDATA[Text to append before the page's URL on email share content.]]></phrase>
+    <phrase title="option_EHSS_ShareCounter" version_id="120" version_string="1.2.0"><![CDATA[Enable Share Counter]]></phrase>
+    <phrase title="option_EHSS_ShareCounter_explain" version_id="120" version_string="1.2.0"><![CDATA[Choose which sites that you want to have its share count fetched. Even if you have the site disabled, the script will still fetch the share count, so you need to disable it from here too.<br>
+<b>NOTE:</b> Strongly suggested not to enable this if your XenForo installation doesn't have any back-end caching enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share count on EVERY page load.]]></phrase>
+    <phrase title="option_EHSS_SocialSites" version_id="120" version_string="1.2.0"><![CDATA[Enable Social Sites]]></phrase>
+    <phrase title="option_EHSS_SocialSites_explain" version_id="120" version_string="1.2.0"><![CDATA[Choose social sites that you want to enable. Disabling all sites will prevent any necessary JS files to be loaded, so you may use this method if you want to temporarily prevent the add-on from loading on the front-end without completely disabling it.]]></phrase>
+    <phrase title="option_EHSS_TweetParamRelated" version_id="106" version_string="1.0.6"><![CDATA[Tweet Parameter: Related]]></phrase>
+    <phrase title="option_EHSS_TweetParamRelated_explain" version_id="106" version_string="1.0.6"><![CDATA[A comma-separated list of accounts related to the content of the shared URI.]]></phrase>
+    <phrase title="option_EHSS_TweetParamVia" version_id="106" version_string="1.0.6"><![CDATA[Tweet Parameter: Via]]></phrase>
+    <phrase title="option_EHSS_TweetParamVia_explain" version_id="106" version_string="1.0.6"><![CDATA[Attribute the source of a Tweet to a Twitter username.]]></phrase>
+    <phrase title="option_EHSS_ViewOptions_bottom" version_id="106" version_string="1.0.6"><![CDATA[Bottom]]></phrase>
+    <phrase title="option_EHSS_ViewOptions_top" version_id="106" version_string="1.0.6"><![CDATA[Top]]></phrase>
+    <phrase title="option_EHSS_ViewPages" version_id="106" version_string="1.0.6"><![CDATA[View on Pages]]></phrase>
+    <phrase title="option_EHSS_ViewPages_explain" version_id="120" version_string="1.2.0"><![CDATA[Select where you want the social share page widget to show on pages. The default is on the bottom, but it may not fit correctly without extra styling. Thus for this add-on only, the default is on the top. If you want to enable it on the bottom, you may need to add some extra styling to make it fit correctly.]]></phrase>
+    <phrase title="option_EHSS_ViewThreads" version_id="106" version_string="1.0.6"><![CDATA[View on Threads]]></phrase>
+    <phrase title="option_EHSS_ViewThreads_explain" version_id="120" version_string="1.2.0"><![CDATA[Select where you want the social share page widget to show on threads. The default is on the bottom, but you can also have it enabled on the top.]]></phrase>
+    <phrase title="option_group_EndlessHorizonSocialShare" version_id="1" version_string="1.0.0"><![CDATA[[Endless Horizon] Social Share]]></phrase>
+    <phrase title="option_group_EndlessHorizonSocialShare_description" version_id="120" version_string="1.2.0"><![CDATA[Floating social share widget.<br>
+Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank">Bobby Wibowo</a>.]]></phrase>
+    <phrase title="view_EHSS_button_text" version_id="106" version_string="1.0.6"><![CDATA[Share This Page]]></phrase>
+    <phrase title="view_EHSS_count_title" version_id="110" version_string="1.1.0"><![CDATA[This page was shared {x} time(s)]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="eh_socialshare" version_id="110" version_string="1.1.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+
+<button class="button primary eh_socialshare"><i class="fa fa-share-alt"></i><span>{xen:phrase view_EHSS_button_text}</span></button>]]></template>
+    <template title="eh_socialshare.css" version_id="110" version_string="1.1.0"><![CDATA[.blurred {
+	-webkit-filter: blur(10px);
+	filter: blur(10px); }
+.alwaysHidden { display: none !important; }
+
+.eh_socialshare {
+	width: 100%;
+	height: auto;
+	padding: 10px;
+	line-height: normal; }
+.eh_socialshare .fa {
+	margin-right: 6px;
+	font-size: 16px;
+	line-height: normal;
+	vertical-align: middle; }
+.eh_socialshare span {
+	display: inline-block;
+	font-size: 13px;
+	line-height: normal; 
+	vertical-align: middle; }
+
+/* OVERLAY TECHNIQUE - COURTESY OF SOCIAL: http://tolgaergin.com/files/social/index.html */
+.eh_socialshare_popup {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, .6);
+	z-index: 9999;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	overflow-y: auto; }
+.eh_socialshare_popup .items_container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center; }
+.eh_socialshare_popup .items_container:before {
+	content: '';
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle; }
+.eh_socialshare_popup .items_container .centered {
+	display: inline-block;
+	vertical-align: middle;
+	width: 80%;
+	max-width: 720px;
+	padding: 1em; }
+.eh_socialshare_popup .items_container .centered ul li {
+	display: inline-block;
+	padding: 10px; }
+.eh_socialshare_popup .items_container .centered ul li > span {
+	display: block;
+	color: white;
+	font-weight: bold;
+	font-size: 13px;
+	margin-top: 10px;
+	text-shadow: 0 2px 2px rgba(0, 0, 0, .8); }
+.eh_socialshare_popup .items_container .centered ul li a span {
+	display: block;
+	width: 100px;
+	height: 100px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, .4);
+	transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-transition-duration: 0.5s;
+	transition-duration: 0.5s; }
+.eh_socialshare_popup .items_container .centered ul li a span:hover {
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2);
+	-webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+	transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36); }
+.eh_socialshare_popup .items_container .centered ul li a span:before {
+	content: '';
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle; }
+.eh_socialshare_popup .items_container .centered ul li a span .shareCount {
+	position: absolute;
+	font-style: normal;
+	font-weight: bold;
+	background-color: white;
+	bottom: 5px;
+	right: 5px;
+	padding: 1px 2px;
+	font-size: 12px;
+	border-radius: 2px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, .4); }
+.eh_socialshare_popup .items_container .centered ul li a span .fa,
+.eh_socialshare_popup .items_container .centered ul li a span .ehss {
+	vertical-align: middle;
+	color: white;
+	font-size: 50px;
+	text-shadow: 0 2px 2px rgba(0, 0, 0, .4); }
+.eh_socialshare_popup .items_container .centered ul li a span .ehss {
+	width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-size: contain; }
+.eh_socialshare_popup .items_container .centered ul li a span .ehss.ehss-line {
+	background-image: url('styles/endlesshorizon/socialshare/line.png'); }]]></template>
+    <template title="eh_socialshare_js" version_id="120" version_string="1.2.0"><![CDATA[<xen:comment>Get Share Counts (experimental method)
+NOTE: The callback will not try to fetch share count if the counter isn't enabled for the specific site on Admin CP.</xen:comment>
+
+<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
+	<xen:set var="$ehss_share_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener" method="getShareCounts"></xen:callback></xen:set>
+</xen:if>
+
+<script>
+var ehss_settings = {
+	"data-url"          : "{$requestPaths.fullUri}",
+	"data-lang"         : "{xen:helper twitterLang, $visitorLanguage.language_code}",
+	"data-mail-extra"   : "{$xenOptions.EHSS_MailPrefix}",
+	"data-via"          : "{$xenOptions.EHSS_TweetParamVia}",
+	"data-related"      : "{$xenOptions.EHSS_TweetParamRelated}",
+	"data-count-title"  : "{xen:phrase view_EHSS_count_title}",
+	"data-counts"       : "{$ehss_share_counts}"
+};
+
+ehss_settings["data-counts"] = ehss_settings["data-counts"].replace(/&quot;/g, "\"");
+
+var ehss_replace_methods = [
+	// value = HTML attribute on the '.eh_socialshare_settings' element (value of the attributes are set from XenForo templates)
+	// entering certain integer code into the 'value' will force the script to do certain custom task (1 - document.title, 2 - get image from apple-touch-icon)
+	{ key: "{lang}",       value: "data-lang" },
+	{ key: "{url}",        value: "data-url" },
+	{ key: "{text}",       value: 1 },
+	{ key: "{via}",        value: "data-via" },
+	{ key: "{related}",    value: "data-related" },
+	{ key: "{media}",      value: 2 },
+	{ key: "{mail_extra}", value: "data-mail-extra" }
+];
+
+var ehss_social_sites = [
+	// read this: http://docs.webplatform.org/wiki/dom/Window/open to know more about the parameters of window.open() (URL, name, and specs)
+	<xen:if is="{$xenOptions.EHSS_SocialSites.facebook}">
+	{ name: "Facebook",
+		iconClass:		"fa fa-facebook",
+		bgColor:		"#3b5998",
+		popupURL:		"https://www.facebook.com/sharer/sharer.php?u={url}&t={text}",
+		popupName:		null,
+		popupSpecs:		"toolbar=0, status=0, width=900, height=500",
+		shareCountID:	"facebook"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.twitter}">
+	{ name: "Twitter",
+		iconClass:		"fa fa-twitter",
+		bgColor:		"#00aced",
+		popupURL:		"https://twitter.com/intent/tweet?text={text}&url={url}{xen:if '{$xenOptions.EHSS_TweetParamVia}', '&via={via}'}{xen:if '{$xenOptions.EHSS_TweetParamRelated}', '&related={related}'}",
+		popupName:		null,
+		popupSpecs:		"toolbar=0, status=0, width=650, height=360",
+		shareCountID:	"twitter"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.googleplus}">
+	{ name: "Google+",
+		iconClass:		"fa fa-google-plus",
+		bgColor:		"#dd4b39",
+		popupURL:		"https://plus.google.com/share?hl={lang}&url={url}",
+		popupName:		"Share to Google+",
+		popupSpecs:		"toolbar=0, status=0, width=600, height=460",
+		shareCountID:	"googleplus"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.linkedin}">
+	{ name: "LinkedIn",
+		iconClass:		"fa fa-linkedin",
+		bgColor:		"#007bb5",
+		popupURL:		"https://www.linkedin.com/cws/share?url={url}&token=&isFramed=true",
+		popupName:		"linkedin",
+		popupSpecs:		"toolbar=no, width=550, height=550",
+		shareCountID:	"linkedin"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.stumbleupon}">
+	{ name: "StumbleUpon",
+		iconClass:		"fa fa-stumbleupon",
+		bgColor:		"#eb4924",
+		popupURL:		"https://www.stumbleupon.com/badge/?url={url}",
+		popupName:		"stumbleupon",
+		popupSpecs:		"toolbar=no, width=550, height=550"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.pinterest}">
+	{ name: "Pinterest",
+		iconClass:		"fa fa-pinterest",
+		bgColor:		"#cb2027",
+		popupURL:		"https://pinterest.com/pin/create/button/?url={url}&media={media}&description={text}",
+		popupName:		"pinterest",
+		popupSpecs:		"toolbar=no, width=700, height=300",
+		shareCountID:	"pinterest"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.delicious}">
+	{ name: "Delicious",
+		iconClass:		"fa fa-delicious",
+		bgColor:		"#3399ff",
+		popupURL:		"https://www.delicious.com/save?v=5&noui&jump=close&url={url}&title={text}",
+		popupName:		"delicious",
+		popupSpecs:		"toolbar=no, width=550, height=550",
+		shareCountID:	"delicious"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.tumblr}">
+	{ name: "Tumblr",
+		iconClass:		"fa fa-tumblr",
+		bgColor:		"#32506d",
+		popupURL:		"https://www.tumblr.com/share/link?url={url}&name={text}",
+		popupName:		null,
+		popupSpecs:		"toolbar=no, width=550, height=550"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.reddit}">
+	{ name: "Reddit",
+		iconClass:		"fa fa-reddit-alien",
+		bgColor:		"#5f99cf",
+		popupURL:		"https://www.reddit.com/submit?url={url}&text={text}",
+		popupName:		null,
+		popupSpecs:		"toolbar=no, width=550, height=550"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.vk}">
+	{ name: "VK",
+		iconClass:		"fa fa-vk",
+		bgColor:		"#45668e",
+		popupURL:		"http://vk.com/share.php?url={url}",
+		popupName:		null,
+		popupSpecs:		"toolbar=no, width=550, height=550",
+		shareCountID:	"vk"
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.whatsapp}">
+	{ name: "WhatsApp",
+		iconClass:		"fa fa-whatsapp",
+		bgColor:		"#4dc247",
+		popupURL:		"whatsapp://send?text={text}",
+		popupName:		"_blank",
+		popupSpecs:		""
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.line}">
+	{ name: "LINE",
+		iconClass:		"ehss ehss-line",
+		bgColor:		"#00c300",
+		popupURL:		"http://line.me/R/msg/text/{text}%20{url}",
+		popupName:		"_blank",
+		popupSpecs:		""
+	},
+	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.email}">
+	{ name: "E-Mail",
+		iconClass:		"fa fa-envelope",
+		bgColor:		"#168de2",
+		popupURL:		"mailto:?subject={text}&body={xen:if '{$xenOptions.EHSS_MailPrefix}', '{mail_extra}'}{url}",
+		popupName:		"_blank",
+		popupSpecs:		""
+	},
+	</xen:if>
+];
+</script>
+
+<xen:require js="js/EndlessHorizon/SocialShare/main.js?_v={$xenAddOns.EndlessHorizonSocialShare}" />]]></template>
+  </templates>
+  <public_template_modifications>
+    <modification template="pagenode_container" modification_key="EHSS_TM_pc_001" description="Hook to pagenode_container template (adds ability to show widget on top of pages)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:require css="pagenode.css" />]]></find>
+      <replace><![CDATA[$0
+
+<xen:if is="{$xenOptions.EHSS_ViewPages.top}">
+	<xen:include template="share_page">
+		<xen:set var="$url">{xen:link 'canonical:threads', $thread}</xen:set>
+	</xen:include>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="pagenode_container" modification_key="EHSS_TM_pc_002" description="Hook to pagenode_container template (adds ability to disable default widget on bottom of pages)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:include template="share_page">
+			<xen:set var="$url">{xen:link 'canonical:pages', $page}</xen:set>
+		</xen:include>]]></find>
+      <replace><![CDATA[<xen:if is="{$xenOptions.EHSS_ViewPages.bottom}">$0</xen:if>]]></replace>
+    </modification>
+    <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Hook to page_container_js_head template (append settings through JavaScript)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<!--XenForo_Require:JS-->]]></find>
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><xen:include template="eh_socialshare_js" /></xen:if>
+$0]]></replace>
+    </modification>
+    <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#^.*$#s]]></find>
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})">
+	<xen:require css="share_page.css" />
+	
+	<div class="sharePage">
+		<xen:hook name="share_page_options">
+			<xen:include template="eh_socialshare" />
+		</xen:hook>
+	</div>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="sidebar_share_page" modification_key="EHSS_TM_sss_001" description="Replace sidebar_share_page template completely (share page widget on sidebar)" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#^.*$#s]]></find>
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})">
+	<xen:require css="share_page.css" />
+	
+	<div class="section infoBlock sharePage">
+		<div class="secondaryContent">
+			<xen:hook name="share_page_options">
+				<xen:include template="eh_socialshare" />
+			</xen:hook>
+		</div>
+	</div>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="thread_view" modification_key="EHSS_TM_tv_001" description="Hook to thread_view template (adds ability to show widget on top of threads)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:edithint template="message" />]]></find>
+      <replace><![CDATA[$0
+
+<xen:if is="{$xenOptions.EHSS_ViewThreads.top}">
+	<xen:include template="share_page">
+		<xen:set var="$url">{xen:link 'canonical:threads', $thread}</xen:set>
+	</xen:include>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="thread_view" modification_key="EHSS_TM_tv_002" description="Hook to thread_view template (adds ability to disable default widget on bottom of threads)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:include template="share_page">
+	<xen:set var="$url">{xen:link 'canonical:threads', $thread}</xen:set>
+</xen:include>]]></find>
+      <replace><![CDATA[<xen:if is="{$xenOptions.EHSS_ViewThreads.bottom}">$0</xen:if>]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
