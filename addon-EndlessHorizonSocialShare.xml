@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.2.1" version_id="121" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.2.2" version_id="122" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -13,7 +13,7 @@
   <optiongroups>
     <group group_id="EndlessHorizonSocialShare" display_order="1" debug_only="0"/>
     <option option_id="EHSS_CacheHitDebug" edit_format="onoff" data_type="boolean" can_backup="1">
-      <default_value>1</default_value>
+      <default_value>0</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="400"/>
@@ -23,6 +23,12 @@
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="110"/>
+    </option>
+    <option option_id="EHSS_CurlTimeout" edit_format="textbox" data_type="positive_integer" can_backup="1">
+      <default_value>500</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="130"/>
     </option>
     <option option_id="EHSS_KeepTrying" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value>1</default_value>
@@ -37,7 +43,7 @@
       <relation group_id="EndlessHorizonSocialShare" display_order="320"/>
     </option>
     <option option_id="EHSS_ShareCounter" edit_format="checkbox" data_type="array" can_backup="1">
-      <default_value>a:7:{s:8:"facebook";b:1;s:7:"twitter";b:1;s:10:"googleplus";b:1;s:8:"linkedin";b:1;s:9:"pinterest";b:1;s:9:"delicious";b:0;s:2:"vk";b:0;}</default_value>
+      <default_value>a:7:{s:8:"facebook";b:0;s:7:"twitter";b:0;s:10:"googleplus";b:0;s:8:"linkedin";b:0;s:9:"pinterest";b:0;s:9:"delicious";b:0;s:2:"vk";b:0;}</default_value>
       <edit_format_params>facebook=Facebook
 twitter=Twitter
 googleplus=Google+
@@ -121,16 +127,20 @@ bottom</sub_options>
   <phrases>
     <phrase title="option_EHSS_CacheHitDebug" version_id="120" version_string="1.2.0"><![CDATA[Enable Cache Hit Debug]]></phrase>
     <phrase title="option_EHSS_CacheHitDebug_explain" version_id="120" version_string="1.2.0"><![CDATA[Enabling this will force the add-on to output cache hit status on Server Error Log. You may want to enable this for the first few minutes prior to installing the add-on to see if the cache is being used correctly.]]></phrase>
-    <phrase title="option_EHSS_CacheTime" version_id="120" version_string="1.2.0"><![CDATA[Share Counter Cache Time]]></phrase>
+    <phrase title="option_EHSS_CacheTime" version_id="121" version_string="1.2.1"><![CDATA[Share Counter Cache Time (s)]]></phrase>
     <phrase title="option_EHSS_CacheTime_explain" version_id="120" version_string="1.2.0"><![CDATA[Set how long the share counters will be cached until they will be fetched again (in seconds).<br>
 <b>NOTE:</b> This requires your XenForo installation to have any back-end caching enabled on config.php!]]></phrase>
+    <phrase title="option_EHSS_CurlTimeout" version_id="121" version_string="1.2.1"><![CDATA[cURL Timeout (ms)]]></phrase>
+    <phrase title="option_EHSS_CurlTimeout_explain" version_id="121" version_string="1.2.1"><![CDATA[Set how long will you let the cURL to run for every try to fetch the share counts from social sites (in milliseconds). This will depend strongly on your server's ping to the social sites. So, servers with better ping may have this lower, while servers with higher ping should have this higher.<br>
+<b>NOTE:</b> If you don't have cURL installed on your server, the add-on will try to use <i>file_get_contents</i>, but there is no timeout support.]]></phrase>
     <phrase title="option_EHSS_KeepTrying" version_id="120" version_string="1.2.0"><![CDATA[Keep Trying]]></phrase>
-    <phrase title="option_EHSS_KeepTrying_explain" version_id="120" version_string="1.2.0"><![CDATA[If not even one social site returned any number other than -1 (which means fetching failure), the script will keep trying to fetch the share count on page loads.]]></phrase>
+    <phrase title="option_EHSS_KeepTrying_explain" version_id="121" version_string="1.2.1"><![CDATA[If not even one social site returned any number other than -1 (which means fetching failure), the script will keep on trying to fetch the share count on the next page loads.]]></phrase>
     <phrase title="option_EHSS_MailPrefix" version_id="106" version_string="1.0.6"><![CDATA[Mail Prefix]]></phrase>
     <phrase title="option_EHSS_MailPrefix_explain" version_id="106" version_string="1.0.6"><![CDATA[Text to append before the page's URL on email share content.]]></phrase>
     <phrase title="option_EHSS_ShareCounter" version_id="120" version_string="1.2.0"><![CDATA[Enable Share Counter]]></phrase>
-    <phrase title="option_EHSS_ShareCounter_explain" version_id="120" version_string="1.2.0"><![CDATA[Choose which sites that you want to have its share count fetched. Even if you have the site disabled, the script will still fetch the share count, so you need to disable it from here too.<br>
-<b>NOTE:</b> Strongly suggested not to enable this if your XenForo installation doesn't have any back-end caching enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share count on EVERY page load.]]></phrase>
+    <phrase title="option_EHSS_ShareCounter_explain" version_id="121" version_string="1.2.1"><![CDATA[Choose which sites that you want to have its share count to be fetched. Even if you have the site disabled, the script will still fetch the share count, so you need to disable it from here too.<br>
+<b>NOTE:</b> Strongly suggested not to enable this if your XenForo installation doesn't have any back-end caching enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share count on EVERY page load.<br>
+<b>Add. NOTE:</b> The script may not fetch share counts from Delicious and VK correctly. I haven't tested them directly, so I can't tell for sure.]]></phrase>
     <phrase title="option_EHSS_SocialSites" version_id="120" version_string="1.2.0"><![CDATA[Enable Social Sites]]></phrase>
     <phrase title="option_EHSS_SocialSites_explain" version_id="120" version_string="1.2.0"><![CDATA[Choose social sites that you want to enable. Disabling all sites will prevent any necessary JS files to be loaded, so you may use this method if you want to temporarily prevent the add-on from loading on the front-end without completely disabling it.]]></phrase>
     <phrase title="option_EHSS_TweetParamRelated" version_id="106" version_string="1.0.6"><![CDATA[Tweet Parameter: Related]]></phrase>
