@@ -32,7 +32,7 @@ $(document).ready(function(){
 	$('body').append(sharePagePopup);
 	
 	// initialize popup items
-	var shareItem, replacedURL, i, j, x;
+	var shareItem, replacedURL, i, j, x, customFix;
 	
 	sharePagePopup.append($('<div class="items_container"><div class="centered"><ul></ul></div></div>'));
 	
@@ -61,6 +61,16 @@ $(document).ready(function(){
 			shareItem.find('a').attr('data-name', ehss_social_sites[i].popupName);
 			shareItem.find('a').attr('data-specs', ehss_social_sites[i].popupSpecs);
 			
+			customFix = ehss_social_sites[i].customFix;
+			switch (customFix) {
+				case 1	: shareItem.find('a').removeAttr('href');
+						  shareItem.find('a').attr('data-href', replacedURL);
+						  shareItem.find('a').attr('data-custom-fix', customFix);
+						  out('Applied custom fix #1: "Prevent pinit.js from hijacking" to an item.');
+					break;
+				// expand if necessary
+			}
+			
 			shareItem.find('a').append($('<span style="background-color: ' + ehss_social_sites[i].bgColor + '"></span>'));
 			shareItem.find('a').find('span').append($('<i class="' + ehss_social_sites[i].iconClass + '"></i>'));
 			
@@ -86,6 +96,17 @@ $(document).ready(function(){
 	// register click event handler to all items
 	sharePagePopup.find('.items_container .centered ul li a').click(function(e){
 		e.preventDefault();
+		
+		customFix = $(this).attr('data-custom-fix');
+		if (customFix) {
+			switch (customFix) {
+				case 1	: window.open($(this).attr('data-href'), $(this).attr('data-name'), $(this).attr('data-specs'));
+					break;
+				// expand if necessary
+			}
+			return;
+		}
+		
 		window.open($(this).attr('href'), $(this).attr('data-name'), $(this).attr('data-specs'));
 	});
 	

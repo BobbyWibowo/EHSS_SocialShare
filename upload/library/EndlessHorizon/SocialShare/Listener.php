@@ -95,7 +95,7 @@ class EndlessHorizon_SocialShare_Listener
 			$previousCache = $cacheObject->load($cacheId);
 		
 			if ($previousCache) {
-				$counts = json_decode($previousCache);
+				$counts = json_decode($previousCache, true);
 				
 				foreach ($counts as $value) {
 					if ($value !== -1) {

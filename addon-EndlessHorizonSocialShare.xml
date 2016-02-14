@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.2.2" version_id="122" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.2.3" version_id="123" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -270,7 +270,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
     background-size: contain; }
 .eh_socialshare_popup .items_container .centered ul li a span .ehss.ehss-line {
 	background-image: url('styles/endlesshorizon/socialshare/line.png'); }]]></template>
-    <template title="eh_socialshare_js" version_id="120" version_string="1.2.0"><![CDATA[<xen:comment>Get Share Counts (experimental method)
+    <template title="eh_socialshare_js" version_id="123" version_string="1.2.3"><![CDATA[<xen:comment>Get Share Counts (experimental method)
 NOTE: The callback will not try to fetch share count if the counter isn't enabled for the specific site on Admin CP.</xen:comment>
 
 <xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
@@ -355,7 +355,8 @@ var ehss_social_sites = [
 		popupURL:		"https://pinterest.com/pin/create/button/?url={url}&media={media}&description={text}",
 		popupName:		"pinterest",
 		popupSpecs:		"toolbar=no, width=700, height=300",
-		shareCountID:	"pinterest"
+		shareCountID:	"pinterest",
+		customFix:		1
 	},
 	</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.delicious}">
 	{ name: "Delicious",
