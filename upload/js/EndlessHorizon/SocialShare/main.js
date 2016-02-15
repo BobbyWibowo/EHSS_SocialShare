@@ -74,7 +74,7 @@ $(document).ready(function(){
 			shareItem.find('a').append($('<span style="background-color: ' + ehss_social_sites[i].bgColor + '"></span>'));
 			shareItem.find('a').find('span').append($('<i class="' + ehss_social_sites[i].iconClass + '"></i>'));
 			
-			if ((typeof ehss_social_sites[i].shareCountID === 'string') && (ehss_social_sites[i].shareCountID.length > 0)) {
+			if (shareCounts && (typeof ehss_social_sites[i].shareCountID === 'string') && (ehss_social_sites[i].shareCountID.length > 0)) {
 				x = shareCounts[ehss_social_sites[i].shareCountID];
 				if (x !== -1) {
 					shareItem.find('a').find('span').append($('<i class="shareCount" style="color: ' + ehss_social_sites[i].bgColor + '" title="' + ehss_settings['data-count-title'].replace('{x}', x) +'">' + x + '</i>'));
