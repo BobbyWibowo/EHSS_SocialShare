@@ -84,7 +84,8 @@ class EndlessHorizon_SocialShare_Listener
 		$siteList = array("facebook", "twitter", "googleplus", "linkedin", "pinterest", "delicious", "buffer", "vk");
 		$counts = array();
 		
-		$url = XenForo_Application::get('requestPaths')['fullUri'];
+		$tmp = XenForo_Application::get('requestPaths');
+        $url = $tmp['fullUri'];
 		
 		$cacheId = "ehss_".sprintf('%u', crc32($url)); // crc32 hash with 'ehss_' prefix
 		$cacheObject = XenForo_Application::getCache();
@@ -112,8 +113,9 @@ class EndlessHorizon_SocialShare_Listener
 		
 		foreach ($siteList as $site) {
 			$counts[$site] = -1;
-			
-			if (XenForo_Application::get('options')->EHSS_ShareCounter[$site]) { $counts[$site] = self::getCount($site, $url); }
+            
+            $tmp = XenForo_Application::get('options')->EHSS_ShareCounter;
+			if ($tmp[$site]) { $counts[$site] = self::getCount($site, $url); }
 			
 			if ($counts[$site] !== -1) { $completeFailure = false; }
 		}
