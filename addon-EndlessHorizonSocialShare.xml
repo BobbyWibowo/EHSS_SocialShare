@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.3.0" version_id="130" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.3.1" version_id="131" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -466,7 +466,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
   <public_template_modifications>
     <modification template="eh_socialshare" modification_key="EHSS_TM_ehss_001" description="Append comment to tell add-on callback that the widget is being used" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[#^.*$#s]]></find>
-      <replace><![CDATA[$0]]></replace>
+      <replace><![CDATA[$0<!-- EHSS_Widget_Exist -->]]></replace>
     </modification>
     <modification template="pagenode_container" modification_key="EHSS_TM_pc_001" description="Hook to pagenode_container template (adds ability to show widget on top of pages)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:require css="pagenode.css" />]]></find>
@@ -483,7 +483,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
     </modification>
     <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Append comment to tell add-on where to include eh_socialshare_js template" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<!--XenForo_Require:JS-->]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"></xen:if>
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><!-- EHSS_Require_JS --></xen:if>
 $0]]></replace>
     </modification>
     <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">

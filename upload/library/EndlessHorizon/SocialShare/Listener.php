@@ -183,21 +183,28 @@ class EndlessHorizon_SocialShare_Listener
     
     public static function front_controller_post_view(XenForo_FrontController $fc, &$output) {
         $responseType = $fc->route()->getResponseType();
+        $controllerName = $fc->route()->getControllerName();
+        $dependencies = $fc->getDependencies();
+        
+        // Disable on Admin features
+        if ($dependencies instanceof XenForo_Dependencies_Admin) { return; }
+        
+        // Disable on attachments
+        if ($controllerName === "XenForo_ControllerPublic_Attachment") { return; }
         
         if ($responseType === "html") {
-            $ehss_keyPos = strpos($output, '<!--EHSS_Widget_Exist-->');
+            $ehss_keyPos = strpos($output, '<!-- EHSS_Widget_Exist -->');
             if ($ehss_keyPos !== false) {
                 // Is this the only way to fetch template..?
                 $request      = new Zend_Controller_Request_Http();
                 $response     = new Zend_Controller_Response_Http();
-                $dependencies = $fc->getDependencies();
                 $viewRenderer = $dependencies->getViewRenderer($response, 'html', $request);
                 $template     = $viewRenderer->renderView('', array(), 'eh_socialshare_js');
                 
-                $output       = str_replace('<!--EHSS_Widget_Exist-->', '', $output);
-                $output       = str_replace('<!--EHSS_Require:JS-->', $template, $output);
+                $output       = str_replace('<!-- EHSS_Widget_Exist -->', '', $output);
+                $output       = str_replace('<!-- EHSS_Require_JS -->', $template, $output);
             } else {
-                $output       = str_replace('<!--EHSS_Require:JS-->', '', $output);
+                $output       = str_replace('<!-- EHSS_Require_JS -->', '', $output);
             }
         }
     }
