@@ -42,7 +42,7 @@ class EndlessHorizon_SocialShare_Listener
         }
     }
     
-    private static function getCount($service, $url, $timeout, $useCurl, $useSeconds) {
+    private static function getCount($service, $url, $timeout, $useCurl, $useMS) {
         $shareLinks = array(
             "facebook"    => "https://graph.facebook.com/fql?q=SELECT%20url,%20normalized_url,%20share_count,%20like_count,%20comment_count,%20total_count,commentsbox_count,%20comments_fbid,%20click_count%20FROM%20link_stat%20WHERE%20url=%27{url}%27",
             "twitter"     => "http://opensharecount.com/count.json?url={url}",
@@ -59,11 +59,11 @@ class EndlessHorizon_SocialShare_Listener
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            if ($useSeconds) {
+            if ($useMS) {
+                curl_setopt($ch, CURLOPT_TIMEOUT_MS, $timeout);
+            } else {
                 $tmp = ($timeout/1000);
                 curl_setopt($ch, CURLOPT_TIMEOUT, ceil($tmp));
-            } else {
-                curl_setopt($ch, CURLOPT_TIMEOUT_MS, $timeout);
             }
             curl_setopt($ch, CURLOPT_CAINFO, getcwd().'/library/EndlessHorizon/SocialShare/cacert.pem'); // Taken from https://curl.haxx.se/ca/cacert.pem
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
