@@ -2,38 +2,80 @@
 
 class EndlessHorizon_SocialShare_Listener
 {
-    private static function getCount($service, $url) {
-        $cURLTimeout = XenForo_Application::get('options')->EHSS_CurlTimeout;
-        $cURLDisabled = XenForo_Application::get('options')->EHSS_DisableCurl;
+    private static function doesComplyWithMinCurlVersion($minVersion) {
+        $ver_min = explode('.', $minVersion);
+        if (!isset($ver_min[2])) { $ver_min[2] = '0'; } // Some cURL version doesn't have patch number - https://curl.haxx.se/docs/releases.html
         
+        $tmp = curl_version();
+        $ver_cur = explode('.', $tmp['version']);
+        if (!isset($ver_cur[2])) { $ver_cur[2] = '0'; }
+        
+        $result = false;
+        // Nested check (someone help simplify this, if possible)
+        if ((int)$ver_cur[0] > (int)$ver_min[0]) {
+            $result = true;
+        } elseif ((int)$ver_cur[0] === (int)$ver_min[0]) {
+            if ((int)$ver_cur[1] > (int)$ver_min[1]) {
+                $result = true;
+            } elseif ((int)$ver_cur[1] === (int)$ver_min[1]) {
+                if ((int)$ver_cur[2] >= (int)$ver_min[2]) {
+                    $result = true;
+                }
+            }
+        }
+        return $result;
+    }
+    
+    private static function logExceptionByType($message, $type) {
+        $permitted = false;
+        
+        if ($type === 1) {
+            $permitted = XenForo_Application::get('options')->EHSS_CacheHitDebug;
+        } elseif ($type === 2) {
+            $permitted = XenForo_Application::get('options')->EHSS_CurlDebug;
+        }
+        
+        if ($permitted) {
+            return XenForo_Error::logException(new XenForo_Exception($message));
+        } else {
+            return false;
+        }
+    }
+    
+    private static function getCount($service, $url, $timeout, $useCurl, $useSeconds) {
         $shareLinks = array(
             "facebook"    => "https://graph.facebook.com/fql?q=SELECT%20url,%20normalized_url,%20share_count,%20like_count,%20comment_count,%20total_count,commentsbox_count,%20comments_fbid,%20click_count%20FROM%20link_stat%20WHERE%20url=%27{url}%27",
             "twitter"     => "http://opensharecount.com/count.json?url={url}",
             "googleplus"  => "https://plusone.google.com/u/0/_/+1/fastbutton?count=true&url={url}",
             "linkedin"    => "https://www.linkedin.com/countserv/count/share?format=json&url={url}",
             "pinterest"   => "https://api.pinterest.com/v1/urls/count.json?url={url}",
-            "buffer"      => "https://api.bufferapp.com/1/links/shares.json?url={url}",
+            "buffer"      => "https://api.bufferapp.com/1/links/shares.json?url={url}", // Waiting for FontAwesome to add Buffer icon
             "vk"          => "https://vk.com/share.php?act=count&index=1&url="
         );
         
-        $shareUrl = str_replace("{url}", $url, $shareLinks[$service]);
+        $url = str_replace("{url}", $url, $shareLinks[$service]);
         
-        if (function_exists('curl_version') && !$cURLDisabled) {
+        if ($useCurl) {
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $shareUrl);
+            curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_TIMEOUT_MS, $cURLTimeout); // cURL 7.6.12
-            curl_setopt($ch, CURLOPT_CAINFO, getcwd().'/library/EndlessHorizon/SocialShare/cacert.pem'); // https://curl.haxx.se/ca/cacert.pem
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1); // cURL 7.10
+            if ($useSeconds) {
+                $tmp = ($timeout/1000);
+                curl_setopt($ch, CURLOPT_TIMEOUT, ceil($tmp));
+            } else {
+                curl_setopt($ch, CURLOPT_TIMEOUT_MS, $timeout);
+            }
+            curl_setopt($ch, CURLOPT_CAINFO, getcwd().'/library/EndlessHorizon/SocialShare/cacert.pem'); // Taken from https://curl.haxx.se/ca/cacert.pem
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+            curl_setopt($ch, CURLOPT_SSLVERSION, 6);
             $result = curl_exec($ch);
             if ($result === false) {
-                self::logExceptionByType('WARNING: cURL error ('.$service.'): '.curl_error($ch), 2);
+                self::logExceptionByType('ERROR: cURL ('.$service.'): '.curl_error($ch), 2);
             }
             curl_close($ch);
         } else {
-            $result = @file_get_contents($shareUrl);
+            $result = @file_get_contents($url);
         }
         
         if ($result) {
@@ -74,32 +116,14 @@ class EndlessHorizon_SocialShare_Listener
         return $count;
     }
     
-    private static function logExceptionByType($message, $type) {
-        $permitted = false;
-        
-        if ($type === 1) {
-            $permitted = XenForo_Application::get('options')->EHSS_CacheHitDebug; // cache hit debug
-        } elseif ($type === 2) {
-            $permitted = XenForo_Application::get('options')->EHSS_CurlDebug; // curl debug
-        }
-        
-        if (!$permitted) {
-            return false;
-        } else {
-            return XenForo_Error::logException(new XenForo_Exception($message));
-        }
-    }
-    
     public static function getShareCounts() {
-        $siteList = array("facebook", "twitter", "googleplus", "linkedin", "pinterest", "delicious", "buffer", "vk");
-        $counts = array();
-        
-        $tmp = XenForo_Application::get('requestPaths');
-        $url = $tmp['fullUri'];
-        
-        $cacheId = "ehss_".sprintf('%u', crc32($url)); // crc32 hash with 'ehss_' prefix
-        $cacheObject = XenForo_Application::getCache();
-        $cacheTime = XenForo_Application::get('options')->EHSS_CacheTime;
+        $services      = array("facebook", "twitter", "googleplus", "linkedin", "pinterest", "vk");
+        $counts        = array();
+        $tmp           = XenForo_Application::get('requestPaths');
+        $url           = $tmp['fullUri'];
+        $cacheId       = "ehss_".sprintf('%u', crc32($url)); // CRC32 hash of the page's URL with 'ehss_' prefix (fastest hash for non-crypto use)
+        $cacheObject   = XenForo_Application::getCache();
+        $cacheTime     = XenForo_Application::get('options')->EHSS_CacheTime;
         $previousCache = false;
         
         if ($cacheObject) {
@@ -110,7 +134,7 @@ class EndlessHorizon_SocialShare_Listener
                 
                 foreach ($counts as $value) {
                     if ($value !== -1) {
-                        self::logExceptionByType('Share counters were loaded from cache and the data was valid ('.$cacheId.')', 1);
+                        self::logExceptionByType('INFO: Share counters were loaded from cache and the data was valid ('.$cacheId.')', 1);
                         return json_encode($counts); // Immediately return counts if at least one count was valid
                     }
                 }
@@ -118,19 +142,28 @@ class EndlessHorizon_SocialShare_Listener
         }
         
         // Fetch share counts if there was no previous cache or the previous cache held no valid counts
-        $keepTrying = XenForo_Application::get('options')->EHSS_KeepTrying;
-        $completeFailure = true; // mark current session as completely failed
+        $keepTrying      = XenForo_Application::get('options')->EHSS_KeepTrying;
+        $completeFailure = true; // Mark current session as completely failed
         
-        foreach ($siteList as $site) {
-            $counts[$site] = -1;
+        $curlTimeout     = XenForo_Application::get('options')->EHSS_CurlTimeout;
+        $curlDisabled    = XenForo_Application::get('options')->EHSS_DisableCurl;
+        $curlExist       = function_exists('curl_version');
+        $curlVerPassMS   = false;
+        
+        if ($curlExist) {
+            $curlVerPassMS = self::doesComplyWithMinCurlVersion('7.16.2');
+        } else {
+            self::logExceptionByType('INFO: Did not use milliseconds as cURL timeout because cURL version was older than 7.16.2 (version: '.curl_version()['version'].')', 2);
+        }
+        
+        foreach ($services as $service) {
+            $counts[$service] = -1;
             
             $tmp = XenForo_Application::get('options')->EHSS_ShareCounter;
-            if ($tmp[$site]) { $counts[$site] = self::getCount($site, $url); }
+            if ($tmp[$service]) { $counts[$service] = self::getCount($service, $url, $curlTimeout, (!$curlDisabled && $curlExist ? true : false), $curlVerPassMS); }
             
-            if ($counts[$site] === -2) {
-                return false; // exception occurred
-            } elseif ($counts[$site] !== -1) {
-                $completeFailure = false; // if at least one site was fetched properly, mark current session as not completely failed, thus store to cache
+            if ($counts[$service] !== -1) {
+                $completeFailure = false; // If at least one service was fetched properly, mark current session as not completely failed, then store to cache
             }
         }
             
@@ -139,13 +172,34 @@ class EndlessHorizon_SocialShare_Listener
         } else {
             if ($cacheObject) {
                 $cacheObject->save(json_encode($counts), $cacheId, array(), $cacheTime);
-                self::logExceptionByType('Share counters were stored on cache ('.$cacheId.')', 1);
+                self::logExceptionByType('INFO: Share counters were stored on cache ('.$cacheId.')', 1);
             } else {
                 self::logExceptionByType('WARNING: Did not save share counters because of missing cache object ('.$cacheId.')', 1);
             }
         }
         
         return json_encode($counts);
+    }
+    
+    public static function front_controller_post_view(XenForo_FrontController $fc, &$output) {
+        $responseType = $fc->route()->getResponseType();
+        
+        if ($responseType === "html") {
+            $ehss_keyPos = strpos($output, '<!--EHSS_Widget_Exist-->');
+            if ($ehss_keyPos !== false) {
+                // Is this the only way to fetch template..?
+                $request      = new Zend_Controller_Request_Http();
+                $response     = new Zend_Controller_Response_Http();
+                $dependencies = $fc->getDependencies();
+                $viewRenderer = $dependencies->getViewRenderer($response, 'html', $request);
+                $template     = $viewRenderer->renderView('', array(), 'eh_socialshare_js');
+                
+                $output       = str_replace('<!--EHSS_Widget_Exist-->', '', $output);
+                $output       = str_replace('<!--EHSS_Require:JS-->', $template, $output);
+            } else {
+                $output       = str_replace('<!--EHSS_Require:JS-->', '', $output);
+            }
+        }
     }
 }
 

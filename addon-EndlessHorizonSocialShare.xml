@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.2.7" version_id="127" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.3.0" version_id="130" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
   <admin_templates/>
   <admin_template_modifications/>
   <code_events/>
-  <code_event_listeners/>
+  <code_event_listeners>
+    <listener event_id="front_controller_post_view" execute_order="10" callback_class="EndlessHorizon_SocialShare_Listener" callback_method="front_controller_post_view" active="1" hint="" description="Look for keys on page and replace when necessary"/>
+  </code_event_listeners>
   <cron/>
   <email_templates/>
   <email_template_modifications/>
@@ -43,7 +45,7 @@
       <relation group_id="EndlessHorizonSocialShare" display_order="205"/>
     </option>
     <option option_id="EHSS_EmailBody" edit_format="textbox" data_type="string" can_backup="1">
-      <default_value>{title}&lt;br&gt;Go check it out with this link: {url}</default_value>
+      <default_value>{title}%0D%0A%0D%0AGo check it out with this link: {url}</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="330"/>
@@ -133,11 +135,13 @@ bottom</sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="30"/>
     </option>
     <option option_id="EHSS_ViewThreads" edit_format="checkbox" data_type="array" can_backup="1">
-      <default_value>a:2:{s:3:"top";b:0;s:6:"bottom";b:1;}</default_value>
+      <default_value>a:2:{s:3:"top";b:0;s:6:"bottom";b:1;s:15:"aboveQuickReply";b:0;}</default_value>
       <edit_format_params>top={xen:phrase option_EHSS_ViewOptions_top}
-bottom={xen:phrase option_EHSS_ViewOptions_bottom}</edit_format_params>
+bottom={xen:phrase option_EHSS_ViewOptions_bottom}
+aboveQuickReply={xen:phrase option_EHSS_ViewOptions_aboveQuickReply}</edit_format_params>
       <sub_options>top
-bottom</sub_options>
+bottom
+aboveQuickReply</sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="20"/>
     </option>
   </optiongroups>
@@ -155,10 +159,12 @@ bottom</sub_options>
     <phrase title="option_EHSS_CurlDebug" version_id="127" version_string="1.2.7"><![CDATA[Enable cURL Debug]]></phrase>
     <phrase title="option_EHSS_CurlDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will make the add-on output whatever problem occurred with the cURL session to your Server Error Logs. If some social sites never returned share count to your server, you may want to know why by enabling this option. Other than that, this will be used for development only.]]></phrase>
     <phrase title="option_EHSS_CurlTimeout" version_id="121" version_string="1.2.1"><![CDATA[cURL Timeout (ms)]]></phrase>
-    <phrase title="option_EHSS_CurlTimeout_explain" version_id="127" version_string="1.2.7"><![CDATA[Set how long will you let the cURL to run for every try to fetch the share count from social site (in milliseconds). This will depend strongly on your server's ping to the social sites. So, servers with better ping may have this lower, while servers with higher ping should have this higher.]]></phrase>
+    <phrase title="option_EHSS_CurlTimeout_explain" version_id="127" version_string="1.2.7"><![CDATA[Set how long will you let the cURL to run for every try to fetch the share count from social site (in milliseconds). This will depend strongly on your server's ping to the social sites. So, servers with better ping may have this lower, while servers with higher ping should have this higher.<br>
+<b>NOTE:</b> To disable timeout limit, set this option to 0.<br>
+And if your cURL is older than version 7.6.12, then the add-on will automatically convert the entered value into seconds, and then round the fractions up with <a href="https://secure.php.net/manual/en/function.ceil.php" target="_blank">ceil</a> function.]]></phrase>
     <phrase title="option_EHSS_DisableCurl" version_id="127" version_string="1.2.7"><![CDATA[Disable cURL]]></phrase>
-    <phrase title="option_EHSS_DisableCurl_explain" version_id="127" version_string="1.2.7"><![CDATA[If you don't want to use cURL for whatever reason, then disable it here. After that, the add-on will use <a href="http://us2.php.net/manual/en/function.file-get-contents.php" target="_blank">file_get_contents</a> instead. Please note that there is no timeout feature. And if you want to disable all share counters instead, then disable all sites from the <i>Enable Share Counter</i> option above.<br>
-<b>NOTE:</b> If you don't have cURL, the add-on will automatically use <a href="http://us2.php.net/manual/en/function.file-get-contents.php" target="_blank">file_get_contents</a> instead.]]></phrase>
+    <phrase title="option_EHSS_DisableCurl_explain" version_id="127" version_string="1.2.7"><![CDATA[If you don't want to use cURL for whatever reason, then disable it here. After that, the add-on will use <a href="http://us2.php.net/manual/en/function.file-get-contents.php" target="_blank">file_get_contents</a> function instead. Please note that there is no timeout feature. And if you want to disable all share counters instead, then disable all sites from the <i>Enable Share Counter</i> option above.<br>
+<b>NOTE:</b> If you don't have cURL, the add-on will still automatically use <a href="http://us2.php.net/manual/en/function.file-get-contents.php" target="_blank">file_get_contents</a> function.]]></phrase>
     <phrase title="option_EHSS_EmailBody" version_id="126" version_string="1.2.6"><![CDATA[E-Mail: Body]]></phrase>
     <phrase title="option_EHSS_EmailBody_explain" version_id="126" version_string="1.2.6"><![CDATA[Set your preferred body for the email share here.<br>
 You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b> for the page's title.<br>
@@ -171,8 +177,8 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_KeepTrying" version_id="126" version_string="1.2.6"><![CDATA[Keep Trying When Fail]]></phrase>
     <phrase title="option_EHSS_KeepTrying_explain" version_id="127" version_string="1.2.7"><![CDATA[If the add-on can't fetch any share counts from ALL social sites, the add-on will keep on trying to fetch them on the next page loads.]]></phrase>
     <phrase title="option_EHSS_PinterestMedia" version_id="126" version_string="1.2.6"><![CDATA[Pinterest: Media URL]]></phrase>
-    <phrase title="option_EHSS_PinterestMedia_explain" version_id="126" version_string="1.2.6"><![CDATA[A fixed path to an acceptable image for Pinterest.<br>
-<b>Note:</b> Do not use a relative path. Pinterest will load the image on a new tab, so it will need direct access to the image. Thus it will also fail if you have an anti hotlinking service enabled.]]></phrase>
+    <phrase title="option_EHSS_PinterestMedia_explain" version_id="127" version_string="1.2.7"><![CDATA[A fixed path to a JPG, PNG or GIF image that will be used as pin for Pinterest share.<br>
+<b>Note:</b> Do not use a relative path. Pinterest will try to fetch the image remotely, so it will need direct access to the image. Thus it will also fail if you have an anti hotlinking service enabled.]]></phrase>
     <phrase title="option_EHSS_ShareCounter" version_id="120" version_string="1.2.0"><![CDATA[Enable Share Counter]]></phrase>
     <phrase title="option_EHSS_ShareCounter_explain" version_id="127" version_string="1.2.7"><![CDATA[Choose which sites that you want to have its share count to be fetched. Even if you have a site disabled on <i>Enable Social Sites</i> option, the add-on will still fetch the share count as long as you have it enabled in this option, so you need to disable it here too.<br>
 <b>NOTE:</b> Strongly suggested not to enable this feature if your XenForo installation doesn't have any <a href="https://xenforo.com/help/cache/" target="_blank">back-end caching</a> enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share count on EVERY page load.<br>]]></phrase>
@@ -182,12 +188,13 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_TweetParamRelated_explain" version_id="106" version_string="1.0.6"><![CDATA[A comma-separated list of accounts related to the content of the shared URI.]]></phrase>
     <phrase title="option_EHSS_TweetParamVia" version_id="106" version_string="1.0.6"><![CDATA[Tweet Parameter: Via]]></phrase>
     <phrase title="option_EHSS_TweetParamVia_explain" version_id="106" version_string="1.0.6"><![CDATA[Attribute the source of a Tweet to a Twitter username.]]></phrase>
+    <phrase title="option_EHSS_ViewOptions_aboveQuickReply" version_id="127" version_string="1.2.7"><![CDATA[Above Quick Reply]]></phrase>
     <phrase title="option_EHSS_ViewOptions_bottom" version_id="106" version_string="1.0.6"><![CDATA[Bottom]]></phrase>
     <phrase title="option_EHSS_ViewOptions_top" version_id="106" version_string="1.0.6"><![CDATA[Top]]></phrase>
     <phrase title="option_EHSS_ViewPages" version_id="106" version_string="1.0.6"><![CDATA[View on Pages]]></phrase>
     <phrase title="option_EHSS_ViewPages_explain" version_id="120" version_string="1.2.0"><![CDATA[Select where you want the social share page widget to show on pages. The default is on the bottom, but it may not fit correctly without extra styling. Thus for this add-on only, the default is on the top. If you want to enable it on the bottom, you may need to add some extra styling to make it fit correctly.]]></phrase>
     <phrase title="option_EHSS_ViewThreads" version_id="106" version_string="1.0.6"><![CDATA[View on Threads]]></phrase>
-    <phrase title="option_EHSS_ViewThreads_explain" version_id="120" version_string="1.2.0"><![CDATA[Select where you want the social share page widget to show on threads. The default is on the bottom, but you can also have it enabled on the top.]]></phrase>
+    <phrase title="option_EHSS_ViewThreads_explain" version_id="127" version_string="1.2.7"><![CDATA[Select where you want the social share page widget to show on threads. The default is on the bottom, but you can also have it enabled on the top, or above the quick reply instead.]]></phrase>
     <phrase title="option_group_EndlessHorizonSocialShare" version_id="1" version_string="1.0.0"><![CDATA[[Endless Horizon] Social Share]]></phrase>
     <phrase title="option_group_EndlessHorizonSocialShare_description" version_id="120" version_string="1.2.0"><![CDATA[Floating social share widget.<br>
 Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank">Bobby Wibowo</a>.]]></phrase>
@@ -197,10 +204,11 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
   <route_prefixes/>
   <style_properties/>
   <templates>
-    <template title="eh_socialshare" version_id="110" version_string="1.1.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+    <template title="eh_socialshare" version_id="130" version_string="1.3.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+<xen:require js="js/EndlessHorizon/SocialShare/main.min.js?_v={$xenAddOns.EndlessHorizonSocialShare}" />
 
-<button class="button primary eh_socialshare"><i class="fa fa-share-alt"></i><span>{xen:phrase view_EHSS_button_text}</span></button>]]></template>
-    <template title="eh_socialshare.css" version_id="126" version_string="1.2.6"><![CDATA[.eh_socialshare {
+<button class="button primary eh_socialshare {xen:if '{$aboveQuickReply}', 'aboveQuickReply'}"><i class="fa fa-share-alt"></i><span>{xen:phrase view_EHSS_button_text}</span></button>]]></template>
+    <template title="eh_socialshare.css" version_id="130" version_string="1.3.0"><![CDATA[.eh_socialshare {
 	width: 100%;
 	height: auto;
 	padding: 10px;
@@ -215,6 +223,8 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
 	font-size: 13px;
 	line-height: normal; 
 	vertical-align: middle; }
+
+.eh_socialshare.aboveQuickReply { margin-bottom: 10px; }
 
 /* OVERLAY TECHNIQUE - COURTESY OF SOCIAL: http://tolgaergin.com/files/social/index.html */
 .eh_socialshare_popup {
@@ -301,7 +311,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
     background-size: contain; }
 .eh_socialshare_popup .items_container .centered ul li a span .ehss.ehss-line {
 	background-image: url('styles/endlesshorizon/socialshare/line.png'); }]]></template>
-    <template title="eh_socialshare_js" version_id="127" version_string="1.2.7"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
+    <template title="eh_socialshare_js" version_id="130" version_string="1.3.0"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
     <xen:set var="$ehss_share_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener" method="getShareCounts"></xen:callback></xen:set>
 </xen:if>
 
@@ -313,19 +323,19 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
         "data-counts"      : "{$ehss_share_counts}"
     };
 
-    // xen:callback will return value that went through htmlspecialchars() function - https://secure.php.net/manual/en/function.htmlspecialchars.php
+    // Xen:callback will return value that went through htmlspecialchars function, so decode the necessary char here - https://secure.php.net/manual/en/function.htmlspecialchars.php
     ehss_settings["data-counts"] = ehss_settings["data-counts"].replace(/&quot;/g, "\"");
 
     var ehss_replace_methods = [
-        // value (see ehss_settings variable)
-        // entering certain integer into the 'value' will force the script to do certain custom task (1 - document.title)
+        // Value (see ehss_settings variable)
+        // Entering certain integer into the 'value' will force the script to do certain custom task (1 - document.title)
         { key: "{lang}",       value: "data-lang" },
         { key: "{url}",        value: "data-url" },
         { key: "{title}",      value: 1 },
     ];
 
     var ehss_social_sites = [
-        // read this: http://docs.webplatform.org/wiki/dom/Window/open to know more about the parameters of window.open() (URL, name, and specs)
+        // Read this: http://docs.webplatform.org/wiki/dom/Window/open to know more about the parameters of window.open() (URL, name, and specs)
         <xen:if is="{$xenOptions.EHSS_SocialSites.facebook}">
         { name: "Facebook",
             iconClass:    "fa fa-facebook",
@@ -451,32 +461,29 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
         },
         </xen:if>
     ];
-</script>
-
-
-<xen:comment>Minified with UglifyJS2</xen:comment>
-<xen:require js="js/EndlessHorizon/SocialShare/main.min.js?_v={$xenAddOns.EndlessHorizonSocialShare}" />]]></template>
+</script>]]></template>
   </templates>
   <public_template_modifications>
+    <modification template="eh_socialshare" modification_key="EHSS_TM_ehss_001" description="Append comment to tell add-on callback that the widget is being used" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#^.*$#s]]></find>
+      <replace><![CDATA[$0]]></replace>
+    </modification>
     <modification template="pagenode_container" modification_key="EHSS_TM_pc_001" description="Hook to pagenode_container template (adds ability to show widget on top of pages)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:require css="pagenode.css" />]]></find>
       <replace><![CDATA[$0
-
 <xen:if is="{$xenOptions.EHSS_ViewPages.top}">
-	<xen:include template="share_page">
-		<xen:set var="$url">{xen:link 'canonical:threads', $thread}</xen:set>
-	</xen:include>
+	<xen:include template="share_page"></xen:include>
 </xen:if>]]></replace>
     </modification>
     <modification template="pagenode_container" modification_key="EHSS_TM_pc_002" description="Hook to pagenode_container template (adds ability to disable default widget on bottom of pages)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:include template="share_page">
 			<xen:set var="$url">{xen:link 'canonical:pages', $page}</xen:set>
 		</xen:include>]]></find>
-      <replace><![CDATA[<xen:if is="{$xenOptions.EHSS_ViewPages.bottom}">$0</xen:if>]]></replace>
+      <replace><![CDATA[<xen:if is="{$xenOptions.EHSS_ViewPages.bottom}"><xen:include template="share_page"></xen:include></xen:if>]]></replace>
     </modification>
-    <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Hook to page_container_js_head template (append settings through JavaScript)" execution_order="10" enabled="1" action="str_replace">
+    <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Append comment to tell add-on where to include eh_socialshare_js template" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<!--XenForo_Require:JS-->]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><xen:include template="eh_socialshare_js" /></xen:if>
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"></xen:if>
 $0]]></replace>
     </modification>
     <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">
@@ -508,18 +515,24 @@ $0]]></replace>
     <modification template="thread_view" modification_key="EHSS_TM_tv_001" description="Hook to thread_view template (adds ability to show widget on top of threads)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:edithint template="message" />]]></find>
       <replace><![CDATA[$0
-
 <xen:if is="{$xenOptions.EHSS_ViewThreads.top}">
-	<xen:include template="share_page">
-		<xen:set var="$url">{xen:link 'canonical:threads', $thread}</xen:set>
-	</xen:include>
+	<xen:include template="share_page"></xen:include>
 </xen:if>]]></replace>
     </modification>
     <modification template="thread_view" modification_key="EHSS_TM_tv_002" description="Hook to thread_view template (adds ability to disable default widget on bottom of threads)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:include template="share_page">
 	<xen:set var="$url">{xen:link 'canonical:threads', $thread}</xen:set>
 </xen:include>]]></find>
-      <replace><![CDATA[<xen:if is="{$xenOptions.EHSS_ViewThreads.bottom}">$0</xen:if>]]></replace>
+      <replace><![CDATA[<xen:if is="{$xenOptions.EHSS_ViewThreads.bottom}"><xen:include template="share_page"></xen:include></xen:if>]]></replace>
+    </modification>
+    <modification template="thread_view" modification_key="EHSS_TM_tv_003" description="Hook to thread_view template (adds ability to show widget above quick reply)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:hook name="thread_view_qr_before" params="{xen:array 'thread={$thread}'}" />]]></find>
+      <replace><![CDATA[$0
+<xen:if is="{$xenOptions.EHSS_ViewThreads.aboveQuickReply}">
+	<xen:include template="share_page">
+		<xen:set var="$aboveQuickReply">1</xen:set>
+	</xen:include>
+</xen:if>]]></replace>
     </modification>
   </public_template_modifications>
   <bb_code_media_sites/>
