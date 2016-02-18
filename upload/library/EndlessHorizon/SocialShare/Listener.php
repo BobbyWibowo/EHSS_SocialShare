@@ -68,7 +68,6 @@ class EndlessHorizon_SocialShare_Listener
             curl_setopt($ch, CURLOPT_CAINFO, getcwd().'/library/EndlessHorizon/SocialShare/cacert.pem'); // Taken from https://curl.haxx.se/ca/cacert.pem
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-            curl_setopt($ch, CURLOPT_SSLVERSION, 6);
             $result = curl_exec($ch);
             if ($result === false) {
                 self::logExceptionByType('ERROR: cURL ('.$service.'): '.curl_error($ch), 2);
