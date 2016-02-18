@@ -63,7 +63,7 @@ class EndlessHorizon_SocialShare_Listener
                 curl_setopt($ch, CURLOPT_TIMEOUT_MS, $timeout);
             } else {
                 $tmp = ($timeout/1000);
-                curl_setopt($ch, CURLOPT_TIMEOUT, ceil($tmp));
+                curl_setopt($ch, CURLOPT_TIMEOUT, (int)ceil($tmp));
             }
             curl_setopt($ch, CURLOPT_CAINFO, getcwd().'/library/EndlessHorizon/SocialShare/cacert.pem'); // Taken from https://curl.haxx.se/ca/cacert.pem
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
