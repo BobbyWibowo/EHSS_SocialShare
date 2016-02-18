@@ -135,7 +135,7 @@ bottom</sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="30"/>
     </option>
     <option option_id="EHSS_ViewThreads" edit_format="checkbox" data_type="array" can_backup="1">
-      <default_value>a:2:{s:3:"top";b:0;s:6:"bottom";b:1;s:15:"aboveQuickReply";b:0;}</default_value>
+      <default_value>a:3:{s:3:"top";b:0;s:6:"bottom";b:1;s:15:"aboveQuickReply";b:0;}</default_value>
       <edit_format_params>top={xen:phrase option_EHSS_ViewOptions_top}
 bottom={xen:phrase option_EHSS_ViewOptions_bottom}
 aboveQuickReply={xen:phrase option_EHSS_ViewOptions_aboveQuickReply}</edit_format_params>
