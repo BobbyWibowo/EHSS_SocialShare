@@ -152,7 +152,8 @@ class EndlessHorizon_SocialShare_Listener
         if ($curlExist) {
             $curlVerPassMS = self::doesComplyWithMinCurlVersion('7.16.2');
         } else {
-            self::logExceptionByType('INFO: Did not use milliseconds as cURL timeout because cURL version was older than 7.16.2 (version: '.curl_version()['version'].')', 2);
+            $tmp = curl_version();
+            self::logExceptionByType('INFO: Did not use milliseconds as cURL timeout because cURL version was older than 7.16.2 (version: '.$tmp['version'].')', 2);
         }
         
         foreach ($services as $service) {
