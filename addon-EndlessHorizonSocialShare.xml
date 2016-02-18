@@ -24,11 +24,23 @@
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="210"/>
     </option>
+    <option option_id="EHSS_CurlDebug" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="235"/>
+    </option>
     <option option_id="EHSS_CurlTimeout" edit_format="textbox" data_type="positive_integer" can_backup="1">
       <default_value>500</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="240"/>
+    </option>
+    <option option_id="EHSS_DisableCurl" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="205"/>
     </option>
     <option option_id="EHSS_EmailBody" edit_format="textbox" data_type="string" can_backup="1">
       <default_value>{title}&lt;br&gt;Go check it out with this link: {url}</default_value>
@@ -55,20 +67,18 @@
       <relation group_id="EndlessHorizonSocialShare" display_order="315"/>
     </option>
     <option option_id="EHSS_ShareCounter" edit_format="checkbox" data_type="array" can_backup="1">
-      <default_value>a:7:{s:8:"facebook";b:0;s:7:"twitter";b:0;s:10:"googleplus";b:0;s:8:"linkedin";b:0;s:9:"pinterest";b:0;s:9:"delicious";b:0;s:2:"vk";b:0;}</default_value>
+      <default_value>a:6:{s:8:"facebook";b:0;s:7:"twitter";b:0;s:10:"googleplus";b:0;s:8:"linkedin";b:0;s:9:"pinterest";b:0;s:2:"vk";b:0;}</default_value>
       <edit_format_params>facebook=Facebook
 twitter=Twitter
 googleplus=Google+
 linkedin=LinkedIn
 pinterest=Pinterest
-delicious=Delicious
 vk=VK</edit_format_params>
       <sub_options>facebook
 twitter
 googleplus
 linkedin
 pinterest
-delicious
 vk</sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="200"/>
     </option>
@@ -138,13 +148,17 @@ bottom</sub_options>
   </permissions>
   <phrases>
     <phrase title="option_EHSS_CacheHitDebug" version_id="120" version_string="1.2.0"><![CDATA[Enable Cache Hit Debug]]></phrase>
-    <phrase title="option_EHSS_CacheHitDebug_explain" version_id="120" version_string="1.2.0"><![CDATA[Enabling this will force the add-on to output cache hit status on Server Error Log. You may want to enable this for the first few minutes prior to installing the add-on to see if the cache is being used correctly.]]></phrase>
+    <phrase title="option_EHSS_CacheHitDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will force the add-on to output cache hit status to Server Error Log. You may want to enable this for the first few minutes prior to installing the add-on to see if the cache is being used correctly.]]></phrase>
     <phrase title="option_EHSS_CacheTime" version_id="121" version_string="1.2.1"><![CDATA[Share Counter Cache Time (s)]]></phrase>
     <phrase title="option_EHSS_CacheTime_explain" version_id="120" version_string="1.2.0"><![CDATA[Set how long the share counters will be cached until they will be fetched again (in seconds).<br>
 <b>NOTE:</b> This requires your XenForo installation to have any back-end caching enabled on config.php!]]></phrase>
+    <phrase title="option_EHSS_CurlDebug" version_id="127" version_string="1.2.7"><![CDATA[Enable cURL Debug]]></phrase>
+    <phrase title="option_EHSS_CurlDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will make the add-on output whatever problem occurred with the cURL session to your Server Error Logs. If some social sites never returned share count to your server, you may want to know why by enabling this option. Other than that, this will be used for development only.]]></phrase>
     <phrase title="option_EHSS_CurlTimeout" version_id="121" version_string="1.2.1"><![CDATA[cURL Timeout (ms)]]></phrase>
-    <phrase title="option_EHSS_CurlTimeout_explain" version_id="121" version_string="1.2.1"><![CDATA[Set how long will you let the cURL to run for every try to fetch the share counts from social sites (in milliseconds). This will depend strongly on your server's ping to the social sites. So, servers with better ping may have this lower, while servers with higher ping should have this higher.<br>
-<b>NOTE:</b> If you don't have cURL installed on your server, the add-on will try to use <i>file_get_contents</i>, but there is no timeout support.]]></phrase>
+    <phrase title="option_EHSS_CurlTimeout_explain" version_id="127" version_string="1.2.7"><![CDATA[Set how long will you let the cURL to run for every try to fetch the share count from social site (in milliseconds). This will depend strongly on your server's ping to the social sites. So, servers with better ping may have this lower, while servers with higher ping should have this higher.]]></phrase>
+    <phrase title="option_EHSS_DisableCurl" version_id="127" version_string="1.2.7"><![CDATA[Disable cURL]]></phrase>
+    <phrase title="option_EHSS_DisableCurl_explain" version_id="127" version_string="1.2.7"><![CDATA[If you don't want to use cURL for whatever reason, then disable it here. After that, the add-on will use <a href="http://us2.php.net/manual/en/function.file-get-contents.php" target="_blank">file_get_contents</a> instead. Please note that there is no timeout feature. And if you want to disable all share counters instead, then disable all sites from the <i>Enable Share Counter</i> option above.<br>
+<b>NOTE:</b> If you don't have cURL, the add-on will automatically use <a href="http://us2.php.net/manual/en/function.file-get-contents.php" target="_blank">file_get_contents</a> instead.]]></phrase>
     <phrase title="option_EHSS_EmailBody" version_id="126" version_string="1.2.6"><![CDATA[E-Mail: Body]]></phrase>
     <phrase title="option_EHSS_EmailBody_explain" version_id="126" version_string="1.2.6"><![CDATA[Set your preferred body for the email share here.<br>
 You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b> for the page's title.<br>
@@ -155,14 +169,13 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
 You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b> for the page's title.<br>
 <b>Hint:</b> You may actually use any available <i>replace methods</i> on <i>eh_socialshare_js</i> template.]]></phrase>
     <phrase title="option_EHSS_KeepTrying" version_id="126" version_string="1.2.6"><![CDATA[Keep Trying When Fail]]></phrase>
-    <phrase title="option_EHSS_KeepTrying_explain" version_id="121" version_string="1.2.1"><![CDATA[If not even one social site returned any number other than -1 (which means fetching failure), the script will keep on trying to fetch the share count on the next page loads.]]></phrase>
+    <phrase title="option_EHSS_KeepTrying_explain" version_id="127" version_string="1.2.7"><![CDATA[If the add-on can't fetch any share counts from ALL social sites, the add-on will keep on trying to fetch them on the next page loads.]]></phrase>
     <phrase title="option_EHSS_PinterestMedia" version_id="126" version_string="1.2.6"><![CDATA[Pinterest: Media URL]]></phrase>
     <phrase title="option_EHSS_PinterestMedia_explain" version_id="126" version_string="1.2.6"><![CDATA[A fixed path to an acceptable image for Pinterest.<br>
 <b>Note:</b> Do not use a relative path. Pinterest will load the image on a new tab, so it will need direct access to the image. Thus it will also fail if you have an anti hotlinking service enabled.]]></phrase>
     <phrase title="option_EHSS_ShareCounter" version_id="120" version_string="1.2.0"><![CDATA[Enable Share Counter]]></phrase>
-    <phrase title="option_EHSS_ShareCounter_explain" version_id="126" version_string="1.2.6"><![CDATA[Choose which sites that you want to have its share count to be fetched. Even if you have the site disabled, the script will still fetch the share count, so you need to disable it from here too.<br>
-<b>NOTE:</b> Strongly suggested not to enable this if your XenForo installation doesn't have any back-end caching enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share count on EVERY page load.<br>
-<b>Add. NOTE:</b> The script may not be able to fetch share count from VK at the moment.]]></phrase>
+    <phrase title="option_EHSS_ShareCounter_explain" version_id="127" version_string="1.2.7"><![CDATA[Choose which sites that you want to have its share count to be fetched. Even if you have a site disabled on <i>Enable Social Sites</i> option, the add-on will still fetch the share count as long as you have it enabled in this option, so you need to disable it here too.<br>
+<b>NOTE:</b> Strongly suggested not to enable this feature if your XenForo installation doesn't have any <a href="https://xenforo.com/help/cache/" target="_blank">back-end caching</a> enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share count on EVERY page load.<br>]]></phrase>
     <phrase title="option_EHSS_SocialSites" version_id="120" version_string="1.2.0"><![CDATA[Enable Social Sites]]></phrase>
     <phrase title="option_EHSS_SocialSites_explain" version_id="120" version_string="1.2.0"><![CDATA[Choose social sites that you want to enable. Disabling all sites will prevent any necessary JS files to be loaded, so you may use this method if you want to temporarily prevent the add-on from loading on the front-end without completely disabling it.]]></phrase>
     <phrase title="option_EHSS_TweetParamRelated" version_id="106" version_string="1.0.6"><![CDATA[Tweet Parameter: Related]]></phrase>
@@ -380,7 +393,6 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
             popupURL:     "https://www.delicious.com/save?v=5&noui&jump=close&url={url}&title={title}",
             popupName:    "delicious",
             popupSpecs:   "toolbar=no, width=550, height=550",
-            shareCountID: "delicious"
         },
         </xen:if>
         <xen:if is="{$xenOptions.EHSS_SocialSites.tumblr}">
