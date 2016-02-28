@@ -81,7 +81,7 @@ class EndlessHorizon_SocialShare_Listener
             $result = curl_exec($ch);
 
             if ($result === false) {
-                self::logExceptionByType('ERROR: cURL ('.$service.'): '.curl_error($ch), 2);
+                self::logExceptionByType('DEBUG: cURL ('.$service.'): '.curl_error($ch), 2);
             }
 
             curl_close($ch);
@@ -146,7 +146,7 @@ class EndlessHorizon_SocialShare_Listener
                 
                 foreach ($counts as $value) {
                     if ($value !== -1) {
-                        self::logExceptionByType('INFO: Share counters were loaded from cache and the data was valid ('.$cacheId.')', 1);
+                        self::logExceptionByType('DEBUG: Share counters were loaded from cache and the data was valid ('.$cacheId.')', 1);
                         return json_encode($counts); // Immediately return counts if at least one count was valid
                     }
                 }
@@ -169,8 +169,8 @@ class EndlessHorizon_SocialShare_Listener
             $curlVerPassPeer = self::doesComplyWithMinCurlVersion('7.10');
 
             $tmp = curl_version();
-            if (!$curlVerPassMS) { self::logExceptionByType('INFO: Did not use milliseconds as cURL timeout because cURL version was older than 7.16.2 (version: '.$tmp['version'].')', 2); }
-            if (!$curlVerPassPeer) { self::logExceptionByType('INFO: Did not cURL option \'CURLOPT_SSL_VERIFYPEER\' because cURL version was older than 7.10 (version: '.$tmp['version'].')', 2); }
+            if (!$curlVerPassMS) { self::logExceptionByType('DEBUG: Did not use milliseconds as cURL timeout because cURL version was older than 7.16.2 (version: '.$tmp['version'].')', 2); }
+            if (!$curlVerPassPeer) { self::logExceptionByType('DEBUG: Did not cURL option \'CURLOPT_SSL_VERIFYPEER\' because cURL version was older than 7.10 (version: '.$tmp['version'].')', 2); }
         }
         
         foreach ($services as $service) {
@@ -185,13 +185,13 @@ class EndlessHorizon_SocialShare_Listener
         }
             
         if ($completeFailure && $keepTrying) {
-            self::logExceptionByType('WARNING: Did not save share counters because none were successfully fetched ('.$cacheId.')', 1);
+            self::logExceptionByType('DEBUG: Did not save share counters because none were successfully fetched ('.$cacheId.')', 1);
         } else {
             if ($cacheObject) {
                 $cacheObject->save(json_encode($counts), $cacheId, array(), $cacheTime);
-                self::logExceptionByType('INFO: Share counters were stored on cache ('.$cacheId.')', 1);
+                self::logExceptionByType('DEBUG: Share counters were stored on cache ('.$cacheId.')', 1);
             } else {
-                self::logExceptionByType('WARNING: Did not save share counters because of missing cache object ('.$cacheId.')', 1);
+                self::logExceptionByType('DEBUG: Did not save share counters because of missing cache object ('.$cacheId.')', 1);
             }
         }
         
