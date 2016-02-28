@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.3.1" version_id="131" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.3.2" version_id="132" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -31,6 +31,12 @@
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="235"/>
+    </option>
+    <option option_id="EHSS_CurlSslVerify" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="250"/>
     </option>
     <option option_id="EHSS_CurlTimeout" edit_format="textbox" data_type="positive_integer" can_backup="1">
       <default_value>500</default_value>
@@ -75,7 +81,7 @@ twitter=Twitter
 googleplus=Google+
 linkedin=LinkedIn
 pinterest=Pinterest
-vk=VK</edit_format_params>
+vk=ВКонтакте (VK)</edit_format_params>
       <sub_options>facebook
 twitter
 googleplus
@@ -95,7 +101,7 @@ pinterest=Pinterest
 delicious=Delicious
 tumblr=Tumblr
 reddit=Reddit
-vk=VK
+vk=ВКонтакте (VK)
 whatsapp=WhatsApp
 line=LINE (be warned, the icon will use an image instead of FontAwesome)
 email=E-Mail</edit_format_params>
@@ -158,6 +164,8 @@ aboveQuickReply</sub_options>
 <b>NOTE:</b> This requires your XenForo installation to have any back-end caching enabled on config.php!]]></phrase>
     <phrase title="option_EHSS_CurlDebug" version_id="127" version_string="1.2.7"><![CDATA[Enable cURL Debug]]></phrase>
     <phrase title="option_EHSS_CurlDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will make the add-on output whatever problem occurred with the cURL session to your Server Error Logs. If some social sites never returned share count to your server, you may want to know why by enabling this option. Other than that, this will be used for development only.]]></phrase>
+    <phrase title="option_EHSS_CurlSslVerify" version_id="131" version_string="1.3.1"><![CDATA[cURL Option: Verify Host & Peer]]></phrase>
+    <phrase title="option_EHSS_CurlSslVerify_explain" version_id="131" version_string="1.3.1"><![CDATA[Enable to tell cURL to check the existence of common name, verify that it matches the hostname provided and verify peer's certificate.]]></phrase>
     <phrase title="option_EHSS_CurlTimeout" version_id="121" version_string="1.2.1"><![CDATA[cURL Timeout (ms)]]></phrase>
     <phrase title="option_EHSS_CurlTimeout_explain" version_id="127" version_string="1.2.7"><![CDATA[Set how long will you let the cURL to run for every try to fetch the share count from social site (in milliseconds). This will depend strongly on your server's ping to the social sites. So, servers with better ping may have this lower, while servers with higher ping should have this higher.<br>
 <b>NOTE:</b> To disable timeout limit, set this option to 0.<br>
@@ -311,7 +319,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
     background-size: contain; }
 .eh_socialshare_popup .items_container .centered ul li a span .ehss.ehss-line {
 	background-image: url('styles/endlesshorizon/socialshare/line.png'); }]]></template>
-    <template title="eh_socialshare_js" version_id="130" version_string="1.3.0"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
+    <template title="eh_socialshare_js" version_id="131" version_string="1.3.1"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
     <xen:set var="$ehss_share_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener" method="getShareCounts"></xen:callback></xen:set>
 </xen:if>
 
@@ -424,7 +432,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
         },
         </xen:if>
         <xen:if is="{$xenOptions.EHSS_SocialSites.vk}">
-        { name: "VK",
+        { name: "ВКонтакте",
             iconClass:    "fa fa-vk",
             bgColor:      "#45668e",
             popupURL:     "http://vk.com/share.php?url={url}",
@@ -466,7 +474,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
   <public_template_modifications>
     <modification template="eh_socialshare" modification_key="EHSS_TM_ehss_001" description="Append comment to tell add-on callback that the widget is being used" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[#^.*$#s]]></find>
-      <replace><![CDATA[$0<!-- EHSS_Widget_Exist -->]]></replace>
+      <replace><![CDATA[$0<!--EHSS_Widget_Exist-->]]></replace>
     </modification>
     <modification template="pagenode_container" modification_key="EHSS_TM_pc_001" description="Hook to pagenode_container template (adds ability to show widget on top of pages)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<xen:require css="pagenode.css" />]]></find>
@@ -483,7 +491,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
     </modification>
     <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Append comment to tell add-on where to include eh_socialshare_js template" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<!--XenForo_Require:JS-->]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><!-- EHSS_Require_JS --></xen:if>
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><!--EHSS_Require_JS--></xen:if>
 $0]]></replace>
     </modification>
     <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">

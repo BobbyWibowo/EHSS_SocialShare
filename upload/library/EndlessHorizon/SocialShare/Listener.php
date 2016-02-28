@@ -42,36 +42,48 @@ class EndlessHorizon_SocialShare_Listener
         }
     }
     
-    private static function getCount($service, $url, $timeout, $useCurl, $useMS) {
+    private static function getCount($service, $siteUrl, $timeout, $useCurl, $useMS, $useSsl, $useSslVerifyPeer) {
         $shareLinks = array(
             "facebook"    => "https://graph.facebook.com/fql?q=SELECT%20url,%20normalized_url,%20share_count,%20like_count,%20comment_count,%20total_count,commentsbox_count,%20comments_fbid,%20click_count%20FROM%20link_stat%20WHERE%20url=%27{url}%27",
             "twitter"     => "http://opensharecount.com/count.json?url={url}",
             "googleplus"  => "https://plusone.google.com/u/0/_/+1/fastbutton?count=true&url={url}",
             "linkedin"    => "https://www.linkedin.com/countserv/count/share?format=json&url={url}",
-            "pinterest"   => "https://api.pinterest.com/v1/urls/count.json?url={url}",
+            "pinterest"   => "https://widgets.pinterest.com/v1/urls/count.json?url={url}",
             "buffer"      => "https://api.bufferapp.com/1/links/shares.json?url={url}", // Waiting for FontAwesome to add Buffer icon
             "vk"          => "https://vk.com/share.php?act=count&index=1&url="
         );
         
-        $url = str_replace("{url}", $url, $shareLinks[$service]);
+        $url = str_replace("{url}", rawurlencode($siteUrl), $shareLinks[$service]);
         
         if ($useCurl) {
             $ch = curl_init();
+
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
             if ($useMS) {
                 curl_setopt($ch, CURLOPT_TIMEOUT_MS, $timeout);
             } else {
                 $tmp = ($timeout/1000);
                 curl_setopt($ch, CURLOPT_TIMEOUT, (int)ceil($tmp));
             }
-            curl_setopt($ch, CURLOPT_CAINFO, getcwd().'/library/EndlessHorizon/SocialShare/cacert.pem'); // Taken from https://curl.haxx.se/ca/cacert.pem
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+
+            if ($useSsl) {
+                curl_setopt($ch, CURLOPT_CAINFO, getcwd().'/library/EndlessHorizon/SocialShare/cacert.pem'); // Taken from https://curl.haxx.se/ca/cacert.pem
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+                if ($useSslVerifyPeer) { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1); }
+            } else {
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                if ($useSslVerifyPeer) { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); }
+            }
             curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+
             $result = curl_exec($ch);
+
             if ($result === false) {
                 self::logExceptionByType('ERROR: cURL ('.$service.'): '.curl_error($ch), 2);
             }
+
             curl_close($ch);
         } else {
             $result = @file_get_contents($url);
@@ -83,11 +95,11 @@ class EndlessHorizon_SocialShare_Listener
                     $result = json_decode($result);
                     $count = $result->data[0]->total_count;
                     break;
-                case "google":
+                case "googleplus":
                     preg_match( '/window\.__SSR = {c: (\d+(?:\.\d+)+)/', $result, $matches);
                     if(isset($matches[0]) && isset($matches[1])) {
                         $bits = explode('.',$matches[1]);
-                        $count = (int)( empty($bits[0]) ?: $bits[0]) . ( empty($bits[1]) ?: $bits[1] ); 
+                        $count = (int)(empty($bits[0]) ?: $bits[0]); 
                     }
                     break;
                 case "pinterest":
@@ -119,8 +131,8 @@ class EndlessHorizon_SocialShare_Listener
         $services      = array("facebook", "twitter", "googleplus", "linkedin", "pinterest", "vk");
         $counts        = array();
         $tmp           = XenForo_Application::get('requestPaths');
-        $url           = $tmp['fullUri'];
-        $cacheId       = "ehss_".sprintf('%u', crc32($url)); // CRC32 hash of the page's URL with 'ehss_' prefix (fastest hash for non-crypto use)
+        $siteUrl       = $tmp['fullUri'];
+        $cacheId       = "ehss_".sprintf('%u', crc32($siteUrl)); // CRC32 hash of the page's URL with 'ehss_' prefix (fastest built-in hash for non-crypto use)
         $cacheObject   = XenForo_Application::getCache();
         $cacheTime     = XenForo_Application::get('options')->EHSS_CacheTime;
         $previousCache = false;
@@ -148,19 +160,23 @@ class EndlessHorizon_SocialShare_Listener
         $curlDisabled    = XenForo_Application::get('options')->EHSS_DisableCurl;
         $curlExist       = function_exists('curl_version');
         $curlVerPassMS   = false;
+        $curlSslVerify   = XenForo_Application::get('options')->EHSS_CurlSslVerify;
+        $curlVerPassPeer = false;
         
         if ($curlExist) {
-            $curlVerPassMS = self::doesComplyWithMinCurlVersion('7.16.2');
-        } else {
+            $curlVerPassMS   = self::doesComplyWithMinCurlVersion('7.16.2');
+            $curlVerPassPeer = self::doesComplyWithMinCurlVersion('7.10');
+
             $tmp = curl_version();
-            self::logExceptionByType('INFO: Did not use milliseconds as cURL timeout because cURL version was older than 7.16.2 (version: '.$tmp['version'].')', 2);
+            if (!$curlVerPassMS) { self::logExceptionByType('INFO: Did not use milliseconds as cURL timeout because cURL version was older than 7.16.2 (version: '.$tmp['version'].')', 2); }
+            if (!$curlVerPassPeer) { self::logExceptionByType('INFO: Did not cURL option \'CURLOPT_SSL_VERIFYPEER\' because cURL version was older than 7.10 (version: '.$tmp['version'].')', 2); }
         }
         
         foreach ($services as $service) {
             $counts[$service] = -1;
             
             $tmp = XenForo_Application::get('options')->EHSS_ShareCounter;
-            if ($tmp[$service]) { $counts[$service] = self::getCount($service, $url, $curlTimeout, (!$curlDisabled && $curlExist ? true : false), $curlVerPassMS); }
+            if ($tmp[$service]) { $counts[$service] = self::getCount($service, $siteUrl, $curlTimeout, (!$curlDisabled && $curlExist ? true : false), $curlVerPassMS, $curlSslVerify, $curlVerPassPeer); }
             
             if ($counts[$service] !== -1) {
                 $completeFailure = false; // If at least one service was fetched properly, mark current session as not completely failed, then store to cache
@@ -193,7 +209,7 @@ class EndlessHorizon_SocialShare_Listener
         if ($controllerName === "XenForo_ControllerPublic_Attachment") { return; }
         
         if ($responseType === "html") {
-            $ehss_keyPos = strpos($output, '<!-- EHSS_Widget_Exist -->');
+            $ehss_keyPos = strpos($output, '<!--EHSS_Widget_Exist-->');
             if ($ehss_keyPos !== false) {
                 // Is this the only way to fetch template..?
                 $request      = new Zend_Controller_Request_Http();
@@ -201,10 +217,10 @@ class EndlessHorizon_SocialShare_Listener
                 $viewRenderer = $dependencies->getViewRenderer($response, 'html', $request);
                 $template     = $viewRenderer->renderView('', array(), 'eh_socialshare_js');
                 
-                $output       = str_replace('<!-- EHSS_Widget_Exist -->', '', $output);
-                $output       = str_replace('<!-- EHSS_Require_JS -->', $template, $output);
+                $output       = str_replace('<!--EHSS_Widget_Exist-->', '', $output);
+                $output       = str_replace('<!--EHSS_Require_JS-->', $template, $output);
             } else {
-                $output       = str_replace('<!-- EHSS_Require_JS -->', '', $output);
+                $output       = str_replace('<!--EHSS_Require_JS-->', '', $output);
             }
         }
     }
