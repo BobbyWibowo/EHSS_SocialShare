@@ -132,7 +132,8 @@ class EndlessHorizon_SocialShare_Listener
         $counts        = array();
         $tmp           = XenForo_Application::get('requestPaths');
         $siteUrl       = $tmp['fullUri'];
-        $cacheId       = "ehss_".sprintf('%u', crc32($siteUrl)); // CRC32 hash of the page's URL with 'ehss_' prefix (fastest built-in hash for non-crypto use)
+        $cacheIdSuffix = XenForo_Application::get('options')->EHSS_CacheIdSuffix;
+        $cacheId       = "ehss_".sprintf('%u', crc32($siteUrl)).($cacheIdSuffix ? '_'.$cacheIdSuffix : ''); // CRC32 hash of the page's URL (fastest built-in hash for non-crypto use) with 'ehss_' prefix and custom suffix if available
         $cacheObject   = XenForo_Application::getCache();
         $cacheTime     = XenForo_Application::get('options')->EHSS_CacheTime;
         $previousCache = false;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.3.2" version_id="132" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="1.3.3" version_id="133" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -19,6 +19,12 @@
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="230"/>
+    </option>
+    <option option_id="EHSS_CacheIdSuffix" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="225"/>
     </option>
     <option option_id="EHSS_CacheTime" edit_format="textbox" data_type="positive_integer" can_backup="1">
       <default_value>21600</default_value>
@@ -159,13 +165,16 @@ aboveQuickReply</sub_options>
   <phrases>
     <phrase title="option_EHSS_CacheHitDebug" version_id="120" version_string="1.2.0"><![CDATA[Enable Cache Hit Debug]]></phrase>
     <phrase title="option_EHSS_CacheHitDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will force the add-on to output cache hit status to Server Error Log. You may want to enable this for the first few minutes prior to installing the add-on to see if the cache is being used correctly.]]></phrase>
-    <phrase title="option_EHSS_CacheTime" version_id="121" version_string="1.2.1"><![CDATA[Share Counter Cache Time (s)]]></phrase>
-    <phrase title="option_EHSS_CacheTime_explain" version_id="120" version_string="1.2.0"><![CDATA[Set how long the share counters will be cached until they will be fetched again (in seconds).<br>
+    <phrase title="option_EHSS_CacheIdSuffix" version_id="132" version_string="1.3.2"><![CDATA[Cache ID Suffix]]></phrase>
+    <phrase title="option_EHSS_CacheIdSuffix_explain" version_id="132" version_string="1.3.2"><![CDATA[<i>(Optional)</i> You may enter any random string here if you want to force the add-on to fetch new share counts even if previous fetches were still available on cache. Please note the the previous share counts will remain on your cache until they are expired.]]></phrase>
+    <phrase title="option_EHSS_CacheTime" version_id="132" version_string="1.3.2"><![CDATA[Share Counts Cache Time (s)]]></phrase>
+    <phrase title="option_EHSS_CacheTime_explain" version_id="132" version_string="1.3.2"><![CDATA[Set how long the share counts will be cached until they will be fetched again (in seconds).<br>
 <b>NOTE:</b> This requires your XenForo installation to have any back-end caching enabled on config.php!]]></phrase>
     <phrase title="option_EHSS_CurlDebug" version_id="127" version_string="1.2.7"><![CDATA[Enable cURL Debug]]></phrase>
     <phrase title="option_EHSS_CurlDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will make the add-on output whatever problem occurred with the cURL session to your Server Error Logs. If some social sites never returned share count to your server, you may want to know why by enabling this option. Other than that, this will be used for development only.]]></phrase>
     <phrase title="option_EHSS_CurlSslVerify" version_id="131" version_string="1.3.1"><![CDATA[cURL Option: Verify Host & Peer]]></phrase>
-    <phrase title="option_EHSS_CurlSslVerify_explain" version_id="131" version_string="1.3.1"><![CDATA[Enable to tell cURL to check the existence of common name, verify that it matches the hostname provided and verify peer's certificate.]]></phrase>
+    <phrase title="option_EHSS_CurlSslVerify_explain" version_id="132" version_string="1.3.2"><![CDATA[Enable this option to tell cURL to check the existence of common name and verify that it matches the hostname provided.<br>
+<b>NOTE:</b> For cURL version 7.10 or newer, this option will also tell cURL to verify peer's certificate.]]></phrase>
     <phrase title="option_EHSS_CurlTimeout" version_id="121" version_string="1.2.1"><![CDATA[cURL Timeout (ms)]]></phrase>
     <phrase title="option_EHSS_CurlTimeout_explain" version_id="127" version_string="1.2.7"><![CDATA[Set how long will you let the cURL to run for every try to fetch the share count from social site (in milliseconds). This will depend strongly on your server's ping to the social sites. So, servers with better ping may have this lower, while servers with higher ping should have this higher.<br>
 <b>NOTE:</b> To disable timeout limit, set this option to 0.<br>
@@ -187,15 +196,15 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_PinterestMedia" version_id="126" version_string="1.2.6"><![CDATA[Pinterest: Media URL]]></phrase>
     <phrase title="option_EHSS_PinterestMedia_explain" version_id="127" version_string="1.2.7"><![CDATA[A fixed path to a JPG, PNG or GIF image that will be used as pin for Pinterest share.<br>
 <b>Note:</b> Do not use a relative path. Pinterest will try to fetch the image remotely, so it will need direct access to the image. Thus it will also fail if you have an anti hotlinking service enabled.]]></phrase>
-    <phrase title="option_EHSS_ShareCounter" version_id="120" version_string="1.2.0"><![CDATA[Enable Share Counter]]></phrase>
-    <phrase title="option_EHSS_ShareCounter_explain" version_id="127" version_string="1.2.7"><![CDATA[Choose which sites that you want to have its share count to be fetched. Even if you have a site disabled on <i>Enable Social Sites</i> option, the add-on will still fetch the share count as long as you have it enabled in this option, so you need to disable it here too.<br>
-<b>NOTE:</b> Strongly suggested not to enable this feature if your XenForo installation doesn't have any <a href="https://xenforo.com/help/cache/" target="_blank">back-end caching</a> enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share count on EVERY page load.<br>]]></phrase>
+    <phrase title="option_EHSS_ShareCounter" version_id="132" version_string="1.3.2"><![CDATA[Enable Share Counts]]></phrase>
+    <phrase title="option_EHSS_ShareCounter_explain" version_id="132" version_string="1.3.2"><![CDATA[<i>(Optional)</i> Choose sites you want their share counts to be fetched by the add-on. Please note that even if you have a site disabled in <i>Enable Social Sites</i> option, the add-on will still fetch its share count as long as you have it enabled in this option, so you need to disable it here too.<br>
+<b>NOTE:</b> Strongly suggested not to enable this feature if your XenForo installation doesn't have any <a href="https://xenforo.com/help/cache/" target="_blank">back-end caching</a> enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share counts on EVERY page load.<br>]]></phrase>
     <phrase title="option_EHSS_SocialSites" version_id="120" version_string="1.2.0"><![CDATA[Enable Social Sites]]></phrase>
     <phrase title="option_EHSS_SocialSites_explain" version_id="120" version_string="1.2.0"><![CDATA[Choose social sites that you want to enable. Disabling all sites will prevent any necessary JS files to be loaded, so you may use this method if you want to temporarily prevent the add-on from loading on the front-end without completely disabling it.]]></phrase>
     <phrase title="option_EHSS_TweetParamRelated" version_id="106" version_string="1.0.6"><![CDATA[Tweet Parameter: Related]]></phrase>
-    <phrase title="option_EHSS_TweetParamRelated_explain" version_id="106" version_string="1.0.6"><![CDATA[A comma-separated list of accounts related to the content of the shared URI.]]></phrase>
+    <phrase title="option_EHSS_TweetParamRelated_explain" version_id="132" version_string="1.3.2"><![CDATA[<i>(Optional)</i> A comma-separated list of accounts related to the content of the shared URI.]]></phrase>
     <phrase title="option_EHSS_TweetParamVia" version_id="106" version_string="1.0.6"><![CDATA[Tweet Parameter: Via]]></phrase>
-    <phrase title="option_EHSS_TweetParamVia_explain" version_id="106" version_string="1.0.6"><![CDATA[Attribute the source of a Tweet to a Twitter username.]]></phrase>
+    <phrase title="option_EHSS_TweetParamVia_explain" version_id="132" version_string="1.3.2"><![CDATA[<i>(Optional)</i> Attribute the source of a Tweet to a Twitter username.]]></phrase>
     <phrase title="option_EHSS_ViewOptions_aboveQuickReply" version_id="127" version_string="1.2.7"><![CDATA[Above Quick Reply]]></phrase>
     <phrase title="option_EHSS_ViewOptions_bottom" version_id="106" version_string="1.0.6"><![CDATA[Bottom]]></phrase>
     <phrase title="option_EHSS_ViewOptions_top" version_id="106" version_string="1.0.6"><![CDATA[Top]]></phrase>
