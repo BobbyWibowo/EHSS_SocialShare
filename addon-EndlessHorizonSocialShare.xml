@@ -18,67 +18,85 @@
       <default_value>0</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="230"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="330"/>
     </option>
     <option option_id="EHSS_CacheIdSuffix" edit_format="textbox" data_type="string" can_backup="1">
       <default_value></default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="225"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="325"/>
     </option>
     <option option_id="EHSS_CacheTime" edit_format="textbox" data_type="positive_integer" can_backup="1">
       <default_value>21600</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="210"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="310"/>
+    </option>
+    <option option_id="EHSS_CurlCertInfo" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="360"/>
     </option>
     <option option_id="EHSS_CurlDebug" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value>0</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="235"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="335"/>
     </option>
     <option option_id="EHSS_CurlSslVerify" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value>1</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="250"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="350"/>
     </option>
     <option option_id="EHSS_CurlTimeout" edit_format="textbox" data_type="positive_integer" can_backup="1">
       <default_value>500</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="240"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="340"/>
     </option>
     <option option_id="EHSS_DisableCurl" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value>0</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="205"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="305"/>
     </option>
     <option option_id="EHSS_EmailBody" edit_format="textbox" data_type="string" can_backup="1">
       <default_value>{title}%0D%0A%0D%0AGo check it out with this link: {url}</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="330"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="430"/>
     </option>
     <option option_id="EHSS_EmailSubject" edit_format="textbox" data_type="string" can_backup="1">
       <default_value>I thought you might like this!</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="320"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="420"/>
+    </option>
+    <option option_id="EHSS_EnableFontAwesome" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="10"/>
+    </option>
+    <option option_id="EHSS_FontAwesomeCssPath" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="20"/>
     </option>
     <option option_id="EHSS_KeepTrying" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value>1</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="220"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="320"/>
     </option>
     <option option_id="EHSS_PinterestMedia" edit_format="textbox" data_type="string" can_backup="1">
       <default_value>http://YOUR_DOMAIN/styles/default/xenforo/logo.og.png</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="315"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="415"/>
     </option>
     <option option_id="EHSS_ShareCounter" edit_format="checkbox" data_type="array" can_backup="1">
       <default_value>a:6:{s:8:"facebook";b:0;s:7:"twitter";b:0;s:10:"googleplus";b:0;s:8:"linkedin";b:0;s:9:"pinterest";b:0;s:2:"vk";b:0;}</default_value>
@@ -94,7 +112,7 @@ googleplus
 linkedin
 pinterest
 vk</sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="200"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="300"/>
     </option>
     <option option_id="EHSS_SocialSites" edit_format="checkbox" data_type="array" can_backup="1">
       <default_value>a:13:{s:8:"facebook";b:1;s:7:"twitter";b:1;s:10:"googleplus";b:1;s:8:"linkedin";b:1;s:11:"stumbleupon";b:1;s:9:"pinterest";b:1;s:9:"delicious";b:1;s:6:"tumblr";b:1;s:6:"reddit";b:1;s:2:"vk";b:1;s:8:"whatsapp";b:1;s:4:"line";b:0;s:5:"email";b:1;}</default_value>
@@ -124,19 +142,19 @@ vk
 whatsapp
 line
 email</sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="100"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="200"/>
     </option>
     <option option_id="EHSS_TweetParamRelated" edit_format="textbox" data_type="string" can_backup="1">
       <default_value></default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="310"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="410"/>
     </option>
     <option option_id="EHSS_TweetParamVia" edit_format="textbox" data_type="string" can_backup="1">
       <default_value></default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="300"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="400"/>
     </option>
     <option option_id="EHSS_ViewPages" edit_format="checkbox" data_type="array" can_backup="1">
       <default_value>a:2:{s:3:"top";b:1;s:6:"bottom";b:0;}</default_value>
@@ -144,7 +162,7 @@ email</sub_options>
 bottom={xen:phrase option_EHSS_ViewOptions_bottom}</edit_format_params>
       <sub_options>top
 bottom</sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="30"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="110"/>
     </option>
     <option option_id="EHSS_ViewThreads" edit_format="checkbox" data_type="array" can_backup="1">
       <default_value>a:3:{s:3:"top";b:0;s:6:"bottom";b:1;s:15:"aboveQuickReply";b:0;}</default_value>
@@ -154,7 +172,7 @@ aboveQuickReply={xen:phrase option_EHSS_ViewOptions_aboveQuickReply}</edit_forma
       <sub_options>top
 bottom
 aboveQuickReply</sub_options>
-      <relation group_id="EndlessHorizonSocialShare" display_order="20"/>
+      <relation group_id="EndlessHorizonSocialShare" display_order="100"/>
     </option>
   </optiongroups>
   <permissions>
@@ -170,6 +188,8 @@ aboveQuickReply</sub_options>
     <phrase title="option_EHSS_CacheTime" version_id="132" version_string="1.3.2"><![CDATA[Share Counts Cache Time (s)]]></phrase>
     <phrase title="option_EHSS_CacheTime_explain" version_id="132" version_string="1.3.2"><![CDATA[Set how long the share counts will be cached until they will be fetched again (in seconds).<br>
 <b>NOTE:</b> This requires your XenForo installation to have any back-end caching enabled on config.php!]]></phrase>
+    <phrase title="option_EHSS_CurlCertInfo" version_id="133" version_string="1.3.3"><![CDATA[cURL Option: Use the add-on's Certificate Bundle]]></phrase>
+    <phrase title="option_EHSS_CurlCertInfo_explain" version_id="133" version_string="1.3.3"><![CDATA[<b>NOTE:</b> If you've had included certificate info in your php.ini, it's recommended to disable this option to avoid conflicts.]]></phrase>
     <phrase title="option_EHSS_CurlDebug" version_id="127" version_string="1.2.7"><![CDATA[Enable cURL Debug]]></phrase>
     <phrase title="option_EHSS_CurlDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will make the add-on output whatever problem occurred with the cURL session to your Server Error Logs. If some social sites never returned share count to your server, you may want to know why by enabling this option. Other than that, this will be used for development only.]]></phrase>
     <phrase title="option_EHSS_CurlSslVerify" version_id="131" version_string="1.3.1"><![CDATA[cURL Option: Verify Host & Peer]]></phrase>
@@ -191,6 +211,11 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_EmailSubject_explain" version_id="126" version_string="1.2.6"><![CDATA[Set your preferred subject for the email share here.<br>
 You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b> for the page's title.<br>
 <b>Hint:</b> You may actually use any available <i>replace methods</i> on <i>eh_socialshare_js</i> template.]]></phrase>
+    <phrase title="option_EHSS_EnableFontAwesome" version_id="133" version_string="1.3.3"><![CDATA[Enable Font Awesome]]></phrase>
+    <phrase title="option_EHSS_EnableFontAwesome_explain" version_id="133" version_string="1.3.3"><![CDATA[If you haven't added Font Awesome by your own, you can use this add-on to enable it (don't forget to fill <i>Font Awesome CSS Path</i> option below).<br>
+<b>NOTE:</b> This add-on will only add the Font Awesome on pages that have the share page widget.]]></phrase>
+    <phrase title="option_EHSS_FontAwesomeCssPath" version_id="133" version_string="1.3.3"><![CDATA[Font Awesome CSS Path]]></phrase>
+    <phrase title="option_EHSS_FontAwesomeCssPath_explain" version_id="133" version_string="1.3.3"><![CDATA[Path to the main CSS of Font Awesome. This can be a relative or a fixed path.]]></phrase>
     <phrase title="option_EHSS_KeepTrying" version_id="126" version_string="1.2.6"><![CDATA[Keep Trying When Fail]]></phrase>
     <phrase title="option_EHSS_KeepTrying_explain" version_id="127" version_string="1.2.7"><![CDATA[If the add-on can't fetch any share counts from ALL social sites, the add-on will keep on trying to fetch them on the next page loads.]]></phrase>
     <phrase title="option_EHSS_PinterestMedia" version_id="126" version_string="1.2.6"><![CDATA[Pinterest: Media URL]]></phrase>
