@@ -2,6 +2,9 @@
 
 class EndlessHorizon_SocialShare_Listener
 {
+    public static $debugCacheHit = false;
+    public static $debugCurl     = false;
+
     private static function doesComplyWithMinCurlVersion($minVersion) {
         $ver_min = explode('.', $minVersion);
         if (!isset($ver_min[2])) { $ver_min[2] = '0'; } // Some cURL version doesn't have patch number - https://curl.haxx.se/docs/releases.html
@@ -27,15 +30,8 @@ class EndlessHorizon_SocialShare_Listener
     }
     
     private static function logExceptionByType($message, $type) {
-        $permitted = false;
-        
-        if ($type === 1) {
-            $permitted = XenForo_Application::get('options')->EHSS_CacheHitDebug;
-        } elseif ($type === 2) {
-            $permitted = XenForo_Application::get('options')->EHSS_CurlDebug;
-        }
-        
-        if ($permitted) {
+        if (($type === 1 && self::$debugCacheHit) ||
+            ($type === 2 && self::$debugCurl)) {
             return XenForo_Error::logException(new XenForo_Exception($message));
         } else {
             return false;
@@ -113,9 +109,9 @@ class EndlessHorizon_SocialShare_Listener
                     break;
                 case "googleplus":
                     preg_match( '/window\.__SSR = {c: (\d+(?:\.\d+)+)/', $result, $matches);
-                    if(isset($matches[0]) && isset($matches[1])) {
-                        $bits  = explode('.',$matches[1]);
-                        $count = (int)(empty($bits[0]) ?: $bits[0]); 
+                    if (isset($matches[0]) && isset($matches[1])) {
+                        $bits  = explode('.', $matches[1]);
+                        if ($bits[0] !== null) { $count = $bits[0]; } else { $count = '0'; }
                     }
                     break;
                 case "pinterest":
@@ -135,7 +131,7 @@ class EndlessHorizon_SocialShare_Listener
                     break;
                 default: break;
             }
-            $count = (int) $count;
+            $count = (int)$count;
         } else {
            $count = -1;
         }
@@ -144,6 +140,10 @@ class EndlessHorizon_SocialShare_Listener
     }
     
     public static function getShareCounts() {
+        // Load XenForo options - debug
+        self::$debugCacheHit = XenForo_Application::get('options')->EHSS_CacheHitDebug;
+        self::$debugCurl     = XenForo_Application::get('options')->EHSS_CurlDebug;
+
         $services      = array("facebook", "twitter", "googleplus", "linkedin", "pinterest", "vk");
         $counts        = array();
         $tmp           = XenForo_Application::get('requestPaths');
@@ -170,7 +170,7 @@ class EndlessHorizon_SocialShare_Listener
         }
         
         
-        // Load XenForo options
+        // Load XenForo options - etc.
         $keepTrying      = XenForo_Application::get('options')->EHSS_KeepTrying;
         $completeFailure = true; // Mark current session as completely failed
 
