@@ -13,11 +13,12 @@ function encodeURIComponentStrict(t){
 
 $(document).ready(function(){
     // initialize elements
-    var sharePageButtons = $('.eh_socialshare');
-    var sharePagePopup = $('<div class="eh_socialshare_popup"></div>');
-    var shareCounts = $.parseJSON(ehss_settings["data-counts"]);
-    var enabledItemsCount = 0;
-    var enabledShareCounter = 0;
+    var sharePageButtons = $('.eh_socialshare'),
+        sharePagePopup = $('<div class="eh_socialshare_popup"></div>'),
+        shareCounts = $.parseJSON(ehss_settings["data-counts"]),
+        enabledItemsCount = 0,
+        enabledShareCounter = 0,
+        tmp;
     
     // initialize popup
     sharePagePopup.attr('style', 'display: none');
@@ -73,7 +74,8 @@ $(document).ready(function(){
             if (shareCounts && (typeof ehss_social_sites[i].shareCountID === 'string') && (ehss_social_sites[i].shareCountID.length > 0)) {
                 x = shareCounts[ehss_social_sites[i].shareCountID];
                 if (x !== -1) {
-                    shareItem.find('a').find('span').append($('<i class="shareCount" style="color: ' + ehss_social_sites[i].bgColor + '" title="' + ehss_settings['data-count-title'].replace('{x}', x) +'">' + x + '</i>'));
+                    if (x === 1) { tmp = ehss_settings['data-count-title-singular']; } else { tmp = ehss_settings['data-count-title-plural']; }
+                    shareItem.find('a').find('span').append($('<i class="shareCount" style="color: ' + ehss_social_sites[i].bgColor + '" title="' + tmp.replace('{x}', x) +'">' + x + '</i>'));
                     enabledShareCounter += 1;
                 }
             }
