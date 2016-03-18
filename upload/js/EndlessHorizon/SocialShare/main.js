@@ -45,12 +45,19 @@ $(document).ready(function(){
                     switch (ehss_replace_methods[j].value) {
                         case 1  : x = encodeURIComponentStrict(document.title); // 1 - document.title
                             break;
-                        // expand when necessary
+                        // extend when necessary
                         default : x = '';
                     }
                 }
                 
                 replacedURL = replacedURL.replace(ehss_replace_methods[j].key, x);
+            }
+
+            // extra patch for Pinterest
+            if ((ehss_social_sites[i].popupName === 'pinterest') && (replacedURL.indexOf('&media=') === -1)) {
+                x = $(document).find('meta[property="og:image"]');
+                out(x.length);
+                if (x.length) { replacedURL += '&media=' + encodeURIComponentStrict(x[x.length - 1].getAttribute('content')); }
             }
             
             shareItem = $('<li><a></a></li>');
@@ -65,7 +72,7 @@ $(document).ready(function(){
                          shareItem.find('a').attr('data-custom-fix', customFix);
                          out('Applied custom fix #1: "Prevent pinit.js from hijacking" to an item.');
                     break;
-                // expand when necessary
+                // extend when necessary
             }
             
             shareItem.find('a').append($('<span style="background-color: ' + ehss_social_sites[i].bgColor + '"></span>'));
@@ -100,7 +107,7 @@ $(document).ready(function(){
             switch (customFix) {
                 case 1 : window.open($(this).attr('data-href'), $(this).attr('data-name'), $(this).attr('data-specs'));
                     break;
-                // expand when necessary
+                // extend when necessary
             }
             return;
         }

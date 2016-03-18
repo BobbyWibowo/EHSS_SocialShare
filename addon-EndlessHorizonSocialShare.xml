@@ -93,7 +93,7 @@
       <relation group_id="EndlessHorizonSocialShare" display_order="320"/>
     </option>
     <option option_id="EHSS_PinterestMedia" edit_format="textbox" data_type="string" can_backup="1">
-      <default_value>http://YOUR_DOMAIN/styles/default/xenforo/logo.og.png</default_value>
+      <default_value></default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="415"/>
@@ -219,10 +219,11 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_KeepTrying" version_id="126" version_string="1.2.6"><![CDATA[Keep Trying When Fail]]></phrase>
     <phrase title="option_EHSS_KeepTrying_explain" version_id="127" version_string="1.2.7"><![CDATA[If the add-on can't fetch any share counts from ALL social sites, the add-on will keep on trying to fetch them on the next page loads.]]></phrase>
     <phrase title="option_EHSS_PinterestMedia" version_id="126" version_string="1.2.6"><![CDATA[Pinterest: Media URL]]></phrase>
-    <phrase title="option_EHSS_PinterestMedia_explain" version_id="127" version_string="1.2.7"><![CDATA[A fixed path to a JPG, PNG or GIF image that will be used as pin for Pinterest share.<br>
-<b>Note:</b> Do not use a relative path. Pinterest will try to fetch the image remotely, so it will need direct access to the image. Thus it will also fail if you have an anti hotlinking service enabled.]]></phrase>
+    <phrase title="option_EHSS_PinterestMedia_explain" version_id="141" version_string="1.4.1"><![CDATA[A fixed path to a JPG, PNG or GIF image that will be used as pin for Pinterest share.<br>
+<b>Note:</b> Do not use a relative path. Pinterest will try to fetch the image remotely, so it will need direct access to the image. Thus it will also fail if you have an anti hotlinking service enabled.<br>
+<b>Add. Hint:</b> Leaving this option blank will tell the add-on to use the image you specified for <a href="https://xenforo.com/help/facebook/#open-graph" target="_blank">Open Graph</a> whenever available.]]></phrase>
     <phrase title="option_EHSS_ShareCounter" version_id="132" version_string="1.3.2"><![CDATA[Enable Share Counts]]></phrase>
-    <phrase title="option_EHSS_ShareCounter_explain" version_id="132" version_string="1.3.2"><![CDATA[<i>(Optional)</i> Choose sites you want their share counts to be fetched by the add-on. Please note that even if you have a site disabled in <i>Enable Social Sites</i> option, the add-on will still fetch its share count as long as you have it enabled in this option, so you need to disable it here too.<br>
+    <phrase title="option_EHSS_ShareCounter_explain" version_id="142" version_string="1.4.2"><![CDATA[<i>(Optional)</i> Choose sites which you want their share counts to be fetched by the add-on. Please note that even if you have a site disabled in the <i>Enable Social Sites</i> option, the add-on will still fetch its share count as long as you have it enabled in this option, so you need to disable it here too.<br>
 <b>NOTE:</b> Strongly suggested not to enable this feature if your XenForo installation doesn't have any <a href="https://xenforo.com/help/cache/" target="_blank">back-end caching</a> enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share counts on EVERY page load.<br>]]></phrase>
     <phrase title="option_EHSS_SocialSites" version_id="120" version_string="1.2.0"><![CDATA[Enable Social Sites]]></phrase>
     <phrase title="option_EHSS_SocialSites_explain" version_id="120" version_string="1.2.0"><![CDATA[Choose social sites that you want to enable. Disabling all sites will prevent any necessary JS files to be loaded, so you may use this method if you want to temporarily prevent the add-on from loading on the front-end without completely disabling it.]]></phrase>
@@ -247,7 +248,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
   <route_prefixes/>
   <style_properties/>
   <templates>
-    <template title="eh_socialshare" version_id="130" version_string="1.3.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+    <template title="eh_socialshare" version_id="141" version_string="1.4.1"><![CDATA[<xen:require css="eh_socialshare.css" />
 <xen:require js="js/EndlessHorizon/SocialShare/main.min.js?_v={$xenAddOns.EndlessHorizonSocialShare}" />
 
 <button class="button primary eh_socialshare {xen:if '{$aboveQuickReply}', 'aboveQuickReply'}"><i class="fa fa-share-alt"></i><span>{xen:phrase view_EHSS_button_text}</span></button>]]></template>
@@ -377,7 +378,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
         // Entering certain integer into the 'value' will force the script to do certain custom task (1 - document.title)
         { key: "{lang}",       value: "data-lang" },
         { key: "{url}",        value: "data-url" },
-        { key: "{title}",      value: 1 },
+        { key: "{title}",      value: 1 }
     ];
 
     var ehss_social_sites = [
@@ -435,7 +436,7 @@ Made with love by <a href="https://www.twitter.com/BobbyWibowoB" target="_blank"
         { name: "Pinterest",
             iconClass:    "fa fa-pinterest",
             bgColor:      "#cb2027",
-            popupURL:     "https://pinterest.com/pin/create/button/?url={url}{xen:if '{$xenOptions.EHSS_PinterestMedia}', '&media={$xenOptions.EHSS_PinterestMedia}'}&description={title}",
+            popupURL:     "https://pinterest.com/pin/create/button/?url={url}&description={title}{xen:if '{$xenOptions.EHSS_PinterestMedia}', '&media={$xenOptions.EHSS_PinterestMedia}'}",
             popupName:    "pinterest",
             popupSpecs:   "toolbar=no, width=700, height=300",
             shareCountID: "pinterest",
