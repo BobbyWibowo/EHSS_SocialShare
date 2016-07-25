@@ -1,17 +1,21 @@
 var logPrefix = '[Endless Horizon] Social Share: ';
 
-function out(m){
-    return console.log(logPrefix + m);
+function out(m)
+{
+    if (ehss_settings["debug"]) { console.log(logPrefix + m); }
+    return true;
 }
 
-function encodeURIComponentStrict(t){
+function encodeURIComponentStrict(t)
+{
     t = encodeURIComponent(t);
     t = t.replace('~' , '%7e'); // replace ~
     t = t.replace('\'', '%27'); // replace '
     return t;
 }
 
-$(document).ready(function(){
+$(document).ready(function()
+{
     // initialize elements
     var sharePageButtons = $('.eh_socialshare'),
         sharePagePopup = $('<div class="eh_socialshare_popup"></div>'),
@@ -22,8 +26,10 @@ $(document).ready(function(){
     
     // initialize popup
     sharePagePopup.attr('style', 'display: none');
-    sharePagePopup.click(function(e){
-        if ($(this).css('opacity') == 1) {
+    sharePagePopup.click(function(e)
+    {
+        if ($(this).css('opacity') == 1)
+        {
             $(this).fadeToggle(400, "swing");
         }
     });
@@ -35,14 +41,22 @@ $(document).ready(function(){
     
     sharePagePopup.append($('<div class="items_container"><div class="centered"><ul></ul></div></div>'));
     
-    for (i = 0; i < ehss_social_sites.length; i++) {
-        if (!ehss_social_sites[i].disabled) {
+    for (i = 0; i < ehss_social_sites.length; i++)
+    {
+        if (!ehss_social_sites[i].disabled)
+        {
             replacedURL = ehss_social_sites[i].popupURL;
-            for (j = 0; j < ehss_replace_methods.length; j++) {
-                if (typeof ehss_replace_methods[j].value === 'string') {
+
+            for (j = 0; j < ehss_replace_methods.length; j++)
+            {
+                if (typeof ehss_replace_methods[j].value === 'string')
+                {
                     x = encodeURIComponentStrict(ehss_settings[ehss_replace_methods[j].value]);
-                } else {
-                    switch (ehss_replace_methods[j].value) {
+                }
+                else
+                {
+                    switch (ehss_replace_methods[j].value)
+                    {
                         case 1  : x = encodeURIComponentStrict(document.title); // 1 - document.title
                             break;
                         // extend when necessary
@@ -54,7 +68,8 @@ $(document).ready(function(){
             }
 
             // extra patch for Pinterest
-            if ((ehss_social_sites[i].popupName === 'pinterest') && (replacedURL.indexOf('&media=') === -1)) {
+            if ((ehss_social_sites[i].popupName === 'pinterest') && (replacedURL.indexOf('&media=') === -1))
+            {
                 x = $(document).find('meta[property="og:image"]');
                 out(x.length);
                 if (x.length) { replacedURL += '&media=' + encodeURIComponentStrict(x[x.length - 1].getAttribute('content')); }
@@ -66,7 +81,8 @@ $(document).ready(function(){
             shareItem.find('a').attr('data-specs', ehss_social_sites[i].popupSpecs);
             
             customFix = ehss_social_sites[i].customFix;
-            switch (customFix) {
+            switch (customFix)
+            {
                 case 1 : shareItem.find('a').removeAttr('href');
                          shareItem.find('a').attr('data-href', replacedURL);
                          shareItem.find('a').attr('data-custom-fix', customFix);
@@ -78,10 +94,20 @@ $(document).ready(function(){
             shareItem.find('a').append($('<span style="background-color: ' + ehss_social_sites[i].bgColor + '"></span>'));
             shareItem.find('a').find('span').append($('<i class="' + ehss_social_sites[i].iconClass + '"></i>'));
             
-            if (shareCounts && (typeof ehss_social_sites[i].shareCountID === 'string') && (ehss_social_sites[i].shareCountID.length > 0)) {
+            if (shareCounts && (typeof ehss_social_sites[i].shareCountID === 'string') && (ehss_social_sites[i].shareCountID.length > 0))
+            {
                 x = shareCounts[ehss_social_sites[i].shareCountID];
-                if (x !== -1) {
-                    if (x === 1) { tmp = ehss_settings['data-count-title-singular']; } else { tmp = ehss_settings['data-count-title-plural']; }
+                if (x >= 0)
+                {
+                    if (x === 1)
+                    {
+                        tmp = ehss_settings['data-count-title-singular'];
+                    }
+                    else
+                    {
+                        tmp = ehss_settings['data-count-title-plural'];
+                    }
+
                     shareItem.find('a').find('span').append($('<i class="shareCount" style="color: ' + ehss_social_sites[i].bgColor + '" title="' + tmp.replace('{x}', x) +'">' + x + '</i>'));
                     enabledShareCounter += 1;
                 }
@@ -99,25 +125,31 @@ $(document).ready(function(){
     sharePagePopup.find('.items_container .centered ul li').click(function(e){ e.stopPropagation(); });
     
     // register click event handler to all items
-    sharePagePopup.find('.items_container .centered ul li a').click(function(e){
+    sharePagePopup.find('.items_container .centered ul li a').click(function(e)
+    {
         e.preventDefault();
         
         customFix = parseInt($(this).attr('data-custom-fix'));
-        if (customFix) {
-            switch (customFix) {
+        if (customFix)
+        {
+            switch (customFix)
+            {
                 case 1 : window.open($(this).attr('data-href'), $(this).attr('data-name'), $(this).attr('data-specs'));
                     break;
                 // extend when necessary
             }
+
             return;
         }
         
         window.open($(this).attr('href'), $(this).attr('data-name'), $(this).attr('data-specs'));
     });
     
-    sharePageButtons.click(function(e){
+    sharePageButtons.click(function(e)
+    {
         e.preventDefault();
-        if (sharePagePopup.css('display') == 'none') {
+        if (sharePagePopup.css('display') == 'none')
+        {
             sharePagePopup.fadeToggle(400, "swing");
         }
     });
