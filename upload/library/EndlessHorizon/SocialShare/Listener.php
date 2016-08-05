@@ -1,4 +1,10 @@
 <?php
+/*
+ * EHSS_SocialShare
+ * by Bobby Wibowo
+ */
+
+/** THIS FILE IS NO LONGER USED. PLEASE CHECK LISTENER2.PHP INSTEAD. **/
 
 class EndlessHorizon_SocialShare_Listener
 {

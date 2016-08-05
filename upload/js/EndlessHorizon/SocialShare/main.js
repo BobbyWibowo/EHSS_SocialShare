@@ -1,159 +1,129 @@
-var logPrefix = '[Endless Horizon] Social Share: ';
-
-function out(m)
-{
-    if (ehss_settings["debug"]) { console.log(logPrefix + m); }
-    return true;
-}
-
-function encodeURIComponentStrict(t)
-{
-    t = encodeURIComponent(t);
-    t = t.replace('~' , '%7e'); // replace ~
-    t = t.replace('\'', '%27'); // replace '
-    return t;
-}
+/*
+ * EHSS_SocialShare
+ * by Bobby Wibowo
+ */
 
 $(document).ready(function()
 {
-    // initialize elements
-    var sharePageButtons = $('.eh_socialshare'),
-        sharePagePopup = $('<div class="eh_socialshare_popup"></div>'),
-        shareCounts = $.parseJSON(ehss_settings["data-counts"]),
-        enabledItemsCount = 0,
-        enabledShareCounter = 0,
-        tmp;
-    
-    // initialize popup
-    sharePagePopup.attr('style', 'display: none');
-    sharePagePopup.click(function(e)
+    if (!EHSS_sites || !Object.keys(EHSS_sites).length) { return; }
+
+    var logPrefix = '[Endless Horizon] Social Share: ';
+
+    function log(m)
     {
-        if ($(this).css('opacity') == 1)
-        {
-            $(this).fadeToggle(400, "swing");
-        }
-    });
-    
-    $('body').append(sharePagePopup);
-    
-    // initialize popup items
-    var shareItem, replacedURL, i, j, x, customFix;
-    
-    sharePagePopup.append($('<div class="items_container"><div class="centered"><ul></ul></div></div>'));
-    
-    for (i = 0; i < ehss_social_sites.length; i++)
-    {
-        if (!ehss_social_sites[i].disabled)
-        {
-            replacedURL = ehss_social_sites[i].popupURL;
-
-            for (j = 0; j < ehss_replace_methods.length; j++)
-            {
-                if (typeof ehss_replace_methods[j].value === 'string')
-                {
-                    x = encodeURIComponentStrict(ehss_settings[ehss_replace_methods[j].value]);
-                }
-                else
-                {
-                    switch (ehss_replace_methods[j].value)
-                    {
-                        case 1  : x = encodeURIComponentStrict(document.title); // 1 - document.title
-                            break;
-                        // extend when necessary
-                        default : x = '';
-                    }
-                }
-                
-                replacedURL = replacedURL.replace(ehss_replace_methods[j].key, x);
-            }
-
-            // extra patch for Pinterest
-            if ((ehss_social_sites[i].popupName === 'pinterest') && (replacedURL.indexOf('&media=') === -1))
-            {
-                x = $(document).find('meta[property="og:image"]');
-                out(x.length);
-                if (x.length) { replacedURL += '&media=' + encodeURIComponentStrict(x[x.length - 1].getAttribute('content')); }
-            }
-            
-            shareItem = $('<li><a></a></li>');
-            shareItem.find('a').attr('href', replacedURL);
-            shareItem.find('a').attr('data-name', ehss_social_sites[i].popupName);
-            shareItem.find('a').attr('data-specs', ehss_social_sites[i].popupSpecs);
-            
-            customFix = ehss_social_sites[i].customFix;
-            switch (customFix)
-            {
-                case 1 : shareItem.find('a').removeAttr('href');
-                         shareItem.find('a').attr('data-href', replacedURL);
-                         shareItem.find('a').attr('data-custom-fix', customFix);
-                         out('Applied custom fix #1: "Prevent pinit.js from hijacking" to an item.');
-                    break;
-                // extend when necessary
-            }
-            
-            shareItem.find('a').append($('<span style="background-color: ' + ehss_social_sites[i].bgColor + '"></span>'));
-            shareItem.find('a').find('span').append($('<i class="' + ehss_social_sites[i].iconClass + '"></i>'));
-            
-            if (shareCounts && (typeof ehss_social_sites[i].shareCountID === 'string') && (ehss_social_sites[i].shareCountID.length > 0))
-            {
-                x = shareCounts[ehss_social_sites[i].shareCountID];
-                if (x >= 0)
-                {
-                    if (x === 1)
-                    {
-                        tmp = ehss_settings['data-count-title-singular'];
-                    }
-                    else
-                    {
-                        tmp = ehss_settings['data-count-title-plural'];
-                    }
-
-                    shareItem.find('a').find('span').append($('<i class="shareCount" style="color: ' + ehss_social_sites[i].bgColor + '" title="' + tmp.replace('{x}', x) +'">' + x + '</i>'));
-                    enabledShareCounter += 1;
-                }
-            }
-            
-            shareItem.append($('<span>' + ehss_social_sites[i].name + '</span>'));
-            
-            sharePagePopup.find('.items_container .centered ul').append(shareItem);
-            
-            enabledItemsCount += 1;
-        }
+        if (EHSS_settings["debug"]) { console.log(logPrefix + m); }
+        return true;
     }
-    
-    // prevent items from trigerring its parent's event handlers
-    sharePagePopup.find('.items_container .centered ul li').click(function(e){ e.stopPropagation(); });
-    
-    // register click event handler to all items
-    sharePagePopup.find('.items_container .centered ul li a').click(function(e)
-    {
-        e.preventDefault();
-        
-        customFix = parseInt($(this).attr('data-custom-fix'));
-        if (customFix)
-        {
-            switch (customFix)
-            {
-                case 1 : window.open($(this).attr('data-href'), $(this).attr('data-name'), $(this).attr('data-specs'));
-                    break;
-                // extend when necessary
-            }
 
-            return;
+    // Check the existence of settings
+    if (!EHSS_settings || !Object.keys(EHSS_settings).length) { log('Failing.. Could not load settings.'); return; }
+
+    // PopupCenter function, courtesy of http://www.xtf.dk/2011/08/center-new-popup-window-even-on.html
+    function PopupCenter(url, w, h)
+    {
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left,
+            dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top,
+            width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width,
+            height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height,
+            left = ((width / 2) - (w / 2)) + dualScreenLeft,
+            top = ((height / 2) - (h / 2)) + dualScreenTop,
+            popup = window.open(url, null, 'toolbar=0, status=0, scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+        if (window.focus) { popup.focus(); }
+    }
+
+    // Replace chars: ~ '
+    function encodeURIComponentStrict(t) { return encodeURIComponent(t).replace('~' , '%7e').replace('\'', '%27'); }
+
+    function makePopupLink(s, url)
+    {
+        var api = EHSS_sites[s].popupURL;
+
+        // Patch for Pinterest
+        if (EHSS_sites[s].pinterest && (api.indexOf('&media=') === -1))
+        {
+            x = $('head').find('meta[property="og:image"]');
+            if (x.length) { api += '&media=' + encodeURIComponentStrict($(x[0]).attr('content')); }
         }
-        
-        window.open($(this).attr('href'), $(this).attr('data-name'), $(this).attr('data-specs'));
-    });
+
+        return api.replace('{url}', encodeURIComponentStrict(url)).replace('{title}', encodeURIComponentStrict(document.title));
+    }
+
+    // Initialize main variables
+    var overlay = $('<div class="ehss_overlay" style="display: none"><div class="ehss_items"><div class="ehss_inner"><ul></ul></div></div></div>'),
+        shareCounts = $.parseJSON(EHSS_settings["counts"].replace(/&quot;/g, "\"")),
+        eItems = 0, eShareCounters = 0, trigger;
     
-    sharePageButtons.click(function(e)
+    for (s in EHSS_sites)
+    {
+        if (EHSS_sites[s].disabled) { continue; }
+
+        var item = $('<li></li>'),
+            item_content = '',
+            item_count = '',
+            count_id = EHSS_sites[s].shareCountID;
+
+        if (shareCounts && shareCounts.hasOwnProperty(count_id))
+        {
+            var x = shareCounts[count_id],
+                t = EHSS_settings[(x === 1 ? 'count-s' : 'count-p')];
+
+            item_count +='<i class="ehss_count" style="color: ' + EHSS_sites[s].bgColor + '" title="' + t.replace('{x}', x) +'">' + x + '</i>';
+            eShareCounters += 1;
+        }
+
+        item_content += '<a data-id="' + s + '">' +
+                '<span style="background-color: ' + EHSS_sites[s].bgColor + '"><i class="' + EHSS_sites[s].iconClass + '"></i>' +
+                    item_count +
+                '</span>' +
+            '</a>' +
+            '<span>' + s + '</span>';
+
+        item.append(item_content);
+        overlay.find('.ehss_items .ehss_inner ul').append(item);
+        eItems += 1;
+    }
+
+    // Register click handler to the parent (should be triggered whenever someone click on the transparent background)
+    overlay.click(function(e) { if (parseInt($(this).css('opacity')) === 1) { $(this).fadeToggle(400, "swing"); } });
+    
+    // Prevent items from trigerring its parent's event handlers
+    overlay.find('.ehss_items .ehss_inner ul li').click(function(e){ e.stopPropagation(); });
+    
+    // Register click event handler to all items
+    overlay.find('.ehss_items .ehss_inner ul li a').click(function(e)
     {
         e.preventDefault();
-        if (sharePagePopup.css('display') == 'none')
+
+        var id = $(this).data('id'),
+            x = makePopupLink(id, $(trigger).data('permalink') || EHSS_settings["url"]),
+            blank = EHSS_sites[id].popupBlank;
+
+        if (blank)
         {
-            sharePagePopup.fadeToggle(400, "swing");
+            window.open(x, '_blank');
+        }
+        else
+        {
+            PopupCenter(x, EHSS_sites[id].popupSize.w, EHSS_sites[id].popupSize.h);
+        }
+    });
+
+    $('body').append(overlay);
+    
+    // Attach handler on body element with '.eh_socialshare' filter so that it'll work with dynamically generated buttons
+    $('body').on('click', '.ehss_button', function(e)
+    {
+        e.preventDefault();
+
+        if (overlay.css('display') === 'none') {
+            trigger = this;
+            // Hide share count if the trigger button was from post's permalink (since the share counts represents the whole thread)
+            overlay.find('.ehss_count').attr('style', ($(trigger).data('permalink') ? 'display: none' : ''));
+            overlay.fadeToggle(400, "swing");
         }
     });
     
-    out(enabledItemsCount + ' item(s) for the social share widget were initialized.');
-    out('Share counter was initialized for ' + enabledShareCounter + ' item(s).');
+    log(eItems + ' item' + (eItems === 1 ? '' : 's') + ' for the social share widget were initialized.');
+    log('Share counter was ' + (eShareCounters ? 'initialized for ' + eShareCounters + ' item' + (eShareCounters === 1 ? '' : 's') : 'not initialized for any items') + '.');
 });

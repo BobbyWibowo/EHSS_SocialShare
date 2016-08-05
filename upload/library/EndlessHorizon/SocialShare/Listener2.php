@@ -1,4 +1,8 @@
 <?php
+/*
+ * EHSS_SocialShare
+ * by Bobby Wibowo
+ */
 
 class EndlessHorizon_SocialShare_Listener2
 {
