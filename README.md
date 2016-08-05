@@ -1,5 +1,5 @@
 # [Endless Horizon] Social Share
-Floating social share widget. Yet another replacement for the default Share This Page widget.
+Overlay social share widget. Yet another replacement for the default Share This Page widget.
 
 More information: https://xenforo.com/community/resources/endless-horizon-social-share.5058/
 
