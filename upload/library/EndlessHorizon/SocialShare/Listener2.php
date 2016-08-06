@@ -39,7 +39,7 @@ class EndlessHorizon_SocialShare_Listener2
     private static function getCount($s)
     {
         $api = array(
-            "facebook"    => "https://graph.facebook.com/fql?q=SELECT%20url,%20normalized_url,%20share_count,%20like_count,%20comment_count,%20total_count,commentsbox_count,%20comments_fbid,%20click_count%20FROM%20link_stat%20WHERE%20url=%27{url}%27",
+            "facebook"    => "https://graph.facebook.com/fql?q=SELECT%20url,%20total_count%20FROM%20link_stat%20WHERE%20url=%27{url}%27",
             "facebook_v2" => "https://graph.facebook.com/?id={url}",
             "twitter"     => "http://opensharecount.com/count.json?url={url}",
             "googleplus"  => "https://plusone.google.com/u/0/_/+1/fastbutton?count=true&url={url}",
@@ -111,7 +111,7 @@ class EndlessHorizon_SocialShare_Listener2
                     break;
                 case "facebook_v2":
                     $res = json_decode($res);
-                    $count  = $res->share->share_count;
+                    $count  = $res->shares;
                     break;
                 case "googleplus":
                     preg_match( '/window\.__SSR = {c: (\d+(?:\.\d+)+)/', $res, $matches);
