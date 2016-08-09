@@ -322,11 +322,11 @@ class EndlessHorizon_SocialShare_Listener2
                 $template     = $viewRenderer->renderView('', array(), 'eh_socialshare_js');
                 
                 $output       = str_replace('<!--EHSS_Widget_Exists-->', '', $output);
-                $output       = str_replace('<!--EHSS_Require_JS-->', $template, $output);
+                $output       = str_replace('<script type="text/javascript"><!--EHSS_Require:JS--></script>', $template, $output);
             }
             else
             {
-                $output       = str_replace('<!--EHSS_Require_JS-->', '', $output);
+                $output       = str_replace('<script type="text/javascript"><!--EHSS_Require:JS--></script>', '', $output);
             }
 
             return true;
