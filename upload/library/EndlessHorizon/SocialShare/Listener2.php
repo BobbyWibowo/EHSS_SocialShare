@@ -107,17 +107,17 @@ class EndlessHorizon_SocialShare_Listener2
             {
                 case "facebook":
                     $res = json_decode($res);
-                    $count  = $res->data[0]->total_count;
+                    $count = $res->data[0]->total_count;
                     break;
                 case "facebook_v2":
                     $res = json_decode($res);
-                    $count  = $res->shares;
+                    $count = (property_exists($res, 'shares') ? $res->shares : $res->share->share_count);
                     break;
                 case "googleplus":
                     preg_match( '/window\.__SSR = {c: (\d+(?:\.\d+)+)/', $res, $matches);
                     if (isset($matches[0]) && isset($matches[1]))
                     {
-                        $bits  = explode('.', $matches[1]);
+                        $bits = explode('.', $matches[1]);
                         if ($bits[0] !== null) { $count = $bits[0]; } else { $count = '0'; }
                     }
                     break;
@@ -126,15 +126,15 @@ class EndlessHorizon_SocialShare_Listener2
                 case "linkedin":
                 case "twitter":
                     $res = json_decode($res);
-                    $count  = $res->count;
+                    $count = $res->count;
                     break;
                 /*case "buffer":
                     $res = json_decode($res);
-                    $count  = $res->shares;
+                    $count = $res->shares;
                     break;*/
                 case "vk":
                     $res = preg_match('/^VK.Share.count\(\d+,\s+(\d+)\);$/i', $res, $matches);
-                    $count  = $matches[1];
+                    $count = $matches[1];
                     break;
                 default: break;
             }
