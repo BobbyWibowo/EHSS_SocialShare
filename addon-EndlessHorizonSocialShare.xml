@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.1.3" version_id="213" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.1.4" version_id="214" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -400,7 +400,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 {
 	.Responsive .ehss_overlay .ehss_items .ehss_inner { width: auto; }
 }]]></template>
-    <template title="eh_socialshare_js" version_id="210" version_string="2.1.0"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
+    <template title="eh_socialshare_js" version_id="214" version_string="2.1.4"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
     <xen:set var="$EHSS_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener2" method="getShareCounts"></xen:callback></xen:set>
 </xen:if>
 
@@ -452,7 +452,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
                 iconClass:    "fa fa-pinterest",
                 bgColor:      "#cb2027",
                 popupURL:     "https://pinterest.com/pin/create/button/?url={url}&description={title}{xen:if '{$xenOptions.EHSS_PinterestMedia}', '&media={$xenOptions.EHSS_PinterestMedia}'}",
-                popupSize:    { w: 700, h: 300 },
+                popupSize:    { w: 700, h: 610 },
                 shareCountID: "pinterest",
                 pinterest:    true
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.delicious}">
@@ -471,7 +471,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
             "Reddit": {
                 iconClass:    "fa fa-reddit-alien",
                 bgColor:      "#5f99cf",
-                popupURL:     "https://www.reddit.com/submit?url={url}&text={title}",
+                popupURL:     "https://www.reddit.com/submit?url={url}&title={title}",
                 popupSize:    { w: 550, h: 550 }
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.vk}">
             "ВКонтакте": {
