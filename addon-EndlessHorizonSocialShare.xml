@@ -524,7 +524,7 @@ $0]]></replace>
     </modification>
     <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Append comment to tell add-on where to include eh_socialshare_js template" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<!--XenForo_Require:JS-->]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><script type="text/javascript"><!--EHSS_Require:JS--></script></xen:if>
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><script type="text/javascript" data-ehss="true"></script></xen:if>
 $0]]></replace>
     </modification>
     <modification template="pagenode_container" modification_key="EHSS_TM_pnc_001" description="Hook to pagenode_container template (adds ability to show widget on top of pages)" execution_order="10" enabled="1" action="str_replace">
