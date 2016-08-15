@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.1.4" version_id="214" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.1.5" version_id="215" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -292,7 +292,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 <xen:require js="js/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
 
 <button class="button primary ehss_button {xen:if '{$aboveQuickReply}', 'aboveQuickReply'}"{xen:if '{$permalink}', ' data-permalink="{$permalink}"'}><i class="fa fa-share-alt"></i><span>{xen:if '{$permalink}', '{xen:phrase view_EHSS_button_text_permalink}', '{xen:phrase view_EHSS_button_text}'}</span></button>]]></template>
-    <template title="eh_socialshare.css" version_id="210" version_string="2.1.0"><![CDATA[.ehss_button {
+    <template title="eh_socialshare.css" version_id="215" version_string="2.1.5"><![CDATA[.ehss_button {
 	width: 100%;
 	height: auto;
 	padding: 10px;
@@ -396,10 +396,12 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 .ehss_overlay .ehss_items .ehss_inner ul li a span .ehss.ehss-line {
 	background-image: url('styles/endlesshorizon/socialshare/line.png'); }
 
+<xen:if is="{xen:property enableResponsive}">
 @media (max-width: {xen:property maxResponsiveNarrowWidth})
 {
 	.Responsive .ehss_overlay .ehss_items .ehss_inner { width: auto; }
-}]]></template>
+}
+</xen:if>]]></template>
     <template title="eh_socialshare_js" version_id="214" version_string="2.1.4"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
     <xen:set var="$EHSS_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener2" method="getShareCounts"></xen:callback></xen:set>
 </xen:if>
