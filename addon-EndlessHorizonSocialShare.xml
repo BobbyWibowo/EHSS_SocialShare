@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.1.5" version_id="215" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.1.6" version_id="216" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -555,8 +555,6 @@ $0]]></replace>
     <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
       <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})">
-	<xen:require css="share_page.css" />
-	
 	<div class="sharePage jsOnly">
 		<xen:hook name="share_page_options">
 			<xen:include template="eh_socialshare" />
@@ -567,8 +565,6 @@ $0]]></replace>
     <modification template="sidebar_share_page" modification_key="EHSS_TM_sss_001" description="Replace sidebar_share_page template completely (share page widget on sidebar)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
       <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})">
-	<xen:require css="share_page.css" />
-	
 	<div class="section infoBlock sharePage jsOnly">
 		<div class="secondaryContent">
 			<xen:hook name="share_page_options">
