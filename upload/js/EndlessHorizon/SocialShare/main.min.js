@@ -1,5 +1,5 @@
 /*
- * EHSS_SocialShare
+ * EH_SocialShare
  * by Bobby Wibowo
  */
 
