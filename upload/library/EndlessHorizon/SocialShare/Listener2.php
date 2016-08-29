@@ -282,7 +282,7 @@ class EndlessHorizon_SocialShare_Listener2
         elseif ($cache && ($cacheTime > 0))
         {
             $cache->save($jsonCounts, self::$mCacheId, array(), $cacheTime);
-            self::logExceptionByType('EHSS_DEBUG: Share counters were stored on cache (Session: '.self::$mCacheId.')', 1);
+            self::logExceptionByType('EHSS_DEBUG: Share counters were stored to cache (Session: '.self::$mCacheId.')', 1);
         }
         else
         {
