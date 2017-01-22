@@ -5,18 +5,20 @@
 
 $(document).ready(function()
 {
+    /** General **/
+
     if (!EHSS_sites || !Object.keys(EHSS_sites).length) { return; }
 
-    var logPrefix = '[Endless Horizon] Social Share: ';
+    var body = $('body');
 
-    function log(m)
+    function EHSS_log(m)
     {
-        if (EHSS_settings["debug"]) { console.log(logPrefix + m); }
+        if (EHSS_settings.debug) { console.log('[Endless Horizon] Social Share: ' + m); }
         return true;
     }
 
     // Check the existence of settings
-    if (!EHSS_settings || !Object.keys(EHSS_settings).length) { log('Failing.. Could not load settings.'); return; }
+    if (!EHSS_settings || !Object.keys(EHSS_settings).length) { EHSS_log('Failing.. Could not load settings.'); return; }
 
     // PopupCenter function, courtesy of http://www.xtf.dk/2011/08/center-new-popup-window-even-on.html
     function PopupCenter(url, w, h)
@@ -37,10 +39,10 @@ $(document).ready(function()
 
     function makePopupLink(s, url)
     {
-        var api = EHSS_sites[s].popupURL;
+        var api = EHSS_sites[s].url;
 
         // Patch for Pinterest
-        if (EHSS_sites[s].pinterest && (api.indexOf('&media=') === -1))
+        if (EHSS_sites[s].pin && (api.indexOf('&media=') === -1))
         {
             x = $('head').find('meta[property="og:image"]');
             if (x.length) { api += '&media=' + encodeURIComponentStrict($(x[0]).attr('content')); }
@@ -51,29 +53,27 @@ $(document).ready(function()
 
     // Initialize main variables
     var overlay = $('<div class="ehss_overlay" style="display: none"><div class="ehss_items"><div class="ehss_inner"><ul></ul></div></div></div>'),
-        shareCounts = $.parseJSON(EHSS_settings["counts"].replace(/&quot;/g, "\"")),
+        shareCounts = $.parseJSON(EHSS_settings.counts.replace(/&quot;/g, "\"")),
         eItems = 0, eShareCounters = 0, trigger;
     
     for (s in EHSS_sites)
     {
-        if (EHSS_sites[s].disabled) { continue; }
-
         var item = $('<li></li>'),
             item_content = '',
             item_count = '',
-            count_id = EHSS_sites[s].shareCountID;
+            scid = EHSS_sites[s].scid;
 
-        if (shareCounts && shareCounts.hasOwnProperty(count_id))
+        if (shareCounts && shareCounts.hasOwnProperty(scid))
         {
-            var x = shareCounts[count_id],
+            var x = shareCounts[scid],
                 t = EHSS_settings[(x === 1 ? 'count-s' : 'count-p')];
 
-            item_count +='<i class="ehss_count" style="color: ' + EHSS_sites[s].bgColor + '" title="' + t.replace('{x}', x) +'">' + x + '</i>';
+            item_count +='<i class="ehss_count" style="color: ' + EHSS_sites[s].bg + '" title="' + t.replace('{x}', x) +'">' + x + '</i>';
             eShareCounters += 1;
         }
 
         item_content += '<a data-id="' + s + '">' +
-                '<span style="background-color: ' + EHSS_sites[s].bgColor + '"><i class="' + EHSS_sites[s].iconClass + '"></i>' +
+                '<span style="background-color: ' + EHSS_sites[s].bg + '"><i class="' + EHSS_sites[s].ic + '"></i>' +
                     item_count +
                 '</span>' +
             '</a>' +
@@ -96,8 +96,8 @@ $(document).ready(function()
         e.preventDefault();
 
         var id = $(this).data('id'),
-            x = makePopupLink(id, $(trigger).data('permalink') || EHSS_settings["url"]),
-            blank = EHSS_sites[id].popupBlank;
+            x = makePopupLink(id, $(trigger).data('permalink') || EHSS_settings.url),
+            blank = EHSS_sites[id].pb;
 
         if (blank)
         {
@@ -105,18 +105,18 @@ $(document).ready(function()
         }
         else
         {
-            PopupCenter(x, EHSS_sites[id].popupSize.w, EHSS_sites[id].popupSize.h);
+            PopupCenter(x, EHSS_sites[id].dim.w, EHSS_sites[id].dim.h);
         }
     });
 
-    $('body').append(overlay);
+    body.append(overlay);
     
     // Attach handler on body element with '.eh_socialshare' filter so that it'll work with dynamically generated buttons
-    $('body').on('click', '.ehss_button', function(e)
+    body.on('click', '.ehss_button', function(e)
     {
         e.preventDefault();
 
-        if (overlay.css('display') === 'none') {
+        if (overlay.css('display') == 'none') {
             trigger = this;
             // Hide share count if the trigger button was from post's permalink (since the share counts represents the whole thread)
             overlay.find('.ehss_count').attr('style', ($(trigger).data('permalink') ? 'display: none' : ''));
@@ -124,6 +124,44 @@ $(document).ready(function()
         }
     });
     
-    log(eItems + ' item' + (eItems === 1 ? '' : 's') + ' for the social share widget were initialized.');
-    log('Share counter was ' + (eShareCounters ? 'initialized for ' + eShareCounters + ' item' + (eShareCounters === 1 ? '' : 's') : 'not initialized for any items') + '.');
+    EHSS_log(eItems + ' item' + (eItems === 1 ? '' : 's') + ' for the social share widget were initialized.');
+    EHSS_log('Share counter was ' + (eShareCounters ? 'initialized for ' + eShareCounters + ' item' + (eShareCounters === 1 ? '' : 's') : 'not initialized for any items') + '.');
+
+    
+    /** Animation for Floating Share Button **/
+
+    if (EHSS_settings.fsbanim)
+    {
+        var btn = body.find('.ehss_button.floating'),
+            iw = btn.innerWidth() + 1,
+            dw = btn.data('w'),
+            btns = btn.find('span'),
+            animTime = 400;
+
+        // Shrink and show button after capturing the targeted full width
+        btns.css('opacity', 0);
+        btn.css('width', dw);
+        btn.css('opacity', 1);
+
+        btn.hover(
+            function(e) // mouse enter
+            {
+                $(this).animate({
+                    width: iw + 'px'
+                }, animTime);
+                btns.animate({
+                    opacity: 1
+                }, animTime);
+            },
+            function(e) // mouse leave
+            {
+                $(this).animate({
+                    width: dw
+                }, animTime);
+                btns.animate({
+                    opacity: 0
+                }, animTime);
+            }
+        );
+    }
 });

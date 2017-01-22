@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.1.7" version_id="217" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.2.0" version_id="220" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -81,7 +81,7 @@
       <relation group_id="EndlessHorizonSocialShare" display_order="335"/>
     </option>
     <option option_id="EHSS_FontAwesomeCssPath" edit_format="textbox" data_type="string" can_backup="1">
-      <default_value>https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css</default_value>
+      <default_value>://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="20"/>
@@ -225,8 +225,8 @@ bottom</sub_options>
     <phrase title="option_EHSS_CompressedJS" version_id="210" version_string="2.1.0"><![CDATA[Use compressed JavaScript file]]></phrase>
     <phrase title="option_EHSS_CompressedJS_explain" version_id="210" version_string="2.1.0"><![CDATA[By enabling this option, the add-on will use compressed version of the JavaScript file (recommended in production forums). This option was simply added to make it easier to switch versions during development.]]></phrase>
     <phrase title="option_EHSS_CurlLocalCert" version_id="200" version_string="2.0.0"><![CDATA[cURL Option: Use the add-on's certificate bundle]]></phrase>
-    <phrase title="option_EHSS_CurlLocalCert_explain" version_id="210" version_string="2.1.0"><![CDATA[You may manually update the <i>cacert.pem</i> file located in <i>library/EndlessHorizon/SocialShare/cacert.pem</i> with <a href="https://curl.haxx.se/ca/cacert.pem" target="_blank">this file</a> whenever you feel like to.<br>
-<b>Note:</b> If you've had included certificate info in your php.ini, it's recommended to disable this option to avoid conflicts.]]></phrase>
+    <phrase title="option_EHSS_CurlLocalCert_explain" version_id="220" version_string="2.2.0"><![CDATA[You may manually update the <i>cacert.pem</i> file located in <i>library/EndlessHorizon/SocialShare/cacert.pem</i> with <a href="https://curl.haxx.se/ca/cacert.pem" target="_blank">this file</a> whenever you feel like to.<br>
+<b style="color: red">NOTICE:</b> If you've had included a certificate info in your php.ini file, it's better to disable this option to avoid conflicts.]]></phrase>
     <phrase title="option_EHSS_CurlSecure" version_id="200" version_string="2.0.0"><![CDATA[cURL Option: Secure connection (verify host)]]></phrase>
     <phrase title="option_EHSS_CurlSecure_explain" version_id="210" version_string="2.1.0"><![CDATA[Enable this option to tell cURL to check the existence of common name and verify that it matches the hostname provided.<br>
 <b>Note:</b> For cURL version 7.10 or newer, this option will also tell cURL to verify peer's certificate.]]></phrase>
@@ -250,28 +250,31 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_JSDebug" version_id="200" version_string="2.0.0"><![CDATA[Enable JavaScript debug messages]]></phrase>
     <phrase title="option_EHSS_JSDebug_explain" version_id="200" version_string="2.0.0"><![CDATA[Enabling this option will make the add-on output debug messages into your and your visitor's browser console.]]></phrase>
     <phrase title="option_EHSS_PinterestMedia" version_id="126" version_string="1.2.6"><![CDATA[Pinterest: Media URL]]></phrase>
-    <phrase title="option_EHSS_PinterestMedia_explain" version_id="210" version_string="2.1.0"><![CDATA[A fixed path to a JPG, PNG or GIF image that will be used as pin for Pinterest share.<br>
-<b>Notes:</b> Do not use a relative path. Pinterest will try to fetch the image remotely, so it will need direct access to the image. So, it will also fail if you have an anti hotlinking service enabled. Leaving this option blank will tell the add-on to use the image you specified for <a href="https://xenforo.com/help/facebook/#open-graph" target="_blank">Open Graph</a> whenever available (the add-on will only use the first found Open Graph image).]]></phrase>
+    <phrase title="option_EHSS_PinterestMedia_explain" version_id="220" version_string="2.2.0"><![CDATA[A fixed path to a JPG, PNG or GIF image that will be used as pin for Pinterest share.<br>
+Leaving this option blank will tell the add-on to use the image you specified for <a href="https://xenforo.com/help/facebook/#open-graph" target="_blank">Open Graph</a> whenever available (the add-on will only use the first found Open Graph image).<br>
+<b style="color: red">NOTICE:</b> Do not use a relative path! Pinterest will try to fetch the image remotely, so it will need direct access to the image. Thus it will also fail if you have an anti image hotlinking service enabled.]]></phrase>
     <phrase title="option_EHSS_ShareCounter" version_id="200" version_string="2.0.0"><![CDATA[Enable share counts]]></phrase>
-    <phrase title="option_EHSS_ShareCounter_explain" version_id="217" version_string="2.1.7"><![CDATA[<i>(Optional)</i> Choose sites which you want their share counts to be fetched by the add-on. Please note that even if you have a site disabled in the <i>Enable social sites</i> option, the add-on will still fetch its share count as long as you have it enabled in this option, so if you want to disable a site, make sure you disable the share count as well.<br>
-<b>Notes:</b> Strongly suggested not to enable this feature if your XenForo installation doesn't have any <a href="https://xenforo.com/help/cache/" target="_blank">back-end caching</a> enabled. Otherwise there'll be a considerable performance impact, as the server will have to fetch share counts on EVERY page load.<br>
+    <phrase title="option_EHSS_ShareCounter_explain" version_id="220" version_string="2.2.0"><![CDATA[<i>(Optional)</i> Choose sites which you want their share counts to be fetched by the add-on. Please note that even if you have a site disabled in the <i>Enable social sites</i> option, the add-on will still fetch its share count as long as you have it enabled in this option, so if you want to disable a site, make sure you disable the share count as well.<br>
 If you want to use Twitter, you must register your forums at <a href="http://opensharecount.com/" target="_blank">OpenShareCount</a>.<br>
-This add-on will not fetch share counts for individual post.]]></phrase>
+This add-on will not fetch share counts for individual post.<br>
+<b style="color: orange;">WARNING:</b> Strongly suggested not to enable this feature if your XenForo installation doesn't have any <a href="https://xenforo.com/help/cache/" target="_blank">back-end caching</a> enabled, otherwise there'll be a considerable performance impact because your server will have to fetch share counts on EVERY page load.]]></phrase>
     <phrase title="option_EHSS_SocialSites" version_id="200" version_string="2.0.0"><![CDATA[Enable social sites]]></phrase>
-    <phrase title="option_EHSS_SocialSites_explain" version_id="200" version_string="2.0.0"><![CDATA[Choose social sites that you want to enable. Disabling all sites will prevent any necessary JS files to be loaded.<br>
-If you want to use LINE, please be aware that the add-on will use an image instead of a Font Awesome icon.]]></phrase>
+    <phrase title="option_EHSS_SocialSites_explain" version_id="220" version_string="2.2.0"><![CDATA[Choose social sites that you want to enable. Disabling all sites will prevent any necessary JavaScript files to be loaded.<br>
+If you want to use LINE, please be aware that the add-on will use an image instead of a Font Awesome icon.<br>
+You can customize some of the styling from the <a href="?style-properties/" target="_blank">Style Properties</a> page.]]></phrase>
     <phrase title="option_EHSS_Timeout" version_id="200" version_string="2.0.0"><![CDATA[Timeout (ms)]]></phrase>
     <phrase title="option_EHSS_Timeout_explain" version_id="210" version_string="2.1.0"><![CDATA[Set how long will the add-on let cURL or file_get_contents run in every tries to fetch share count from social sites (in milliseconds). This strongly depends on your server's latency to the social sites' servers. Servers with lower latency may have this lower, while servers with higher latency must have this higher.<br>
 To disable timeout limit, set this option to 0 (not recommended in production forums).<br>
 If your cURL version is older than version 7.6.12, the add-on will automatically convert the timeout value into seconds, and round the fractions up with <a href="https://secure.php.net/manual/en/function.ceil.php" target="_blank">ceil</a> function.]]></phrase>
-    <phrase title="option_EHSS_TryAgain" version_id="200" version_string="2.0.0"><![CDATA[Try again if the previous attempt was failed]]></phrase>
-    <phrase title="option_EHSS_TryAgain_explain" version_id="217" version_string="2.1.7"><![CDATA[If the add-on couldn't fetch any share count from any social sites in the previous attempt, tell the add-on to try again in the next attempt (basically, in the next page load).]]></phrase>
+    <phrase title="option_EHSS_TryAgain" version_id="220" version_string="2.2.0"><![CDATA[Try again if the previous attempt failed]]></phrase>
+    <phrase title="option_EHSS_TryAgain_explain" version_id="220" version_string="2.2.0"><![CDATA[If the add-on couldn't fetch any share count from ANY social sites in the previous attempt, tell the add-on to try again in the next attempt (next page load).]]></phrase>
     <phrase title="option_EHSS_TweetParamRelated" version_id="200" version_string="2.0.0"><![CDATA[Tweet parameter: related]]></phrase>
     <phrase title="option_EHSS_TweetParamRelated_explain" version_id="132" version_string="1.3.2"><![CDATA[<i>(Optional)</i> A comma-separated list of accounts related to the content of the shared URI.]]></phrase>
     <phrase title="option_EHSS_TweetParamVia" version_id="200" version_string="2.0.0"><![CDATA[Tweet parameter: via]]></phrase>
     <phrase title="option_EHSS_TweetParamVia_explain" version_id="132" version_string="1.3.2"><![CDATA[<i>(Optional)</i> Attribute the source of a Tweet to a Twitter username.]]></phrase>
     <phrase title="option_EHSS_UseFloatingButton" version_id="217" version_string="2.1.7"><![CDATA[Use floating share button]]></phrase>
-    <phrase title="option_EHSS_UseFloatingButton_explain" version_id="217" version_string="2.1.7"><![CDATA[Enabling this option will display a floating share button. When this option is enabled, all the options below will be disabled (except <i>View on threads > Post's Permalink</i>).]]></phrase>
+    <phrase title="option_EHSS_UseFloatingButton_explain" version_id="220" version_string="2.2.0"><![CDATA[Enabling this option will display a floating share button.<br>
+When this option is enabled, all the options below will be disabled (except <i>View on threads > Post's Permalink</i>).]]></phrase>
     <phrase title="option_EHSS_ViewOptions_aboveQuickReply" version_id="127" version_string="1.2.7"><![CDATA[Above Quick Reply]]></phrase>
     <phrase title="option_EHSS_ViewOptions_bottom" version_id="106" version_string="1.0.6"><![CDATA[Bottom]]></phrase>
     <phrase title="option_EHSS_ViewOptions_post" version_id="210" version_string="2.1.0"><![CDATA[Post's Permalink]]></phrase>
@@ -284,142 +287,313 @@ If your cURL version is older than version 7.6.12, the add-on will automatically
     <phrase title="option_EHSS_ViewThreads_explain" version_id="217" version_string="2.1.7"><![CDATA[Select where you want the Share This Page widget to show on threads. The default is on the bottom, but you can also have it enabled on the top, above the quick reply and/or within post's permalink.<br>
 <b>Notes:</b> Enabling it within post's permalink will add a "Share This Post" button instead. All of the buttons will then automatically use the post's permalink instead of the thread's. Also, share counts will be hidden if the overlay display was triggered from post's permalink, since the share counts represent the whole thread instead of individual post.]]></phrase>
     <phrase title="option_EHSS_ZeroFallback" version_id="200" version_string="2.0.0"><![CDATA[Fallback to zero]]></phrase>
-    <phrase title="option_EHSS_ZeroFallback_explain" version_id="210" version_string="2.1.0"><![CDATA[By enabling this option, whenever the add-on can't fetch share count from a particular social site, it will fallback to zero instead of not displaying any count.<br>
-<b>Note:</b> This will not make <i>Try again if the previous attempt was failed</i> option obsolete.]]></phrase>
+    <phrase title="option_EHSS_ZeroFallback_explain" version_id="220" version_string="2.2.0"><![CDATA[By enabling this option, whenever the add-on can't fetch share count from a particular social site, it will fallback to zero instead of not displaying any count.<br>
+<b>Note:</b> This will not make <i>Try again if the previous attempt failed</i> option obsolete.]]></phrase>
     <phrase title="option_group_EndlessHorizonSocialShare" version_id="1" version_string="1.0.0"><![CDATA[[Endless Horizon] Social Share]]></phrase>
     <phrase title="option_group_EndlessHorizonSocialShare_description" version_id="200" version_string="2.0.0"><![CDATA[Floating social share widget.<br>
 Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank">Bobby Wibowo</a>.]]></phrase>
+    <phrase title="style_property_EHSS_button_aboveQuickReply_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button.aboveQuickReply]]></phrase>
+    <phrase title="style_property_EHSS_button_aboveQuickReply_master" version_id="220" version_string="2.2.0"><![CDATA[Share Button Container (Above Quick Reply)]]></phrase>
+    <phrase title="style_property_EHSS_button_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button]]></phrase>
+    <phrase title="style_property_EHSS_button_fa_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button .fa]]></phrase>
+    <phrase title="style_property_EHSS_button_fa_master" version_id="220" version_string="2.2.0"><![CDATA[Share Button's Icon]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button.floating]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_fa_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button.floating .fa]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_fa_master" version_id="220" version_string="2.2.0"><![CDATA[Floating Share Button's Icon]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_master" version_id="220" version_string="2.2.0"><![CDATA[Floating Share Button Container]]></phrase>
+    <phrase title="style_property_EHSS_button_master" version_id="220" version_string="2.2.0"><![CDATA[Share Button Container]]></phrase>
+    <phrase title="style_property_EHSS_button_span_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button span]]></phrase>
+    <phrase title="style_property_EHSS_button_span_master" version_id="220" version_string="2.2.0"><![CDATA[Share Button's Text]]></phrase>
+    <phrase title="style_property_EHSS_delicious_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_delicious_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Delicious] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_delicious_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_delicious_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Delicious] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_email_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_email_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Email] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_email_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_email_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Email] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_facebook_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_facebook_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Facebook] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_facebook_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_facebook_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Facebook] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_fsbanim_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_fsbanim_master" version_id="220" version_string="2.2.0"><![CDATA[Enable animation for Floating Share Button]]></phrase>
+    <phrase title="style_property_EHSS_googleplus_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_googleplus_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Google+] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_googleplus_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_googleplus_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Google+] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_line_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_line_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[LINE] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_line_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_line_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[LINE] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_linkedin_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_linkedin_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[LinkedIn] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_linkedin_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_linkedin_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[LinkedIn] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_overlay_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_count_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss_count]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_count_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Item's Share Count]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay .ehss_items .ehss_inner ul li a span]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_fa_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay .ehss_items .ehss_inner ul li a span .fa, .ehss_overlay .ehss_items .ehss_inner ul li a span .ehss]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_fa_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Item's Icon]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_hover_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay .ehss_items .ehss_inner ul li a span:hover]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_hover_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Item's Button (Hover)]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_a_span_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Item's Button]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_inner_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay .ehss_items .ehss_inner]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_inner_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Items Inner Container]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_li_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay .ehss_items .ehss_inner ul li]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_li_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Item's Outer Layer]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_span_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_overlay .ehss_items .ehss_inner ul li > span]]></phrase>
+    <phrase title="style_property_EHSS_overlay_items_span_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Item's Text]]></phrase>
+    <phrase title="style_property_EHSS_overlay_master" version_id="220" version_string="2.2.0"><![CDATA[Overlay Container]]></phrase>
+    <phrase title="style_property_EHSS_pinterest_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_pinterest_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Pinterest] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_pinterest_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_pinterest_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Pinterest] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_reddit_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_reddit_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Reddit] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_reddit_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_reddit_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Reddit] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_sharebutton_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_sharebutton_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Share Button] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_stumbleupon_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_stumbleupon_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[StumbleUpon] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_stumbleupon_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_stumbleupon_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[StumbleUpon] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_tumblr_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_tumblr_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Tumblr] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_tumblr_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_tumblr_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Tumblr] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_twitter_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_twitter_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[Twitter] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_twitter_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_twitter_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[Twitter] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_vk_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_vk_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[ВКонтакте (VK] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_vk_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_vk_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[ВКонтакте (VK)] Icon Class]]></phrase>
+    <phrase title="style_property_EHSS_whatsapp_bg_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_whatsapp_bg_master" version_id="220" version_string="2.2.0"><![CDATA[[WhatsApp] Background Color]]></phrase>
+    <phrase title="style_property_EHSS_whatsapp_ic_description_master" version_id="220" version_string="2.2.0"><![CDATA[]]></phrase>
+    <phrase title="style_property_EHSS_whatsapp_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[WhatsApp] Icon Class]]></phrase>
+    <phrase title="style_property_group_EndlessHorizonAdvOG_master" version_id="220" version_string="2.2.0"><![CDATA[[Endless Horizon] Social Share]]></phrase>
+    <phrase title="style_property_group_EndlessHorizonAdvOG_master_desc" version_id="220" version_string="2.2.0"><![CDATA[Floating social share widget. Made with love by Bobby Wibowo.]]></phrase>
     <phrase title="view_EHSS_button_text" version_id="106" version_string="1.0.6"><![CDATA[Share This Page]]></phrase>
     <phrase title="view_EHSS_button_text_permalink" version_id="210" version_string="2.1.0"><![CDATA[Share This Post]]></phrase>
     <phrase title="view_EHSS_count_title_plural" version_id="141" version_string="1.4.1"><![CDATA[This page was shared {x} times]]></phrase>
     <phrase title="view_EHSS_count_title_singular" version_id="141" version_string="1.4.1"><![CDATA[This page was shared {x} time]]></phrase>
   </phrases>
   <route_prefixes/>
-  <style_properties/>
+  <style_properties>
+    <property property_name="EHSS_button" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Share Button Container" description=".ehss_button" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="10" sub_group=""><![CDATA[{"height":"auto","padding-all":"10px","width":"100%"}]]></property>
+    <property property_name="EHSS_button_fa" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Share Button's Icon" description=".ehss_button .fa" css_components="text,layout,extra" scalar_type="" scalar_parameters="" display_order="20" sub_group=""><![CDATA[{"extra":"position: relative;\ntop: -1px;\ntext-align: center;","font-size":"16px","width":"16px"}]]></property>
+    <property property_name="EHSS_button_span" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Share Button's Text" description=".ehss_button span" css_components="text,layout,extra" scalar_type="" scalar_parameters="" display_order="30" sub_group=""><![CDATA[{"font-size":"13px","margin-left":"10px"}]]></property>
+    <property property_name="EHSS_button_aboveQuickReply" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Share Button Container (Above Quick Reply)" description=".ehss_button.aboveQuickReply" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="40" sub_group=""><![CDATA[{"margin-bottom":"10px"}]]></property>
+    <property property_name="EHSS_button_floating" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Floating Share Button Container" description=".ehss_button.floating" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="50" sub_group=""><![CDATA[{"border-bottom-left-radius":"0","border-left-width":"0","border-top-left-radius":"0","extra":"box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .2), rgba(0, 0, 0, .2) 0px 1px 4px;\nz-index: 9999;","height":"42px","width":"42px"}]]></property>
+    <property property_name="EHSS_button_floating_fa" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Floating Share Button's Icon" description=".ehss_button.floating .fa" css_components="text,layout,extra" scalar_type="" scalar_parameters="" display_order="60" sub_group=""><![CDATA[[]]]></property>
+    <property property_name="EHSS_overlay" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Container" description=".ehss_overlay" css_components="background,layout,extra" scalar_type="" scalar_parameters="" display_order="70" sub_group=""><![CDATA[{"background-color":"rgba(0, 0, 0, .6)","extra":"z-index: 10000;"}]]></property>
+    <property property_name="EHSS_overlay_items_inner" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Items Inner Container" description=".ehss_overlay .ehss_items .ehss_inner" css_components="background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="80" sub_group=""><![CDATA[{"extra":"max-width: 720px;","padding-all":"1em","width":"80%"}]]></property>
+    <property property_name="EHSS_overlay_items_li" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Item's Outer Layer" description=".ehss_overlay .ehss_items .ehss_inner ul li" css_components="background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="90" sub_group=""><![CDATA[{"padding-all":"10px"}]]></property>
+    <property property_name="EHSS_overlay_items_span" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Item's Text" description=".ehss_overlay .ehss_items .ehss_inner ul li &gt; span" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="100" sub_group=""><![CDATA[{"color":"rgb(255, 255, 255)","extra":"text-shadow: 0 2px 2px rgba(0, 0, 0, .8);","font-size":"13px","font-weight":"bold","margin-top":"10px"}]]></property>
+    <property property_name="EHSS_overlay_items_a_span" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Item's Button" description=".ehss_overlay .ehss_items .ehss_inner ul li a span" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="110" sub_group=""><![CDATA[{"extra":"box-shadow: 0 2px 2px rgba(0, 0, 0, .4);","height":"100px","width":"100px"}]]></property>
+    <property property_name="EHSS_overlay_items_a_span_hover" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Item's Button (Hover)" description=".ehss_overlay .ehss_items .ehss_inner ul li a span:hover" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="120" sub_group=""><![CDATA[[]]]></property>
+    <property property_name="EHSS_overlay_items_a_span_count" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Item's Share Count" description=".ehss_overlay .ehss_items .ehss_inner ul li a span .ehss_count" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="130" sub_group=""><![CDATA[{"background-color":"rgb(255, 255, 255)","border-radius":"2px","extra":"position: absolute;\nbottom: 5px;\nright: 5px;\nbox-shadow: 0 2px 2px rgba(0, 0, 0, .4);","font-size":"12px","font-weight":"bold","padding-bottom":"1px","padding-left":"2px","padding-right":"2px","padding-top":"1px"}]]></property>
+    <property property_name="EHSS_overlay_items_a_span_fa" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Item's Icon" description=".ehss_overlay .ehss_items .ehss_inner ul li a span .fa, .ehss_overlay .ehss_items .ehss_inner ul li a span .ehss" css_components="text,layout,extra" scalar_type="" scalar_parameters="" display_order="140" sub_group=""><![CDATA[{"color":"rgb(255, 255, 255)","extra":"text-shadow: 0 2px 2px rgba(0, 0, 0, .4);","font-size":"50px"}]]></property>
+    <property property_name="EHSS_facebook_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Facebook] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="10" sub_group="EHSS_facebook"><![CDATA[fa fa-facebook]]></property>
+    <property property_name="EHSS_facebook_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Facebook] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="20" sub_group="EHSS_facebook"><![CDATA[#3b5998]]></property>
+    <property property_name="EHSS_twitter_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Twitter] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="50" sub_group="EHSS_twitter"><![CDATA[fa fa-twitter]]></property>
+    <property property_name="EHSS_twitter_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Twitter] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="60" sub_group="EHSS_twitter"><![CDATA[#00aced]]></property>
+    <property property_name="EHSS_googleplus_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Google+] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="100" sub_group="EHSS_googleplus"><![CDATA[fa fa-google-plus]]></property>
+    <property property_name="EHSS_googleplus_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Google+] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="110" sub_group="EHSS_googleplus"><![CDATA[#dd4b39]]></property>
+    <property property_name="EHSS_linkedin_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[LinkedIn] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="150" sub_group="EHSS_linkedin"><![CDATA[fa fa-linkedin]]></property>
+    <property property_name="EHSS_linkedin_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[LinkedIn] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="160" sub_group="EHSS_linkedin"><![CDATA[#007bb5]]></property>
+    <property property_name="EHSS_stumbleupon_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[StumbleUpon] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="200" sub_group="EHSS_stumbleupon"><![CDATA[fa fa-stumbleupon]]></property>
+    <property property_name="EHSS_stumbleupon_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[StumbleUpon] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="210" sub_group="EHSS_stumbleupon"><![CDATA[#eb4924]]></property>
+    <property property_name="EHSS_pinterest_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Pinterest] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="250" sub_group="EHSS_pinterest"><![CDATA[fa fa-pinterest]]></property>
+    <property property_name="EHSS_pinterest_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Pinterest] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="260" sub_group="EHSS_pinterest"><![CDATA[#cb2027]]></property>
+    <property property_name="EHSS_delicious_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Delicious] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="300" sub_group="EHSS_delicious"><![CDATA[fa fa-delicious]]></property>
+    <property property_name="EHSS_delicious_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Delicious] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="310" sub_group="EHSS_delicious"><![CDATA[#3399ff]]></property>
+    <property property_name="EHSS_tumblr_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Tumblr] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="350" sub_group="EHSS_tumblr"><![CDATA[fa fa-tumblr]]></property>
+    <property property_name="EHSS_tumblr_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Tumblr] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="360" sub_group="EHSS_tumblr"><![CDATA[#32506d]]></property>
+    <property property_name="EHSS_reddit_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Reddit] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="400" sub_group="EHSS_reddit"><![CDATA[fa fa-reddit-alien]]></property>
+    <property property_name="EHSS_reddit_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Reddit] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="410" sub_group="EHSS_reddit"><![CDATA[#5f99cf]]></property>
+    <property property_name="EHSS_vk_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[ВКонтакте (VK)] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="450" sub_group="EHSS_vk"><![CDATA[fa fa-vk]]></property>
+    <property property_name="EHSS_vk_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[ВКонтакте (VK] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="460" sub_group="EHSS_vk"><![CDATA[#45668e]]></property>
+    <property property_name="EHSS_whatsapp_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[WhatsApp] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="500" sub_group="EHSS_whatsapp"><![CDATA[fa fa-whatsapp]]></property>
+    <property property_name="EHSS_whatsapp_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[WhatsApp] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="510" sub_group="EHSS_whatsapp"><![CDATA[#4dc247]]></property>
+    <property property_name="EHSS_line_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[LINE] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="550" sub_group="EHSS_line"><![CDATA[ehss ehss-line]]></property>
+    <property property_name="EHSS_line_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[LINE] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="560" sub_group="EHSS_line"><![CDATA[#00c300]]></property>
+    <property property_name="EHSS_email_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Email] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="600" sub_group="EHSS_email"><![CDATA[fa fa-envelope]]></property>
+    <property property_name="EHSS_email_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Email] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="610" sub_group="EHSS_email"><![CDATA[#168de2]]></property>
+    <property property_name="EHSS_sharebutton_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Share Button] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="5" sub_group="EHSS_sharebutton"><![CDATA[fa fa-share-alt]]></property>
+    <property property_name="EHSS_fsbanim" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="Enable animation for Floating Share Button" description="" css_components="" scalar_type="boolean" scalar_parameters="" display_order="1" sub_group="EHSS_general"><![CDATA[1]]></property>
+    <group group_name="EndlessHorizonAdvOG" display_order="1500">
+      <title>[Endless Horizon] Social Share</title>
+      <description>Floating social share widget. Made with love by Bobby Wibowo.</description>
+    </group>
+  </style_properties>
   <templates>
-    <template title="eh_socialshare" version_id="217" version_string="2.1.7"><![CDATA[<xen:require css="eh_socialshare.css" />
-<xen:require js="js/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
+    <template title="eh_socialshare" version_id="220" version_string="2.2.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+<xen:require js="{$javaScriptSource}/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
 
-<button class="button primary ehss_button {xen:if '{$aboveQuickReply}', 'aboveQuickReply'}"{xen:if '{$permalink}', ' data-permalink="{$permalink}"'}><i class="fa fa-share-alt"></i><span>{xen:if '{$permalink}', '{xen:phrase view_EHSS_button_text_permalink}', '{xen:phrase view_EHSS_button_text}'}</span></button>]]></template>
-    <template title="eh_socialshare.css" version_id="217" version_string="2.1.7"><![CDATA[.ehss_button {
-	width: 100%;
-	height: auto;
-	padding: 10px;
-	line-height: normal; }
-.ehss_button .fa {
-	margin-right: 6px;
-	font-size: 16px;
+<button class="button primary ehss_button {xen:if '{$aboveQuickReply}', 'aboveQuickReply'}"{xen:if '{$permalink}', ' data-permalink="{$permalink}"'}><i class="{xen:property EHSS_sharebutton_ic}"></i><span>{xen:if '{$permalink}', '{xen:phrase view_EHSS_button_text_permalink}', '{xen:phrase view_EHSS_button_text}'}</span></button>]]></template>
+    <template title="eh_socialshare.css" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button
+{
 	line-height: normal;
-	vertical-align: middle; }
-.ehss_button span {
+	
+	{xen:property EHSS_button}
+}
+.ehss_button .fa
+{
+	line-height: normal;
+	vertical-align: middle;
+	
+	{xen:property EHSS_button_fa}
+}
+.ehss_button span
+{
 	display: inline-block;
-	font-size: 13px;
-	line-height: normal; 
-	vertical-align: middle; }
+	line-height: normal;
+	vertical-align: middle;
+	
+	{xen:property EHSS_button_span}
+}
 
-.ehss_button.aboveQuickReply { margin-bottom: 10px; }
+.ehss_button.aboveQuickReply
+{
+	{xen:property EHSS_button_aboveQuickReply}
+}
 
-.ehss_button.floating {
+.ehss_button.floating
+{
 	position: fixed;
-	width: 42px;
-	height: 42px;
+	top: 50%;
 	left: 0;
-	bottom: 40px;
-	border-left-width: 0;
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
-	box-shadow: 0 2px 2px rgba(0,0,0,.2);
-	z-index: 9999; }
+	margin-top: -{xen:calc '{xen:property EHSS_button_floating.height} / 2'}px;
+	text-align: center;
+	
+	{xen:property EHSS_button_floating}
+}
 
-.ehss_button.floating .fa { margin-right: 0; }
+.ehss_button.floating .fa
+{
+	{xen:property EHSS_button_floating_fa}
+}
+
+<xen:if is="{xen:property EHSS_fsbanim}">
+.ehss_button.floating
+{
+	text-align: left;
+	width: auto;
+	white-space: nowrap;
+	overflow: hidden;
+	opacity: 0;
+}
+</xen:if>
 
 
-/** OVERLAY TECHNIQUE, COURTESY OF SOCIAL: http://tolgaergin.com/files/social/index.html **/
+<xen:comment>/* Overlay design, courtesy of Social: http://tolgaergin.com/files/social/index.html */</xen:comment>
 
-.ehss_overlay {
+.ehss_overlay
+{
 	position: fixed;
 	top: 0;
 	left: 0;
-	background: rgba(0, 0, 0, .6);
-	z-index: 10000;
+	text-align: center;
+	overflow-y: auto;
 	width: 100%;
 	height: 100%;
-	text-align: center;
-	overflow-y: auto; }
-.ehss_overlay .ehss_items {
+	
+	{xen:property EHSS_overlay}
+}
+.ehss_overlay .ehss_items
+{
 	position: absolute;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
-	text-align: center; }
-.ehss_overlay .ehss_items:before {
+	text-align: center;
+}
+.ehss_overlay .ehss_items:before
+{
 	content: '';
 	height: 100%;
 	display: inline-block;
-	vertical-align: middle; }
-.ehss_overlay .ehss_items .ehss_inner {
+	vertical-align: middle;
+}
+.ehss_overlay .ehss_items .ehss_inner
+{
 	display: inline-block;
 	vertical-align: middle;
-	width: 80%;
-	max-width: 720px;
-	padding: 1em; }
-.ehss_overlay .ehss_items .ehss_inner ul li {
+	
+	{xen:property EHSS_overlay_items_inner}
+}
+.ehss_overlay .ehss_items .ehss_inner ul li
+{
 	display: inline-block;
-	padding: 10px; }
-.ehss_overlay .ehss_items .ehss_inner ul li > span {
+	
+	{xen:property EHSS_overlay_items_li}
+}
+.ehss_overlay .ehss_items .ehss_inner ul li > span
+{
 	display: block;
-	color: white;
-	font-weight: bold;
-	font-size: 13px;
-	margin-top: 10px;
-	text-shadow: 0 2px 2px rgba(0, 0, 0, .8); }
-.ehss_overlay .ehss_items .ehss_inner ul li a span {
+	
+	{xen:property EHSS_overlay_items_span}
+}
+.ehss_overlay .ehss_items .ehss_inner ul li a span
+{
 	display: block;
-	width: 100px;
-	height: 100px;
-	box-shadow: 0 2px 2px rgba(0, 0, 0, .4);
 	transform: translateZ(0);
 	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
+	        backface-visibility: hidden;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-transition-duration: 0.5s;
-	transition-duration: 0.5s;
-	cursor: pointer; }
-.ehss_overlay .ehss_items .ehss_inner ul li a span:hover {
+	        transition-duration: 0.5s;
+	cursor: pointer;
+	
+	{xen:property EHSS_overlay_items_a_span}
+}
+.ehss_overlay .ehss_items .ehss_inner ul li a span:hover
+{
 	-webkit-transform: scale(1.2);
-	transform: scale(1.2);
+	        transform: scale(1.2);
 	-webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
-	transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36); }
-.ehss_overlay .ehss_items .ehss_inner ul li a span:before {
+	        transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+	
+	{xen:property EHSS_overlay_items_a_span_hover}
+}
+.ehss_overlay .ehss_items .ehss_inner ul li a span:before
+{
 	content: '';
 	height: 100%;
 	display: inline-block;
-	vertical-align: middle; }
-.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss_count {
-	position: absolute;
-	font-style: normal;
-	font-weight: bold;
-	background-color: white;
-	bottom: 5px;
-	right: 5px;
-	padding: 1px 2px;
-	font-size: 12px;
-	border-radius: 2px;
-	box-shadow: 0 2px 2px rgba(0, 0, 0, .4); }
-.ehss_overlay .ehss_items .ehss_inner ul li a span .fa,
-.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss {
 	vertical-align: middle;
-	color: white;
-	font-size: 50px;
-	text-shadow: 0 2px 2px rgba(0, 0, 0, .4); }
-.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss {
+}
+.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss_count
+{
+	font-style: normal;
+	
+	{xen:property EHSS_overlay_items_a_span_count}
+}
+.ehss_overlay .ehss_items .ehss_inner ul li a span .fa,
+.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss
+{
+	vertical-align: middle;
+	
+	{xen:property EHSS_overlay_items_a_span_fa}
+}
+.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss
+{
 	width: 100%;
 	height: 100%;
 	display: inline-block;
-	background-size: contain; }
-.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss.ehss-line {
-	background-image: url('styles/endlesshorizon/socialshare/line.png'); }
+	background-size: contain;
+}
+.ehss_overlay .ehss_items .ehss_inner ul li a span .ehss.ehss-line
+{
+	background-image: url('styles/endlesshorizon/socialshare/line.png');
+}
 
 <xen:if is="{xen:property enableResponsive}">
 @media (max-width: {xen:property maxResponsiveNarrowWidth})
@@ -427,110 +601,127 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 	.Responsive .ehss_overlay .ehss_items .ehss_inner { width: auto; }
 }
 </xen:if>]]></template>
-    <template title="eh_socialshare_floating" version_id="217" version_string="2.1.7"><![CDATA[<xen:require css="eh_socialshare.css" />
-<xen:require js="js/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
+    <template title="eh_socialshare_floating" version_id="220" version_string="2.2.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+<xen:require js="{$javaScriptSource}/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
 
-<button class="button primary ehss_button floating" title="{xen:phrase view_EHSS_button_text}"><i class="fa fa-share-alt"></i></button>]]></template>
-    <template title="eh_socialshare_js" version_id="214" version_string="2.1.4"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
+<button class="button primary ehss_button floating" title="{xen:if '!{xen:property EHSS_fsbanim}', '{xen:phrase view_EHSS_button_text}'}" data-w="{xen:property EHSS_button_floating.width}"><i class="{xen:property EHSS_sharebutton_ic}"></i>{xen:if '{xen:property EHSS_fsbanim}', '<span>{xen:phrase view_EHSS_button_text}</span>'}</button>]]></template>
+    <template title="eh_socialshare_js" version_id="220" version_string="2.2.0"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
     <xen:set var="$EHSS_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener2" method="getShareCounts"></xen:callback></xen:set>
 </xen:if>
 
 <script type="text/javascript">
-    var EHSS_settings = {
-            "url"     : "{$requestPaths.fullUri}",
-            "count-p" : "{xen:phrase view_EHSS_count_title_plural}",
-            "count-s" : "{xen:phrase view_EHSS_count_title_singular}",
-            "counts"  : "{$EHSS_counts}",
-            "debug"   : {$xenOptions.EHSS_JSDebug}
+    var EHSS_settings =
+        {
+            "url"     : '{$requestPaths.fullUri}',
+            "count-p" : '{xen:phrase view_EHSS_count_title_plural}',
+            "count-s" : '{xen:phrase view_EHSS_count_title_singular}',
+            "counts"  : '{$EHSS_counts}',
+            "debug"   : {$xenOptions.EHSS_JSDebug},
+			"fsbanim" : {xen:property EHSS_fsbanim}
         },
-        /** To read more about the parameters of windows.open(), please read this: http://docs.webplatform.org/wiki/dom/Window/open **/
+        <xen:comment>
+        /* To read more about the parameters of windows.open(), please read this: http://docs.webplatform.org/wiki/dom/Window/open
+         *
+         * Legend:
+         * ic   = Icon's Class Name
+         * bg   = Icon's Background Color
+         * url  = Popup URL
+         * dim  = Popup's Dimension (width * height)
+         * scid = Share Count's ID
+         * pin  = (Key) Pinterest
+         * pb   = Blank Popup (open popup in a new tab)
+         */
+        </xen:comment>
         EHSS_sites = {<xen:if is="{$xenOptions.EHSS_SocialSites.facebook}">
             "Facebook": {
-                iconClass:    "fa fa-facebook",
-                bgColor:      "#3b5998",
-                popupURL:     "https://www.facebook.com/sharer/sharer.php?u={url}&t={title}",
-                popupSize:    { w: 900, h: 500 },
-                shareCountID: "facebook"
+                ic:   "{xen:property EHSS_facebook_ic}",
+                bg:   "{xen:property EHSS_facebook_bg}",
+                url:  "https://www.facebook.com/sharer/sharer.php?u={url}&t={title}",
+                dim:  { w: 900, h: 500 },
+                scid: "facebook"
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.twitter}">
             "Twitter": {
-                iconClass:    "fa fa-twitter",
-                bgColor:      "#00aced",
-                popupURL:     "https://twitter.com/intent/tweet?text={title}&url={url}{xen:if '{$xenOptions.EHSS_TweetParamVia}', '&via={$xenOptions.EHSS_TweetParamVia}'}{xen:if '{$xenOptions.EHSS_TweetParamRelated}', '&related={$xenOptions.EHSS_TweetParamRelated}'}",
-                popupSize:    { w: 650, h: 360 },
-                shareCountID: "twitter"
+                ic:   "{xen:property EHSS_twitter_ic}",
+                bg:   "{xen:property EHSS_twitter_bg}",
+                url:  "https://twitter.com/intent/tweet?text={title}&url={url}{xen:if '{$xenOptions.EHSS_TweetParamVia}', '&via={$xenOptions.EHSS_TweetParamVia}'}{xen:if '{$xenOptions.EHSS_TweetParamRelated}', '&related={$xenOptions.EHSS_TweetParamRelated}'}",
+                dim:  { w: 650, h: 360 },
+                scid: "twitter"
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.googleplus}">
             "Google+": {
-                iconClass:    "fa fa-google-plus",
-                bgColor:      "#dd4b39",
-                popupURL:     "https://plus.google.com/share?url={url}",
-                popupSize:    { w: 600, h: 460 },
-                shareCountID: "googleplus"
+                ic:   "{xen:property EHSS_googleplus_ic}",
+                bg:   "{xen:property EHSS_googleplus_bg}",
+                url:  "https://plus.google.com/share?url={url}",
+                dim:  { w: 600, h: 460 },
+                scid: "googleplus"
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.linkedin}">
             "LinkedIn": {
-                iconClass:    "fa fa-linkedin",
-                bgColor:      "#007bb5",
-                popupURL:     "https://www.linkedin.com/cws/share?url={url}&token=&isFramed=true",
-                popupSize:    { w: 550, h: 550 },
-                shareCountID: "linkedin"
+                ic:   "{xen:property EHSS_linkedin_ic}",
+                bg:   "{xen:property EHSS_linkedin_bg}",
+                url:  "https://www.linkedin.com/cws/share?url={url}&token=&isFramed=true",
+                dim:  { w: 550, h: 550 },
+                scid: "linkedin"
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.stumbleupon}">
             "StumbleUpon": {
-                iconClass:    "fa fa-stumbleupon",
-                bgColor:      "#eb4924",
-                popupURL:     "https://www.stumbleupon.com/badge/?url={url}",
-                popupSize:    { w: 550, h: 550 }
+                ic:   "{xen:property EHSS_stumbleupon_ic}",
+                bg:   "{xen:property EHSS_stumbleupon_bg}",
+                url:  "https://www.stumbleupon.com/badge/?url={url}",
+                dim:  { w: 550, h: 550 }
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.pinterest}">
             "Pinterest": {
-                iconClass:    "fa fa-pinterest",
-                bgColor:      "#cb2027",
-                popupURL:     "https://pinterest.com/pin/create/button/?url={url}&description={title}{xen:if '{$xenOptions.EHSS_PinterestMedia}', '&media={$xenOptions.EHSS_PinterestMedia}'}",
-                popupSize:    { w: 700, h: 610 },
-                shareCountID: "pinterest",
-                pinterest:    true
+                ic:   "{xen:property EHSS_pinterest_ic}",
+                bg:   "{xen:property EHSS_pinterest_bg}",
+                url:  "https://pinterest.com/pin/create/button/?url={url}&description={title}{xen:if '{$xenOptions.EHSS_PinterestMedia}', '&media={$xenOptions.EHSS_PinterestMedia}'}",
+                dim:  { w: 700, h: 610 },
+                scid: "pinterest",
+                pin:  1
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.delicious}">
             "Delicious": {
-                iconClass:    "fa fa-delicious",
-                bgColor:      "#3399ff",
-                popupURL:     "https://www.delicious.com/save?v=5&noui&jump=close&url={url}&title={title}",
-                popupSize:    { w: 550, h: 550 }
+                ic:   "{xen:property EHSS_delicious_ic}",
+                bg:   "{xen:property EHSS_delicious_bg}",
+                url:  "https://www.delicious.com/save?v=5&noui&jump=close&url={url}&title={title}",
+                dim:  { w: 550, h: 550 }
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.tumblr}">
             "Tumblr": {
-                iconClass:    "fa fa-tumblr",
-                bgColor:      "#32506d",
-                popupURL:     "https://www.tumblr.com/share/link?url={url}&name={title}",
-                popupSize:    { w: 550, h: 550 }
+                ic:   "{xen:property EHSS_tumblr_ic}",
+                bg:   "{xen:property EHSS_tumblr_bg}",
+                url:  "https://www.tumblr.com/share/link?url={url}&name={title}",
+                dim:  { w: 550, h: 550 }
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.reddit}">
             "Reddit": {
-                iconClass:    "fa fa-reddit-alien",
-                bgColor:      "#5f99cf",
-                popupURL:     "https://www.reddit.com/submit?url={url}&title={title}",
-                popupSize:    { w: 550, h: 550 }
+                ic:   "{xen:property EHSS_reddit_ic}",
+                bg:   "{xen:property EHSS_reddit_bg}",
+                url:  "https://www.reddit.com/submit?url={url}&title={title}",
+                dim:  { w: 550, h: 550 }
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.vk}">
-            "ВКонтакте": {
-                iconClass:    "fa fa-vk",
-                bgColor:      "#45668e",
-                popupURL:     "http://vk.com/share.php?url={url}",
-                popupSize:    { w: 550, h: 550 },
-                shareCountID: "vk"
+            "ВКонтакте (VK)": {
+                ic:   "{xen:property EHSS_vk_ic}",
+                bg:   "{xen:property EHSS_vk_bg}",
+                url:  "http://vk.com/share.php?url={url}",
+                dim:  { w: 550, h: 550 },
+                scid: "vk"
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.whatsapp}">
             "WhatsApp": {
-                iconClass:    "fa fa-whatsapp",
-                bgColor:      "#4dc247",
-                popupURL:     "whatsapp://send?text={title}%20{url}",
-                popupBlank:   true
+                ic:   "{xen:property EHSS_whatsapp_ic}",
+                bg:   "{xen:property EHSS_whatsapp_bg}",
+                url:  "whatsapp://send?text={title}%20{url}",
+                pb:   1
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.line}">
             "LINE": {
-                iconClass:    "ehss ehss-line",
-                bgColor:      "#00c300",
-                popupURL:     "http://line.me/R/msg/text/{title}%20{url}",
-                popupBlank:   true
+                ic:   "{xen:property EHSS_line_ic}",
+                bg:   "{xen:property EHSS_line_bg}",
+                url:  "http://line.me/R/msg/text/{title}%20{url}",
+                pb:   1
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.email}">
-            "E-Mail": {
-                iconClass:    "fa fa-envelope",
-                bgColor:      "#168de2",
-                popupURL:     "mailto:?{xen:if '{$xenOptions.EHSS_EmailSubject}', 'subject={$xenOptions.EHSS_EmailSubject}&'}{xen:if '{$xenOptions.EHSS_EmailBody}', 'body={$xenOptions.EHSS_EmailBody}'}", // "&" was intentionally written on the first conditional, just in case admin wanted to disable subject, but not body
-                popupBlank:   true
+            "Email": {
+                ic:   "{xen:property EHSS_email_ic}",
+                bg:   "{xen:property EHSS_email_bg}",
+                url:  "mailto:?{xen:if '{$xenOptions.EHSS_EmailSubject}', 'subject={$xenOptions.EHSS_EmailSubject}&'}{xen:if '{$xenOptions.EHSS_EmailBody}', 'body={$xenOptions.EHSS_EmailBody}'}",
+                pb:   1
             },</xen:if>
         };
+	<xen:if is="{xen:property EHSS_fsbanim}">
+		
+	</xen:if>
 </script>]]></template>
   </templates>
   <public_template_modifications>
