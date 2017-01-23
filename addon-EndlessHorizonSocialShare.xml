@@ -208,6 +208,12 @@ bottom</sub_options>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="306"/>
     </option>
+    <option option_id="enableFacebookSdk" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="30"/>
+    </option>
   </optiongroups>
   <permissions>
     <permission_groups/>
@@ -289,6 +295,8 @@ When this option is enabled, all the options below will be disabled (except <i>V
     <phrase title="option_EHSS_ZeroFallback" version_id="200" version_string="2.0.0"><![CDATA[Fallback to zero]]></phrase>
     <phrase title="option_EHSS_ZeroFallback_explain" version_id="220" version_string="2.2.0"><![CDATA[By enabling this option, whenever the add-on can't fetch share count from a particular social site, it will fallback to zero instead of not displaying any count.<br>
 <b>Note:</b> This will not make <i>Try again if the previous attempt failed</i> option obsolete.]]></phrase>
+    <phrase title="option_enableFacebookSdk" version_id="221" version_string="2.2.1"><![CDATA[Enable Facebook SDK]]></phrase>
+    <phrase title="option_enableFacebookSdk_explain" version_id="221" version_string="2.2.1"><![CDATA[Originally, Facebook SDK would be enabled when you chose to enable <a href="?options/list/seo#_facebookLike" target="_blank">Facebook Like / Recommended Feature</a> in <a href="options/list/seo" target="_blank">Search Engine Optimization (SEO)</a> options, but since Facebook SDK is not required by this add-on, it's being forcibly disabled. If you need Facebook SDK for anything else, such as Facebook Comments plugin, you will have to enable it through this option.]]></phrase>
     <phrase title="option_group_EndlessHorizonSocialShare" version_id="1" version_string="1.0.0"><![CDATA[[Endless Horizon] Social Share]]></phrase>
     <phrase title="option_group_EndlessHorizonSocialShare_description" version_id="200" version_string="2.0.0"><![CDATA[Floating social share widget.<br>
 Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank">Bobby Wibowo</a>.]]></phrase>
@@ -750,6 +758,10 @@ $0]]></replace>
       <replace><![CDATA[$0
 <xen:if is="{$xenOptions.EHSS_ViewThreadsList.bottom}"><xen:include template="share_page"></xen:include></xen:if>]]></replace>
     </modification>
+    <modification template="page_container_js_body" modification_key="EHSS_TM_pcjb_001" description="Hook to page_container_js_body template (adds ability to forcibly enable Facebook SDK)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[XenForo.Facebook.forceInit = {xen:if $facebookSdk, true, false};]]></find>
+      <replace><![CDATA[XenForo.Facebook.forceInit = {xen:if '{$xenOptions.enableFacebookSdk}', true, false};]]></replace>
+    </modification>
     <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Append comment to tell add-on where to include eh_socialshare_js template" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<!--XenForo_Require:JS-->]]></find>
       <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites})"><script type="text/javascript" data-ehss="true"></script></xen:if>
@@ -782,10 +794,7 @@ $0]]></replace>
     </modification>
     <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
-      <replace><![CDATA[<xen:if is="{$xenOptions.facebookLike}">
-	<xen:container var="$facebookSdk">1</xen:container>
-</xen:if>
-<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
 	<div class="sharePage jsOnly">
 		<xen:hook name="share_page_options">
 			<xen:include template="eh_socialshare" />
@@ -795,10 +804,7 @@ $0]]></replace>
     </modification>
     <modification template="sidebar_share_page" modification_key="EHSS_TM_sss_001" description="Replace sidebar_share_page template completely (share page widget on sidebar)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
-      <replace><![CDATA[<xen:if is="{$xenOptions.facebookLike}">
-	<xen:container var="$facebookSdk">1</xen:container>
-</xen:if>
-<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
 	<div class="section infoBlock sharePage jsOnly">
 		<div class="secondaryContent">
 			<xen:hook name="share_page_options">
