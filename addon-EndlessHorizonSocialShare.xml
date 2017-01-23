@@ -433,7 +433,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
     </group>
   </style_properties>
   <templates>
-    <template title="eh_socialshare" version_id="220" version_string="2.2.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+    <template title="eh_socialshare" version_id="221" version_string="2.2.1"><![CDATA[<xen:require css="eh_socialshare.css" />
 <xen:require js="{$javaScriptSource}/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
 
 <button class="button primary ehss_button {xen:if '{$aboveQuickReply}', 'aboveQuickReply'}"{xen:if '{$permalink}', ' data-permalink="{$permalink}"'}><i class="{xen:property EHSS_sharebutton_ic}"></i><span>{xen:if '{$permalink}', '{xen:phrase view_EHSS_button_text_permalink}', '{xen:phrase view_EHSS_button_text}'}</span></button>]]></template>
@@ -601,11 +601,11 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 	.Responsive .ehss_overlay .ehss_items .ehss_inner { width: auto; }
 }
 </xen:if>]]></template>
-    <template title="eh_socialshare_floating" version_id="220" version_string="2.2.0"><![CDATA[<xen:require css="eh_socialshare.css" />
+    <template title="eh_socialshare_floating" version_id="221" version_string="2.2.1"><![CDATA[<xen:require css="eh_socialshare.css" />
 <xen:require js="{$javaScriptSource}/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
 
 <button class="button primary ehss_button floating" title="{xen:if '!{xen:property EHSS_fsbanim}', '{xen:phrase view_EHSS_button_text}'}" data-w="{xen:property EHSS_button_floating.width}"><i class="{xen:property EHSS_sharebutton_ic}"></i>{xen:if '{xen:property EHSS_fsbanim}', '<span>{xen:phrase view_EHSS_button_text}</span>'}</button>]]></template>
-    <template title="eh_socialshare_js" version_id="220" version_string="2.2.0"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
+    <template title="eh_socialshare_js" version_id="221" version_string="2.2.1"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
     <xen:set var="$EHSS_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener2" method="getShareCounts"></xen:callback></xen:set>
 </xen:if>
 
@@ -719,9 +719,6 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
                 pb:   1
             },</xen:if>
         };
-	<xen:if is="{xen:property EHSS_fsbanim}">
-		
-	</xen:if>
 </script>]]></template>
   </templates>
   <public_template_modifications>
@@ -731,7 +728,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 <xen:if is="{$xenOptions.EHSS_EnableFontAwesome} && {$xenOptions.EHSS_FontAwesomeCssPath}"><link href="{$xenOptions.EHSS_FontAwesomeCssPath}" rel="stylesheet"></xen:if>]]></replace>
     </modification>
     <modification template="PAGE_CONTAINER" modification_key="EHSS_TM_PC_002" description="Hook to PAGE_CONTAINER template (adds ability to show floating share button)" execution_order="10" enabled="1" action="str_replace">
-      <find><![CDATA[<xen:hook name="body">]]></find>
+      <find><![CDATA[</footer>]]></find>
       <replace><![CDATA[$0
 <xen:if is="{$xenOptions.EHSS_UseFloatingButton}"><xen:include template="eh_socialshare_floating" /></xen:if>]]></replace>
     </modification>
@@ -785,7 +782,10 @@ $0]]></replace>
     </modification>
     <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
+      <replace><![CDATA[<xen:if is="{$xenOptions.facebookLike}">
+	<xen:container var="$facebookSdk">1</xen:container>
+</xen:if>
+<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
 	<div class="sharePage jsOnly">
 		<xen:hook name="share_page_options">
 			<xen:include template="eh_socialshare" />
@@ -795,7 +795,10 @@ $0]]></replace>
     </modification>
     <modification template="sidebar_share_page" modification_key="EHSS_TM_sss_001" description="Replace sidebar_share_page template completely (share page widget on sidebar)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
+      <replace><![CDATA[<xen:if is="{$xenOptions.facebookLike}">
+	<xen:container var="$facebookSdk">1</xen:container>
+</xen:if>
+<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
 	<div class="section infoBlock sharePage jsOnly">
 		<div class="secondaryContent">
 			<xen:hook name="share_page_options">
