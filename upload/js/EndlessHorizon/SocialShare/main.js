@@ -119,7 +119,7 @@ $(document).ready(function()
         if (overlay.css('display') == 'none') {
             trigger = this;
             // Hide share count if the trigger button was from post's permalink (since the share counts represents the whole thread)
-            overlay.find('.ehss_count').attr('style', ($(trigger).data('permalink') ? 'display: none' : ''));
+            overlay.find('.ehss_count').css('display', ($(trigger).data('permalink') ? 'none' : 'block'));
             overlay.fadeToggle(400, "swing");
         }
     });
