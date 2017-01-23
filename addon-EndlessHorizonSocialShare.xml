@@ -80,8 +80,15 @@
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="335"/>
     </option>
+    <option option_id="EHSS_FloatingButtonPosition" edit_format="select" data_type="string" can_backup="1">
+      <default_value>a:2:{s:4:"left";b:1;s:5:"right";b:0;}</default_value>
+      <edit_format_params>left={xen:phrase option_EHSS_Position_left}
+right={xen:phrase option_EHSS_Position_right}</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="105"/>
+    </option>
     <option option_id="EHSS_FontAwesomeCssPath" edit_format="textbox" data_type="string" can_backup="1">
-      <default_value>://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css</default_value>
+      <default_value>//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css</default_value>
       <edit_format_params></edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="20"/>
@@ -251,6 +258,8 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_EnableFontAwesome_explain" version_id="217" version_string="2.1.7"><![CDATA[If you haven't added Font Awesome by your own, you can use this add-on to add it (don't forget to fill <i>Font Awesome CSS path</i> option below). Please note, this add-on will add it to all pages served by your XenForo installation.]]></phrase>
     <phrase title="option_EHSS_FetchingDebug" version_id="200" version_string="2.0.0"><![CDATA[Enable count fetching debug messages]]></phrase>
     <phrase title="option_EHSS_FetchingDebug_explain" version_id="217" version_string="2.1.7"><![CDATA[Enabling this option will make the add-on output debug messages when fetching share count from any social sites into your Server Error Logs. If some social sites have never returned share count to your server, you may want to know why by enabling this option.]]></phrase>
+    <phrase title="option_EHSS_FloatingButtonPosition" version_id="222" version_string="2.2.2"><![CDATA[Floating share button's position]]></phrase>
+    <phrase title="option_EHSS_FloatingButtonPosition_explain" version_id="222" version_string="2.2.2"><![CDATA[]]></phrase>
     <phrase title="option_EHSS_FontAwesomeCssPath" version_id="200" version_string="2.0.0"><![CDATA[Font Awesome CSS path]]></phrase>
     <phrase title="option_EHSS_FontAwesomeCssPath_explain" version_id="133" version_string="1.3.3"><![CDATA[Path to the main CSS of Font Awesome. This can be a relative or a fixed path.]]></phrase>
     <phrase title="option_EHSS_JSDebug" version_id="200" version_string="2.0.0"><![CDATA[Enable JavaScript debug messages]]></phrase>
@@ -259,6 +268,8 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_PinterestMedia_explain" version_id="220" version_string="2.2.0"><![CDATA[A fixed path to a JPG, PNG or GIF image that will be used as pin for Pinterest share.<br>
 Leaving this option blank will tell the add-on to use the image you specified for <a href="https://xenforo.com/help/facebook/#open-graph" target="_blank">Open Graph</a> whenever available (the add-on will only use the first found Open Graph image).<br>
 <b style="color: red">NOTICE:</b> Do not use a relative path! Pinterest will try to fetch the image remotely, so it will need direct access to the image. Thus it will also fail if you have an anti image hotlinking service enabled.]]></phrase>
+    <phrase title="option_EHSS_Position_left" version_id="222" version_string="2.2.2"><![CDATA[Left]]></phrase>
+    <phrase title="option_EHSS_Position_right" version_id="222" version_string="2.2.2"><![CDATA[Right]]></phrase>
     <phrase title="option_EHSS_ShareCounter" version_id="200" version_string="2.0.0"><![CDATA[Enable share counts]]></phrase>
     <phrase title="option_EHSS_ShareCounter_explain" version_id="220" version_string="2.2.0"><![CDATA[<i>(Optional)</i> Choose sites which you want their share counts to be fetched by the add-on. Please note that even if you have a site disabled in the <i>Enable social sites</i> option, the add-on will still fetch its share count as long as you have it enabled in this option, so if you want to disable a site, make sure you disable the share count as well.<br>
 If you want to use Twitter, you must register your forums at <a href="http://opensharecount.com/" target="_blank">OpenShareCount</a>.<br>
@@ -305,10 +316,14 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
     <phrase title="style_property_EHSS_button_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button]]></phrase>
     <phrase title="style_property_EHSS_button_fa_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button .fa]]></phrase>
     <phrase title="style_property_EHSS_button_fa_master" version_id="220" version_string="2.2.0"><![CDATA[Share Button's Icon]]></phrase>
-    <phrase title="style_property_EHSS_button_floating_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button.floating]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_description_master" version_id="222" version_string="2.2.2"><![CDATA[.ehss_button.floating]]></phrase>
     <phrase title="style_property_EHSS_button_floating_fa_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button.floating .fa]]></phrase>
     <phrase title="style_property_EHSS_button_floating_fa_master" version_id="220" version_string="2.2.0"><![CDATA[Floating Share Button's Icon]]></phrase>
-    <phrase title="style_property_EHSS_button_floating_master" version_id="220" version_string="2.2.0"><![CDATA[Floating Share Button Container]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_left_description_master" version_id="222" version_string="2.2.2"><![CDATA[.ehss_button.floating]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_left_master" version_id="222" version_string="2.2.2"><![CDATA[Floating Share Button Container (Left)]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_master" version_id="222" version_string="2.2.2"><![CDATA[Floating Share Button Container (Global)]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_right_description_master" version_id="222" version_string="2.2.2"><![CDATA[.ehss_button.floating]]></phrase>
+    <phrase title="style_property_EHSS_button_floating_right_master" version_id="222" version_string="2.2.2"><![CDATA[Floating Share Button Container (Right)]]></phrase>
     <phrase title="style_property_EHSS_button_master" version_id="220" version_string="2.2.0"><![CDATA[Share Button Container]]></phrase>
     <phrase title="style_property_EHSS_button_span_description_master" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button span]]></phrase>
     <phrase title="style_property_EHSS_button_span_master" version_id="220" version_string="2.2.0"><![CDATA[Share Button's Text]]></phrase>
@@ -397,7 +412,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
     <property property_name="EHSS_button_fa" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Share Button's Icon" description=".ehss_button .fa" css_components="text,layout,extra" scalar_type="" scalar_parameters="" display_order="20" sub_group=""><![CDATA[{"extra":"position: relative;\ntop: -1px;\ntext-align: center;","font-size":"16px","width":"16px"}]]></property>
     <property property_name="EHSS_button_span" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Share Button's Text" description=".ehss_button span" css_components="text,layout,extra" scalar_type="" scalar_parameters="" display_order="30" sub_group=""><![CDATA[{"font-size":"13px","margin-left":"10px"}]]></property>
     <property property_name="EHSS_button_aboveQuickReply" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Share Button Container (Above Quick Reply)" description=".ehss_button.aboveQuickReply" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="40" sub_group=""><![CDATA[{"margin-bottom":"10px"}]]></property>
-    <property property_name="EHSS_button_floating" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Floating Share Button Container" description=".ehss_button.floating" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="50" sub_group=""><![CDATA[{"border-bottom-left-radius":"0","border-left-width":"0","border-top-left-radius":"0","extra":"box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .2), rgba(0, 0, 0, .2) 0px 1px 4px;\nz-index: 9999;","height":"42px","width":"42px"}]]></property>
+    <property property_name="EHSS_button_floating_left" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Floating Share Button Container (Left)" description=".ehss_button.floating" css_components="border,extra" scalar_type="" scalar_parameters="" display_order="51" sub_group=""><![CDATA[{"border-bottom-left-radius":"0","border-left-width":"0","border-top-left-radius":"0"}]]></property>
     <property property_name="EHSS_button_floating_fa" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Floating Share Button's Icon" description=".ehss_button.floating .fa" css_components="text,layout,extra" scalar_type="" scalar_parameters="" display_order="60" sub_group=""><![CDATA[[]]]></property>
     <property property_name="EHSS_overlay" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Container" description=".ehss_overlay" css_components="background,layout,extra" scalar_type="" scalar_parameters="" display_order="70" sub_group=""><![CDATA[{"background-color":"rgba(0, 0, 0, .6)","extra":"z-index: 10000;"}]]></property>
     <property property_name="EHSS_overlay_items_inner" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Overlay Items Inner Container" description=".ehss_overlay .ehss_items .ehss_inner" css_components="background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="80" sub_group=""><![CDATA[{"extra":"max-width: 720px;","padding-all":"1em","width":"80%"}]]></property>
@@ -435,6 +450,8 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
     <property property_name="EHSS_email_bg" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Email] Background Color" description="" css_components="" scalar_type="color" scalar_parameters="" display_order="610" sub_group="EHSS_email"><![CDATA[#168de2]]></property>
     <property property_name="EHSS_sharebutton_ic" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="[Share Button] Icon Class" description="" css_components="" scalar_type="" scalar_parameters="" display_order="5" sub_group="EHSS_sharebutton"><![CDATA[fa fa-share-alt]]></property>
     <property property_name="EHSS_fsbanim" property_type="scalar" definition="1" group_name="EndlessHorizonAdvOG" title="Enable animation for Floating Share Button" description="" css_components="" scalar_type="boolean" scalar_parameters="" display_order="1" sub_group="EHSS_general"><![CDATA[1]]></property>
+    <property property_name="EHSS_button_floating_right" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Floating Share Button Container (Right)" description=".ehss_button.floating" css_components="border,extra" scalar_type="" scalar_parameters="" display_order="52" sub_group=""><![CDATA[{"border-bottom-right-radius":"0","border-right-width":"0","border-top-right-radius":"0"}]]></property>
+    <property property_name="EHSS_button_floating" property_type="css" definition="1" group_name="EndlessHorizonAdvOG" title="Floating Share Button Container (Global)" description=".ehss_button.floating" css_components="text,background,border,layout,extra" scalar_type="" scalar_parameters="" display_order="50" sub_group=""><![CDATA[{"extra":"box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .2), rgba(0, 0, 0, .2) 0px 1px 4px;\nz-index: 9999;","height":"42px","width":"42px"}]]></property>
     <group group_name="EndlessHorizonAdvOG" display_order="1500">
       <title>[Endless Horizon] Social Share</title>
       <description>Floating social share widget. Made with love by Bobby Wibowo.</description>
@@ -445,7 +462,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 <xen:require js="{$javaScriptSource}/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
 
 <button class="button primary ehss_button {xen:if '{$aboveQuickReply}', 'aboveQuickReply'}"{xen:if '{$permalink}', ' data-permalink="{$permalink}"'}><i class="{xen:property EHSS_sharebutton_ic}"></i><span>{xen:if '{$permalink}', '{xen:phrase view_EHSS_button_text_permalink}', '{xen:phrase view_EHSS_button_text}'}</span></button>]]></template>
-    <template title="eh_socialshare.css" version_id="220" version_string="2.2.0"><![CDATA[.ehss_button
+    <template title="eh_socialshare.css" version_id="222" version_string="2.2.2"><![CDATA[.ehss_button
 {
 	line-height: normal;
 	
@@ -476,12 +493,27 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 {
 	position: fixed;
 	top: 50%;
-	left: 0;
 	margin-top: -{xen:calc '{xen:property EHSS_button_floating.height} / 2'}px;
 	text-align: center;
 	
 	{xen:property EHSS_button_floating}
 }
+
+<xen:if is="{$xenOptions.EHSS_FloatingButtonPosition} == 'left'">
+.ehss_button.floating
+{
+	left: 0;
+	
+	{xen:property EHSS_button_floating_left}
+}
+<xen:elseif is="{$xenOptions.EHSS_FloatingButtonPosition} == 'right'" />
+.ehss_button.floating
+{
+	right: 0;
+	
+	{xen:property EHSS_button_floating_right}
+}
+</xen:if>
 
 .ehss_button.floating .fa
 {
