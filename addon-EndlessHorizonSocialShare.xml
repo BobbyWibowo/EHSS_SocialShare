@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.2.1" version_id="221" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.2.2" version_id="222" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -760,7 +760,7 @@ $0]]></replace>
     </modification>
     <modification template="page_container_js_body" modification_key="EHSS_TM_pcjb_001" description="Hook to page_container_js_body template (adds ability to forcibly enable Facebook SDK)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[XenForo.Facebook.forceInit = {xen:if $facebookSdk, true, false};]]></find>
-      <replace><![CDATA[XenForo.Facebook.forceInit = {xen:if '{$xenOptions.enableFacebookSdk}', true, false};]]></replace>
+      <replace><![CDATA[XenForo.Facebook.forceInit = {xen:if '{$xenOptions.enableFacebookSdk} || {$facebookSdk}', true, false};]]></replace>
     </modification>
     <modification template="page_container_js_head" modification_key="EHSS_TM_pcjh_001" description="Append comment to tell add-on where to include eh_socialshare_js template" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[<!--XenForo_Require:JS-->]]></find>
