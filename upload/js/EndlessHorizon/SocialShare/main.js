@@ -138,10 +138,9 @@ $(document).ready(function()
             btns = btn.find('span'),
             animTime = 400;
 
-        // Shrink and show button after capturing the targeted full width
         btns.css('opacity', 0);
         btn.css('width', dw);
-        btn.css('opacity', 1);
+        btn.toggleClass('ehss_ready');
 
         btn.hover(
             function(e) // mouse enter

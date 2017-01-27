@@ -529,6 +529,8 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 	overflow: hidden;
 	opacity: 0;
 }
+
+.ehss_button.floating.ehss_ready { opacity: 1; }
 </xen:if>
 
 
@@ -636,6 +638,17 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 }
 
 <xen:if is="{xen:property enableResponsive}">
+@media (max-width:{xen:property maxResponsiveWideWidth})
+{
+	.ehss_button.floating.ehss_ready
+	{
+		top: 20%;
+		opacity: .5;
+	}
+	
+	.ehss_button.floating.ehss_ready:hover, .ehss_button.floating.ehss_ready:focus { opacity: 1; }
+}
+
 @media (max-width: {xen:property maxResponsiveNarrowWidth})
 {
 	.Responsive .ehss_overlay .ehss_items .ehss_inner { width: auto; }
