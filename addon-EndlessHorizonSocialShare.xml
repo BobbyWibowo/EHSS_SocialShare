@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.2.2" version_id="222" url="https://www.endlesshorizon.net/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+<addon addon_id="EndlessHorizonSocialShare" title="[Endless Horizon] Social Share" version_string="2.2.2" version_id="222" url="https://www.endlesshorizon.net/" install_callback_class="EndlessHorizon_SocialShare_Install" install_callback_method="install" uninstall_callback_class="EndlessHorizon_SocialShare_Install" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -8,12 +8,20 @@
   <code_events/>
   <code_event_listeners>
     <listener event_id="front_controller_post_view" execute_order="9" callback_class="EndlessHorizon_SocialShare_Listener2" callback_method="front_controller_post_view" active="1" hint="" description="Look for keys on page and replace when necessary"/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="EndlessHorizon_SocialShare_Listener2" callback_method="load_class_controller" active="1" hint="XenForo_ControllerPublic_Account" description="XenForo_ControllerPublic_Account"/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="EndlessHorizon_SocialShare_Listener2" callback_method="load_class_datawriter" active="1" hint="XenForo_DataWriter_User" description="XenForo_DataWriter_User"/>
   </code_event_listeners>
   <cron/>
   <email_templates/>
   <email_template_modifications/>
   <optiongroups>
     <group group_id="EndlessHorizonSocialShare" display_order="1" debug_only="0"/>
+    <option option_id="EHSS_AllowDisableFromPreferences" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EndlessHorizonSocialShare" display_order="40"/>
+    </option>
     <option option_id="EHSS_CacheHitDebug" edit_format="onoff" data_type="boolean" can_backup="1">
       <default_value>0</default_value>
       <edit_format_params></edit_format_params>
@@ -80,10 +88,10 @@
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="335"/>
     </option>
-    <option option_id="EHSS_FloatingButtonPosition" edit_format="select" data_type="string" can_backup="1">
-      <default_value>a:2:{s:4:"left";b:1;s:5:"right";b:0;}</default_value>
-      <edit_format_params>left={xen:phrase option_EHSS_Position_left}
-right={xen:phrase option_EHSS_Position_right}</edit_format_params>
+    <option option_id="EHSS_FloatingButtonPositionNew" edit_format="select" data_type="string" can_backup="1">
+      <default_value>a:2:{s:10:"floating_l";b:1;s:10:"floating_r";b:0;}</default_value>
+      <edit_format_params>floating_l={xen:phrase option_EHSS_Position_left}
+floating_r={xen:phrase option_EHSS_Position_right}</edit_format_params>
       <sub_options></sub_options>
       <relation group_id="EndlessHorizonSocialShare" display_order="105"/>
     </option>
@@ -228,6 +236,8 @@ bottom</sub_options>
     <interface_groups/>
   </permissions>
   <phrases>
+    <phrase title="option_EHSS_AllowDisableFromPreferences" version_id="222" version_string="2.2.2"><![CDATA[Allow user to disable display from Preferences]]></phrase>
+    <phrase title="option_EHSS_AllowDisableFromPreferences_explain" version_id="222" version_string="2.2.2"><![CDATA[Enabling this option will add another entry for the "Social Share display" option in Preferences for user to disable the display.]]></phrase>
     <phrase title="option_EHSS_CacheHitDebug" version_id="200" version_string="2.0.0"><![CDATA[Enable cache hit debug messages]]></phrase>
     <phrase title="option_EHSS_CacheHitDebug_explain" version_id="127" version_string="1.2.7"><![CDATA[Enabling this option will force the add-on to output cache hit status to Server Error Log. You may want to enable this for the first few minutes prior to installing the add-on to see if the cache is being used correctly.]]></phrase>
     <phrase title="option_EHSS_CacheIdPrefix" version_id="200" version_string="2.0.0"><![CDATA[Cache ID prefix]]></phrase>
@@ -258,8 +268,8 @@ You may also use these params: <b>{url}</b> for the page's URL and <b>{title}</b
     <phrase title="option_EHSS_EnableFontAwesome_explain" version_id="217" version_string="2.1.7"><![CDATA[If you haven't added Font Awesome by your own, you can use this add-on to add it (don't forget to fill <i>Font Awesome CSS path</i> option below). Please note, this add-on will add it to all pages served by your XenForo installation.]]></phrase>
     <phrase title="option_EHSS_FetchingDebug" version_id="200" version_string="2.0.0"><![CDATA[Enable count fetching debug messages]]></phrase>
     <phrase title="option_EHSS_FetchingDebug_explain" version_id="217" version_string="2.1.7"><![CDATA[Enabling this option will make the add-on output debug messages when fetching share count from any social sites into your Server Error Logs. If some social sites have never returned share count to your server, you may want to know why by enabling this option.]]></phrase>
-    <phrase title="option_EHSS_FloatingButtonPosition" version_id="222" version_string="2.2.2"><![CDATA[Floating share button's position]]></phrase>
-    <phrase title="option_EHSS_FloatingButtonPosition_explain" version_id="222" version_string="2.2.2"><![CDATA[]]></phrase>
+    <phrase title="option_EHSS_FloatingButtonPositionNew" version_id="222" version_string="2.2.2"><![CDATA[Floating share button's position]]></phrase>
+    <phrase title="option_EHSS_FloatingButtonPositionNew_explain" version_id="222" version_string="2.2.2"><![CDATA[]]></phrase>
     <phrase title="option_EHSS_FontAwesomeCssPath" version_id="200" version_string="2.0.0"><![CDATA[Font Awesome CSS path]]></phrase>
     <phrase title="option_EHSS_FontAwesomeCssPath_explain" version_id="133" version_string="1.3.3"><![CDATA[Path to the main CSS of Font Awesome. This can be a relative or a fixed path.]]></phrase>
     <phrase title="option_EHSS_JSDebug" version_id="200" version_string="2.0.0"><![CDATA[Enable JavaScript debug messages]]></phrase>
@@ -401,6 +411,12 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
     <phrase title="style_property_EHSS_whatsapp_ic_master" version_id="220" version_string="2.2.0"><![CDATA[[WhatsApp] Icon Class]]></phrase>
     <phrase title="style_property_group_EndlessHorizonAdvOG_master" version_id="220" version_string="2.2.0"><![CDATA[[Endless Horizon] Social Share]]></phrase>
     <phrase title="style_property_group_EndlessHorizonAdvOG_master_desc" version_id="220" version_string="2.2.0"><![CDATA[Floating social share widget. Made with love by Bobby Wibowo.]]></phrase>
+    <phrase title="view_EHSS_account_preferences_disable" version_id="222" version_string="2.2.2"><![CDATA[None]]></phrase>
+    <phrase title="view_EHSS_account_preferences_floating_l" version_id="222" version_string="2.2.2"><![CDATA[Floating (left)]]></phrase>
+    <phrase title="view_EHSS_account_preferences_floating_r" version_id="222" version_string="2.2.2"><![CDATA[Floating (right)]]></phrase>
+    <phrase title="view_EHSS_account_preferences_option_explanation" version_id="222" version_string="2.2.2"><![CDATA[Choose how you want the Social Share button to display. Default option will make the Social Share button use the default display mode that the site's administrator chose. Some area may be disabled for "Sidebar and/or page's top and bottom area" option.]]></phrase>
+    <phrase title="view_EHSS_account_preferences_option_title" version_id="222" version_string="2.2.2"><![CDATA[Social Share display]]></phrase>
+    <phrase title="view_EHSS_account_preferences_standard" version_id="222" version_string="2.2.2"><![CDATA[Sidebar and/or page's top and bottom area]]></phrase>
     <phrase title="view_EHSS_button_text" version_id="106" version_string="1.0.6"><![CDATA[Share This Page]]></phrase>
     <phrase title="view_EHSS_button_text_permalink" version_id="210" version_string="2.1.0"><![CDATA[Share This Post]]></phrase>
     <phrase title="view_EHSS_count_title_plural" version_id="141" version_string="1.4.1"><![CDATA[This page was shared {x} times]]></phrase>
@@ -489,7 +505,8 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 	{xen:property EHSS_button_aboveQuickReply}
 }
 
-.ehss_button.floating
+.ehss_button.floating_l,
+.ehss_button.floating_r
 {
 	position: fixed;
 	top: 50%;
@@ -499,29 +516,30 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 	{xen:property EHSS_button_floating}
 }
 
-<xen:if is="{$xenOptions.EHSS_FloatingButtonPosition} == 'left'">
-.ehss_button.floating
+
+.ehss_button.floating_l
 {
 	left: 0;
 	
 	{xen:property EHSS_button_floating_left}
 }
-<xen:elseif is="{$xenOptions.EHSS_FloatingButtonPosition} == 'right'" />
-.ehss_button.floating
+
+.ehss_button.floating_r
 {
 	right: 0;
 	
 	{xen:property EHSS_button_floating_right}
 }
-</xen:if>
 
-.ehss_button.floating .fa
+.ehss_button.floating_l .fa,
+.ehss_button.floating_r .fa
 {
 	{xen:property EHSS_button_floating_fa}
 }
 
 <xen:if is="{xen:property EHSS_fsbanim}">
-.ehss_button.floating
+.ehss_button.floating_l,
+.ehss_button.floating_r
 {
 	text-align: left;
 	width: auto;
@@ -530,7 +548,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 	opacity: 0;
 }
 
-.ehss_button.floating.ehss_ready { opacity: 1; }
+.ehss_button.floating_l.ehss_ready, .ehss_button.floating_r.ehss_ready { opacity: 1; }
 </xen:if>
 
 
@@ -654,10 +672,23 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 	.Responsive .ehss_overlay .ehss_items .ehss_inner { width: auto; }
 }
 </xen:if>]]></template>
-    <template title="eh_socialshare_floating" version_id="221" version_string="2.2.1"><![CDATA[<xen:require css="eh_socialshare.css" />
+    <template title="eh_socialshare_account_preferences" version_id="222" version_string="2.2.2"><![CDATA[<dl class="ctrlUnit">
+	<dt><label for="ctrl_ehss_display">{xen:phrase view_EHSS_account_preferences_option_title}:</label></dt>
+	<dd>
+		<select name="ehss_display" class="textCtrl" id="ctrl_ehss_display">
+			<xen:if is="{$xenOptions.EHSS_AllowDisableFromPreferences}"><option value="none" {xen:selected '{$visitor.ehss_display} == "none"'}>{xen:phrase view_EHSS_account_preferences_disable}</option></xen:if>
+			<option value="" {xen:selected '!{$visitor.ehss_display} || (!{$xenOptions.EHSS_AllowDisableFromPreferences} && ({$visitor.ehss_display} == "none"))'}>{xen:phrase default}</option>
+			<option value="standard" {xen:selected '{$visitor.ehss_display} == "standard"'}>{xen:phrase view_EHSS_account_preferences_standard}</option>
+			<option value="floating_l" {xen:selected '{$visitor.ehss_display} == "floating_l"'}>{xen:phrase view_EHSS_account_preferences_floating_l}</option>
+			<option value="floating_r" {xen:selected '{$visitor.ehss_display} == "floating_r"'}>{xen:phrase view_EHSS_account_preferences_floating_r}</option>
+		</select>
+		<p class="explain">{xen:phrase view_EHSS_account_preferences_option_explanation}</p>
+	</dd>
+</dl>]]></template>
+    <template title="eh_socialshare_floating" version_id="222" version_string="2.2.2"><![CDATA[<xen:require css="eh_socialshare.css" />
 <xen:require js="{$javaScriptSource}/EndlessHorizon/SocialShare/main{xen:if '{$xenOptions.EHSS_CompressedJS}', '.min'}.js" />
 
-<button class="button primary ehss_button floating" title="{xen:if '!{xen:property EHSS_fsbanim}', '{xen:phrase view_EHSS_button_text}'}" data-w="{xen:property EHSS_button_floating.width}"><i class="{xen:property EHSS_sharebutton_ic}"></i>{xen:if '{xen:property EHSS_fsbanim}', '<span>{xen:phrase view_EHSS_button_text}</span>'}</button>]]></template>
+<button class="button primary ehss_button {$position}" title="{xen:if '!{xen:property EHSS_fsbanim}', '{xen:phrase view_EHSS_button_text}'}" data-w="{xen:property EHSS_button_floating.width}"><i class="{xen:property EHSS_sharebutton_ic}"></i>{xen:if '{xen:property EHSS_fsbanim}', '<span>{xen:phrase view_EHSS_button_text}</span>'}</button>]]></template>
     <template title="eh_socialshare_js" version_id="221" version_string="2.2.1"><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_ShareCounter})">
     <xen:set var="$EHSS_counts"><xen:callback class="EndlessHorizon_SocialShare_Listener2" method="getShareCounts"></xen:callback></xen:set>
 </xen:if>
@@ -783,14 +814,23 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
     <modification template="PAGE_CONTAINER" modification_key="EHSS_TM_PC_002" description="Hook to PAGE_CONTAINER template (adds ability to show floating share button)" execution_order="10" enabled="1" action="str_replace">
       <find><![CDATA[</footer>]]></find>
       <replace><![CDATA[$0
-<xen:if is="{$xenOptions.EHSS_UseFloatingButton}"><xen:include template="eh_socialshare_floating" /></xen:if>]]></replace>
+<xen:if is="({$xenOptions.EHSS_UseFloatingButton} || ({$visitor.ehss_display} == 'floating_l') || ({$visitor.ehss_display} == 'floating_r')) && !({$visitor.ehss_display} == 'standard') && !({$xenOptions.EHSS_AllowDisableFromPreferences} && ({$visitor.ehss_display} == 'none'))">
+<xen:include template="eh_socialshare_floating">
+	<xen:set var="$position"><xen:if is="{$visitor.ehss_display}">{$visitor.ehss_display}<xen:else />{$xenOptions.EHSS_FloatingButtonPositionNew}</xen:if></xen:set>
+</xen:include>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="account_preferences" modification_key="EHSS_TM_ap_001" description="Hook to account_preferences (add preferences option to choose display mode)" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<xen:include template="custom_fields_edit" />]]></find>
+      <replace><![CDATA[<xen:include template="eh_socialshare_account_preferences" />
+$0]]></replace>
     </modification>
     <modification template="eh_socialshare" modification_key="EHSS_TM_ehss_001" description="Append comment to tell add-on callback that the widget is being used" execution_order="10" enabled="1" action="preg_replace">
-      <find><![CDATA[/^.+?$/s]]></find>
+      <find><![CDATA[/$/]]></find>
       <replace><![CDATA[$0<!--EHSS_Widget_Exists-->]]></replace>
     </modification>
     <modification template="eh_socialshare_floating" modification_key="EHSS_TM_ehssf_001" description="Append comment to tell add-on callback that the widget is being used" execution_order="10" enabled="1" action="preg_replace">
-      <find><![CDATA[/^.+?$/s]]></find>
+      <find><![CDATA[/$/]]></find>
       <replace><![CDATA[$0<!--EHSS_Widget_Exists-->]]></replace>
     </modification>
     <modification template="forum_view" modification_key="EHSS_TM_fw_001" description="Hook to forum_view template (adds ability to show widget on top of threads list)" execution_order="10" enabled="1" action="str_replace">
@@ -799,7 +839,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
 $0]]></replace>
     </modification>
     <modification template="forum_view" modification_key="EHSS_TM_fw_002" description="Hook to forum_view template (adds ability to show widget under threads list)" execution_order="10" enabled="1" action="preg_replace">
-      <find><![CDATA[/^.+?$/s]]></find>
+      <find><![CDATA[/$/]]></find>
       <replace><![CDATA[$0
 <xen:if is="{$xenOptions.EHSS_ViewThreadsList.bottom}"><xen:include template="share_page"></xen:include></xen:if>]]></replace>
     </modification>
@@ -839,7 +879,7 @@ $0]]></replace>
     </modification>
     <modification template="share_page" modification_key="EHSS_TM_ss_001" description="Replace share_page template completely (share page widget on threads and pages)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && (!{$xenOptions.EHSS_UseFloatingButton} || ({$visitor.ehss_display} == 'standard')) && !({$xenOptions.EHSS_AllowDisableFromPreferences} && ({$visitor.ehss_display} == 'none'))">
 	<div class="sharePage jsOnly">
 		<xen:hook name="share_page_options">
 			<xen:include template="eh_socialshare" />
@@ -849,7 +889,7 @@ $0]]></replace>
     </modification>
     <modification template="sidebar_share_page" modification_key="EHSS_TM_sss_001" description="Replace sidebar_share_page template completely (share page widget on sidebar)" execution_order="10" enabled="1" action="preg_replace">
       <find><![CDATA[/^.+?$/s]]></find>
-      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && !{$xenOptions.EHSS_UseFloatingButton}">
+      <replace><![CDATA[<xen:if is="in_array(true, {$xenOptions.EHSS_SocialSites}) && (!{$xenOptions.EHSS_UseFloatingButton} || ({$visitor.ehss_display} == 'standard')) && !({$xenOptions.EHSS_AllowDisableFromPreferences} && ({$visitor.ehss_display} == 'none'))">
 	<div class="section infoBlock sharePage jsOnly">
 		<div class="secondaryContent">
 			<xen:hook name="share_page_options">

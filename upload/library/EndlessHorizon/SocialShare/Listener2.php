@@ -6,6 +6,22 @@
 
 class EndlessHorizon_SocialShare_Listener2
 {
+    public static function load_class_controller($class, array &$extend)
+    {
+        if ($class === 'XenForo_ControllerPublic_Account')
+        {
+            $extend[] = 'EndlessHorizon_SocialShare_ControllerPublic_Account';
+        }
+    }
+
+    public static function load_class_datawriter($class, array &$extend)
+    {
+        if ($class === 'XenForo_DataWriter_User')
+        {
+            $extend[] = 'EndlessHorizon_SocialShare_DataWriter_User';
+        }
+    }
+
     /** DEBUG VARIABLES **/
     private static $dCacheHit;
     private static $dFetching;

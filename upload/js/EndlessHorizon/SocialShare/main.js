@@ -132,11 +132,13 @@ $(document).ready(function()
 
     if (EHSS_settings.fsbanim)
     {
-        var btn = body.find('.ehss_button.floating'),
+        var btn = body.find('.ehss_button.floating_l').add('.ehss_button.floating_r').first(),
             iw = btn.innerWidth() + 1,
             dw = btn.data('w'),
             btns = btn.find('span'),
             animTime = 400;
+
+        console.log(btn);
 
         btns.css('opacity', 0);
         btn.css('width', dw);
