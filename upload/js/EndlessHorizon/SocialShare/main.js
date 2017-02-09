@@ -138,8 +138,6 @@ $(document).ready(function()
             btns = btn.find('span'),
             animTime = 400;
 
-        console.log(btn);
-
         btns.css('opacity', 0);
         btn.css('width', dw);
         btn.toggleClass('ehss_ready');
