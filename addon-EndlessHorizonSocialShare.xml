@@ -861,7 +861,7 @@ Made with love by <a href="https://www.facebook.com/BobbyWibowoB" target="_blank
             "Delicious": {
                 ic:   "{xen:property EHSS_delicious_ic}",
                 bg:   "{xen:property EHSS_delicious_bg}",
-                url:  "https://www.delicious.com/save?v=5&noui&jump=close&url={url}&title={title}",
+                url:  "https://del.icio.us/save?v=5&noui&jump=close&url={url}&title={title}",
                 dim:  { w: 550, h: 550 }
             },</xen:if><xen:if is="{$xenOptions.EHSS_SocialSites.tumblr}">
             "Tumblr": {
