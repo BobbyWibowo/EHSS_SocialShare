@@ -64,14 +64,14 @@ class EndlessHorizon_SocialShare_Listener2
             //"buffer"      => "https://api.bufferapp.com/1/links/shares.json?url={url}",
             "vk"          => "https://vk.com/share.php?act=count&index=1&url="
         );
-        
+
         $url = str_replace("{url}", rawurlencode(self::$mSiteUrl), $api[$s]);
 
         // Facebook v2 patch (use newer Graph API with access token if available)
         if ($s === 'facebook_v2') { $url = $url.'&access_token='.self::$mFacebookAppId.'|'.self::$mFacebookAppSecret; }
 
         self::logExceptionByType('EHSS_DEBUG: '.$s.' service will be fetched with API: '.$url.' (Session: '.self::$mCacheId.')', 2);
-        
+
         if (self::$mCurlUsable)
         {
             $ch = curl_init();
@@ -116,7 +116,7 @@ class EndlessHorizon_SocialShare_Listener2
                 $res = @file_get_contents($url);
             }
         }
-        
+
         if ($res)
         {
             switch($s)
@@ -161,10 +161,10 @@ class EndlessHorizon_SocialShare_Listener2
         {
             $count = -1;
         }
-        
+
         return $count;
     }
-    
+
     public static function getShareCounts()
     {
         // XenForo options
@@ -176,8 +176,8 @@ class EndlessHorizon_SocialShare_Listener2
         // XenForo variables
         $cache = XenForo_Application::getCache();
         $req   = XenForo_Application::get('requestPaths');
-        
-        
+
+
         // Main options
         $cacheIdPrefix  = $o->EHSS_CacheIdPrefix;
         $cacheTime      = $o->EHSS_CacheTime;
@@ -193,11 +193,11 @@ class EndlessHorizon_SocialShare_Listener2
         if ($cache && ($cacheTime > 0))
         {
             $prevCache = $cache->load(self::$mCacheId);
-        
+
             if ($prevCache)
             {
                 $counts = json_decode($prevCache, true);
-                
+
                 foreach ($counts as $v)
                 {
                     if ($v !== -1)
@@ -307,49 +307,41 @@ class EndlessHorizon_SocialShare_Listener2
 
         return $jsonCounts;
     }
-    
+
     public static function front_controller_post_view(XenForo_FrontController $fc, &$output)
     {
-        // FailSafe
-        if (!$fc) { return false; }
+        if (!$fc) { return; }
 
         $dependencies = $fc->getDependencies();
 
         // Disable on Admin dependencies
-        if ($dependencies instanceof XenForo_Dependencies_Admin) { return false; }
+        if ($dependencies instanceof XenForo_Dependencies_Admin) { return; }
 
         // XenForo Route
         $route = $fc->route();
 
         // Disable on attachment controller
-        if ($route->getControllerName() === "XenForo_ControllerPublic_Attachment") { return false; }
-        
-        if ($route->getResponseType() === "html")
+        if ($route->getControllerName() === "XenForo_ControllerPublic_Attachment") { return; }
+
+        if ($route->getResponseType() !== "html") { return; }
+
+        $keyPos = strpos($output, '<!--EHSS_Widget_Exists-->');
+
+        if ($keyPos === false)
         {
-            $keyPos = strpos($output, '<!--EHSS_Widget_Exists-->');
-
-            if ($keyPos !== false)
-            {
-                $req = new Zend_Controller_Request_Http();
-                $res = new Zend_Controller_Response_Http();
-
-                $viewRenderer = $dependencies->getViewRenderer($res, 'html', $req);
-
-                $template     = $viewRenderer->renderView('', array(), 'eh_socialshare_js');
-                
-                $output       = str_replace('<!--EHSS_Widget_Exists-->', '', $output);
-                $output       = str_replace('<script type="text/javascript" data-ehss="true"></script>', $template, $output);
-            }
-            else
-            {
-                $output       = str_replace('<script type="text/javascript" data-ehss="true"></script>', '', $output);
-            }
-
-            return true;
+            $output = str_replace('<script type="text/javascript" data-ehss="true"></script>', '', $output);
         }
         else
         {
-            return false;
+            $req = new Zend_Controller_Request_Http();
+            $res = new Zend_Controller_Response_Http();
+
+            $viewRenderer = $dependencies->getViewRenderer($res, 'html', $req);
+
+            $template = $viewRenderer->renderView('', array(), 'eh_socialshare_js');
+
+            $output = str_replace('<!--EHSS_Widget_Exists-->', '', $output);
+            $output = str_replace('<script type="text/javascript" data-ehss="true"></script>', $template, $output);
         }
     }
 }
